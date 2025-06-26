@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Directory - A Square Mall Kenya</title>
+    <meta name="description" content="Browse our comprehensive store directory featuring fashion, electronics, dining, and entertainment at A Square Mall Kenya.">
+    <meta name="keywords" content="stores, directory, shopping, mall, Kenya, Nairobi, fashion, electronics, dining">
+    <meta property="og:title" content="Store Directory - A Square Mall">
+    <meta property="og:description" content="Discover all stores and services at A Square Mall Kenya">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .category-filter.active {
+            @apply bg-brand-gold text-brand-blue;
+        }
+        .store-card {
+            transition: all 0.3s ease;
+        }
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .search-results {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="storeDirectory()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="directory.html" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="events.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Events</a>
+                        <a href="gallery.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Gallery</a>
+                        <a href="map.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Map</a>
+                        <a href="leasing.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                <a href="directory.html" class="block px-3 py-2 text-brand-blue font-medium">Stores</a>
+                <a href="events.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Events</a>
+                <a href="gallery.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Gallery</a>
+                <a href="map.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Map</a>
+                <a href="leasing.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Leasing</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Store Directory</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Discover over 100+ stores, restaurants, and services at A Square Mall
+            </p>
+        </div>
+    </section>
+    <!-- Search and Filter Section -->
+    <section class="py-8 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Search Bar -->
+            <div class="mb-8">
+                <div class="relative max-w-2xl mx-auto">
+                    <input 
+                        type="text" 
+                        x-model="searchQuery" 
+                        @input="filterStores()"
+                        placeholder="Search stores, brands, or services..."
+                        class="w-full px-6 py-4 pl-12 text-lg border-2 border-gray-200 rounded-full focus:border-brand-blue focus:outline-none focus:ring-4 focus:ring-brand-blue/20 transition-all"
+                    >
+                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button 
+                    @click="selectedCategory = 'all'; filterStores()" 
+                    :class="selectedCategory === 'all' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    All Stores
+                </button>
+                <button 
+                    @click="selectedCategory = 'fashion'; filterStores()" 
+                    :class="selectedCategory === 'fashion' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Fashion & Apparel
+                </button>
+                <button 
+                    @click="selectedCategory = 'electronics'; filterStores()" 
+                    :class="selectedCategory === 'electronics' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Electronics
+                </button>
+                <button 
+                    @click="selectedCategory = 'dining'; filterStores()" 
+                    :class="selectedCategory === 'dining' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Dining
+                </button>
+                <button 
+                    @click="selectedCategory = 'entertainment'; filterStores()" 
+                    :class="selectedCategory === 'entertainment' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Entertainment
+                </button>
+                <button 
+                    @click="selectedCategory = 'beauty'; filterStores()" 
+                    :class="selectedCategory === 'beauty' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Beauty & Wellness
+                </button>
+                <button 
+                    @click="selectedCategory = 'services'; filterStores()" 
+                    :class="selectedCategory === 'services' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Services
+                </button>
+            </div>
+            <!-- Results Counter -->
+            <div class="text-center mb-8">
+                <p class="text-gray-600" x-text="`Showing ${filteredStores.length} of ${stores.length} stores`"></p>
+            </div>
+        </div>
+    </section>
+    <!-- Stores Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="stores-grid">
+                <template x-for="store in filteredStores" :key="store.id">
+                    <div class="store-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in">
+                        <div class="h-40 flex items-center justify-center text-white font-bold text-xl" :style="`background: ${store.bgColor}`">
+                            <div class="text-center">
+                                <div x-text="store.name" class="text-lg font-poppins font-bold"></div>
+                                <div x-text="store.tagline" class="text-sm opacity-90"></div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-full text-sm font-medium" x-text="store.category"></span>
+                                <span class="text-gray-500 text-sm" x-text="store.floor"></span>
+                            </div>
+                            <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-2" x-text="store.name"></h3>
+                            <p class="text-gray-600 mb-4 text-sm" x-text="store.description"></p>
+                            
+                            <!-- Operating Hours -->
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-800 mb-2">Hours:</h4>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <div class="flex justify-between">
+                                        <span>Mon - Fri:</span>
+                                        <span x-text="store.hours.weekday"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Sat - Sun:</span>
+                                        <span x-text="store.hours.weekend"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Contact Info -->
+                            <div class="border-t pt-4 space-y-2">
+                                <div class="flex items-center space-x-2 text-sm text-gray-600" x-show="store.phone">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                    <span x-text="store.phone"></span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-600" x-show="store.email">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span x-text="store.email"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- No Results Message -->
+            <div x-show="filteredStores.length === 0" class="text-center py-16">
+                <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <h3 class="text-2xl font-poppins font-semibold text-gray-600 mb-2">No stores found</h3>
+                <p class="text-gray-500">Try adjusting your search or filter criteria</p>
+                <button @click="searchQuery = ''; selectedCategory = 'all'; filterStores()" class="mt-4 px-6 py-3 bg-brand-gold text-brand-blue rounded-full font-semibold hover:shadow-lg transition-all">
+                    Clear Filters
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Quick Stats Section -->
+    <section class="py-16 bg-brand-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-poppins font-bold text-brand-gold mb-2">100+</div>
+                    <div class="text-white/80">Total Stores</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-poppins font-bold text-brand-gold mb-2">25+</div>
+                    <div class="text-white/80">Restaurants</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-poppins font-bold text-brand-gold mb-2">3</div>
+                    <div class="text-white/80">Floors</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-poppins font-bold text-brand-gold mb-2">24/7</div>
+                    <div class="text-white/80">Security</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-poppins font-bold mb-4 text-brand-gold">A Square Mall</h3>
+                    <p class="text-white/80 mb-4">Kenya's premier shopping destination offering world-class retail, dining, and entertainment experiences.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="events.html" class="text-white/80 hover:text-white transition-colors">Events & Promotions</a></li>
+                        <li><a href="gallery.html" class="text-white/80 hover:text-white transition-colors">Photo Gallery</a></li>
+                        <li><a href="map.html" class="text-white/80 hover:text-white transition-colors">Mall Map</a></li>
+                        <li><a href="leasing.html" class="text-white/80 hover:text-white transition-colors">Leasing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#fashion" class="text-white/80 hover:text-white transition-colors">Fashion & Apparel</a></li>
+                        <li><a href="#electronics" class="text-white/80 hover:text-white transition-colors">Electronics</a></li>
+                        <li><a href="#dining" class="text-white/80 hover:text-white transition-colors">Dining</a></li>
+                        <li><a href="#entertainment" class="text-white/80 hover:text-white transition-colors">Entertainment</a></li>
+                        <li><a href="#beauty" class="text-white/80 hover:text-white transition-colors">Beauty & Wellness</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Contact Info</h4>
+                    <div class="space-y-2 text-white/80">
+                        <p>Kimathi Street, Nairobi CBD</p>
+                        <p>Nairobi, Kenya</p>
+                        <p>Phone: +254 700 123 456</p>
+                        <p>Email: info@asquaremall.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">&copy; 2024 A Square Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/alpine.min.js" defer></script>
+    <script>
+        // Alpine.js Store Directory Component
+        function storeDirectory() {
+            return {
+                searchQuery: '',
+                selectedCategory: 'all',
+                stores: [
+                    // Fashion & Apparel
+                    {
+                        id: 1,
+                        name: "Zara",
+                        category: "Fashion",
+                        description: "Contemporary fashion for men, women and children.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 001",
+                        email: "zara@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
+                        tagline: "Fashion Forward"
+                    },
+                    {
+                        id: 2,
+                        name: "H&M",
+                        category: "Fashion",
+                        description: "Trendy and affordable fashion for the whole family.",
+                        floor: "First Floor",
+                        phone: "+254 700 111 002",
+                        email: "hm@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #f093fb 0%, #f5576c 100%)",
+                        tagline: "Style for Everyone"
+                    },
+                    {
+                        id: 3,
+                        name: "Nike Store",
+                        category: "Fashion",
+                        description: "Athletic wear and footwear for sports enthusiasts.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 003",
+                        email: "nike@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
+                        tagline: "Just Do It"
+                    },
+                    {
+                        id: 4,
+                        name: "Levi's",
+                        category: "Fashion",
+                        description: "Premium denim and casual wear since 1853.",
+                        floor: "First Floor",
+                        phone: "+254 700 111 004",
+                        email: "levis@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)",
+                        tagline: "Original Jeans"
+                    },
+                    // Electronics
+                    {
+                        id: 5,
+                        name: "Samsung Experience Store",
+                        category: "Electronics",
+                        description: "Latest smartphones, tablets, and smart home devices.",
+                        floor: "Second Floor",
+                        phone: "+254 700 111 005",
+                        email: "samsung@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)",
+                        tagline: "Innovation Hub"
+                    },
+                    {
+                        id: 6,
+                        name: "Apple Store",
+                        category: "Electronics",
+                        description: "iPhone, iPad, MacBook and accessories.",
+                        floor: "Second Floor",
+                        phone: "+254 700 111 006",
+                        email: "apple@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
+                        tagline: "Think Different"
+                    },
+                    {
+                        id: 7,
+                        name: "Techno Zone",
+                        category: "Electronics",
+                        description: "Gaming consoles, computers, and tech accessories.",
+                        floor: "Second Floor",
+                        phone: "+254 700 111 007",
+                        email: "techno@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)",
+                        tagline: "Tech Paradise"
+                    },
+                    // Dining
+                    {
+                        id: 8,
+                        name: "Java House",
+                        category: "Dining",
+                        description: "Premium coffee and international cuisine.",
+                        floor: "Food Court",
+                        phone: "+254 700 111 008",
+                        email: "java@asquaremall.co.ke",
+                        hours: { weekday: "7:00 AM - 10:00 PM", weekend: "8:00 AM - 11:00 PM" },
+                        bgColor: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)",
+                        tagline: "Great Coffee"
+                    },
+                    {
+                        id: 9,
+                        name: "KFC",
+                        category: "Dining",
+                        description: "Finger lickin' good fried chicken and sides.",
+                        floor: "Food Court",
+                        phone: "+254 700 111 009",
+                        email: "kfc@asquaremall.co.ke",
+                        hours: { weekday: "10:00 AM - 10:00 PM", weekend: "10:00 AM - 11:00 PM" },
+                        bgColor: "linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)",
+                        tagline: "Finger Lickin' Good"
+                    },
+                    {
+                        id: 10,
+                        name: "Artcaffe",
+                        category: "Dining",
+                        description: "Artisanal coffee, pastries, and light meals.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 010",
+                        email: "artcaffe@asquaremall.co.ke",
+                        hours: { weekday: "7:00 AM - 9:00 PM", weekend: "8:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)",
+                        tagline: "Artisan Coffee"
+                    },
+                    {
+                        id: 11,
+                        name: "Pizza Inn",
+                        category: "Dining",
+                        description: "Wood-fired pizzas and Italian favorites.",
+                        floor: "Food Court",
+                        phone: "+254 700 111 011",
+                        email: "pizzainn@asquaremall.co.ke",
+                        hours: { weekday: "11:00 AM - 10:00 PM", weekend: "11:00 AM - 11:00 PM" },
+                        bgColor: "linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)",
+                        tagline: "Authentic Pizza"
+                    },
+                    // Entertainment
+                    {
+                        id: 12,
+                        name: "Century Cinemax",
+                        category: "Entertainment",
+                        description: "Latest movies in 2D, 3D, and IMAX experience.",
+                        floor: "Third Floor",
+                        phone: "+254 700 111 012",
+                        email: "cinema@asquaremall.co.ke",
+                        hours: { weekday: "10:00 AM - 11:00 PM", weekend: "9:00 AM - 12:00 AM" },
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
+                        tagline: "Movie Magic"
+                    },
+                    {
+                        id: 13,
+                        name: "Fun Zone Arcade",
+                        category: "Entertainment",
+                        description: "Arcade games, virtual reality, and family fun.",
+                        floor: "Third Floor",
+                        phone: "+254 700 111 013",
+                        email: "funzone@asquaremall.co.ke",
+                        hours: { weekday: "10:00 AM - 10:00 PM", weekend: "10:00 AM - 11:00 PM" },
+                        bgColor: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)",
+                        tagline: "Family Fun"
+                    },
+                    {
+                        id: 14,
+                        name: "Kids Play Area",
+                        category: "Entertainment",
+                        description: "Safe and fun playground for children aged 2-12.",
+                        floor: "Second Floor",
+                        phone: "+254 700 111 014",
+                        email: "kidsplay@asquaremall.co.ke",
+                        hours: { weekday: "10:00 AM - 8:00 PM", weekend: "10:00 AM - 9:00 PM" },
+                        bgColor: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)",
+                        tagline: "Happy Kids"
+                    },
+                    // Beauty & Wellness
+                    {
+                        id: 15,
+                        name: "Sephora",
+                        category: "Beauty",
+                        description: "Premium cosmetics, skincare, and fragrance.",
+                        floor: "First Floor",
+                        phone: "+254 700 111 015",
+                        email: "sephora@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 9:00 PM", weekend: "10:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #f093fb 0%, #f5576c 100%)",
+                        tagline: "Beauty Paradise"
+                    },
+                    {
+                        id: 16,
+                        name: "The Spa",
+                        category: "Beauty",
+                        description: "Relaxing spa treatments and wellness services.",
+                        floor: "Second Floor",
+                        phone: "+254 700 111 016",
+                        email: "spa@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 8:00 PM", weekend: "9:00 AM - 9:00 PM" },
+                        bgColor: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)",
+                        tagline: "Relaxation Zone"
+                    },
+                    {
+                        id: 17,
+                        name: "Hair Studio",
+                        category: "Beauty",
+                        description: "Professional hair styling and coloring services.",
+                        floor: "First Floor",
+                        phone: "+254 700 111 017",
+                        email: "hairstudio@asquaremall.co.ke",
+                        hours: { weekday: "9:00 AM - 7:00 PM", weekend: "9:00 AM - 8:00 PM" },
+                        bgColor: "linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)",
+                        tagline: "Style Studio"
+                    },
+                    // Services
+                    {
+                        id: 18,
+                        name: "Nakumatt Supermarket",
+                        category: "Services",
+                        description: "Full-service supermarket with fresh groceries.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 018",
+                        email: "nakumatt@asquaremall.co.ke",
+                        hours: { weekday: "7:00 AM - 10:00 PM", weekend: "8:00 AM - 10:00 PM" },
+                        bgColor: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)",
+                        tagline: "Everything Under One Roof"
+                    },
+                    {
+                        id: 19,
+                        name: "Equity Bank",
+                        category: "Services",
+                        description: "Full banking services and ATM facilities.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 019",
+                        email: "equity@asquaremall.co.ke",
+                        hours: { weekday: "8:00 AM - 5:00 PM", weekend: "9:00 AM - 1:00 PM" },
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
+                        tagline: "Banking Solutions"
+                    },
+                    {
+                        id: 20,
+                        name: "M-Pesa Agent",
+                        category: "Services",
+                        description: "Mobile money transfers and financial services.",
+                        floor: "Ground Floor",
+                        phone: "+254 700 111 020",
+                        email: "mpesa@asquaremall.co.ke",
+                        hours: { weekday: "7:00 AM - 9:00 PM", weekend: "8:00 AM - 8:00 PM" },
+                        bgColor: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)",
+                        tagline: "Mobile Money"
+                    }
+                ],
+                filteredStores: [],
+                init() {
+                    this.filteredStores = this.stores;
+                    this.$nextTick(() => {
+                        this.animateStoreCards();
+                    });
+                },
+                filterStores() {
+                    let filtered = this.stores;
+                    // Filter by category
+                    if (this.selectedCategory !== 'all') {
+                        filtered = filtered.filter(store => 
+                            store.category.toLowerCase() === this.selectedCategory.toLowerCase()
+                        );
+                    }
+                    // Filter by search query
+                    if (this.searchQuery.trim() !== '') {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(store => 
+                            store.name.toLowerCase().includes(query) ||
+                            store.description.toLowerCase().includes(query) ||
+                            store.category.toLowerCase().includes(query)
+                        );
+                    }
+                    this.filteredStores = filtered;
+                    
+                    this.$nextTick(() => {
+                        this.animateStoreCards();
+                    });
+                },
+                animateStoreCards() {
+                    gsap.fromTo('.store-card', 
+                        {
+                            opacity: 0,
+                            y: 30,
+                            scale: 0.95
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.6,
+                            stagger: 0.1,
+                            ease: 'power3.out'
+                        }
+                    );
+                }
+            }
+        }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        // Header animation
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+        // Search section animation
+        gsap.fromTo('.relative', 
+            { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.8, delay: 0.5, ease: 'back.out(1.7)' }
+        );
+        // Category filters animation
+        gsap.fromTo('.category-filter', 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 0.7, ease: 'power3.out' }
+        );
+        // Stats animation
+        gsap.fromTo('.grid div', 
+            { opacity: 0, y: 30 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.8, 
+                stagger: 0.2, 
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.py-16.bg-brand-blue',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+    </script>
+</body>
+</html>
