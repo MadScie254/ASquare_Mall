@@ -30,6 +30,7 @@
             background: linear-gradient(135deg, #004080 0%, #0066cc 50%, #f5af19 100%);
         }
         .login-card {
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.95);
         }
@@ -100,6 +101,7 @@
                             type="button"
                             @click="showPassword = !showPassword"
                             class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            title="Toggle password visibility"
                         >
                             <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
