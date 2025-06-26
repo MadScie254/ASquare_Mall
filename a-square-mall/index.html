@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Square Mall | Nairobi's Premier Urban Sanctuary for Luxury & Lifestyle</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Welcome to A Square Mall, an architectural marvel and Kenya's ultimate sanctuary for urban shopping, world-class dining, and transcendent entertainment. Immerse yourself in a world of luxury.">
+    <meta name="keywords" content="A Square Mall, luxury shopping Kenya, Nairobi mall, fine dining Nairobi, fashion destination, urban lifestyle, entertainment Kenya">
+    <meta name="author" content="A Square Mall">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.asquaremall.co.ke/">
+    <meta property="og:title" content="A Square Mall | Nairobi's Premier Urban Sanctuary for Luxury & Lifestyle">
+    <meta property="og:description" content="Experience an unparalleled fusion of elegance, culture, and commerce. A Square Mall is not just a destination; it's a lifestyle.">
+    <meta property="og:image" content="https://placehold.co/1200x630/004080/f5af19?text=A+Square+Mall">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.asquaremall.co.ke/">
+    <meta property="twitter:title" content="A Square Mall | Nairobi's Premier Urban Sanctuary for Luxury & Lifestyle">
+    <meta property="twitter:description" content="Experience an unparalleled fusion of elegance, culture, and commerce. A Square Mall is not just a destination; it's a lifestyle.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/004080/f5af19?text=A+Square+Mall">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/f5af19/004080?text=A" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://css.gg/css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Alpine.js for lightweight interactivity -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- GSAP (GreenSock Animation Platform) & ScrollTrigger Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Custom styles to integrate the design system with Tailwind */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom brand colors for Tailwind */
+        .bg-brand-blue { background-color: #004080; }
+        .text-brand-blue { color: #004080; }
+        .bg-brand-gold { background-color: #f5af19; }
+        .text-brand-gold { color: #f5af19; }
+        .border-brand-gold { border-color: #f5af19; }
+
+        /* Hero section overlay for cinematic effect */
+        .hero-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 32, 64, 0.8), rgba(0, 32, 64, 0.4));
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        /* For character-level animation */
+        .hero-title-char {
+            display: inline-block;
+        }
+
+        /* Horizontal scroll container styling */
+        .scroll-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Roadmap/Timeline Styling */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .timeline-item:not(:last-child) {
+            padding-bottom: 4rem;
+            border-left: 2px solid #e5e7eb; /* light gray */
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -10px; /* Adjust to center on the line */
+            top: 0;
+            height: 20px;
+            width: 20px;
+            background-color: white;
+            border: 4px solid #f5af19; /* brand-gold */
+            border-radius: 50%;
+        }
+        
+        /* Countdown Timer Styling */
+        .countdown-box {
+            background: rgba(0, 64, 128, 0.8);
+            border: 1px solid #f5af19;
+        }
+        .countdown-number {
+            font-size: clamp(2rem, 10vw, 4rem); /* Responsive font size */
+        }
+        
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header Section -->
+    <header x-data="{ mobileMenuOpen: false }" class="bg-brand-blue text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-gold tracking-wider">A SQUARE</a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="text-brand-gold border-b-2 border-brand-gold">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold transition duration-300">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold transition duration-300">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold transition duration-300">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold transition duration-300">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold transition duration-300">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-4 py-2 rounded-md font-semibold hover:bg-yellow-400 transition duration-300">Contact Us</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden focus:outline-none" title="Toggle mobile menu">
+                <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                <span class="sr-only">Toggle mobile menu</span>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-transition @click.away="mobileMenuOpen = false" class="lg:hidden absolute top-full left-0 right-0 bg-brand-blue shadow-xl">
+             <div class="flex flex-col items-center space-y-4 py-8">
+                <a href="index.html" class="text-brand-gold">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-6 py-3 rounded-md font-semibold">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
+            <div class="hero-bg absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579737920839-a9a35a822b31?q=80&w=2071&auto=format&fit=crop');"></div>
+            
+            <div class="hero-content text-center px-4">
+                <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase">
+                    <span class="hero-line-1 block">Where Legacy Meets</span>
+                    <span class="hero-line-2 block text-brand-gold">Lifestyle</span>
+                </h1>
+                <p class="hero-subtitle mt-6 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
+                    A Square is more than a destination; it is the definitive statement of urban sophistication. An architectural marvel in the heart of Kenya, curated for the discerning individual who seeks not just to shop, but to experience.
+                </p>
+                <a href="#journey" class="hero-cta inline-block mt-10 bg-brand-gold text-brand-blue px-8 py-4 rounded-md text-lg font-bold uppercase hover:bg-yellow-400 transform hover:scale-105 transition-all duration-300">
+                    Discover Our Story
+                </a>
+            </div>
+        </section>
+
+        <!-- The A Square Journey (Roadmap) Section -->
+        <section id="journey" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">The A Square Journey</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">From a visionary blueprint to a living landmark. This is our story of ambition, precision, and passion.</p>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <!-- Timeline Start -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot animate-on-scroll"></div>
+                        <div class="animate-on-scroll">
+                            <p class="text-brand-gold font-semibold">Phase 1: The Vision (2023)</p>
+                            <h3 class="text-2xl font-bold text-brand-blue mt-1">Conceptualization</h3>
+                            <p class="text-gray-700 mt-2">The genesis of A Square: a bold idea to redefine the retail landscape of East Africa by creating an integrated environment that harmonizes commerce, culture, and community.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot animate-on-scroll"></div>
+                        <div class="animate-on-scroll">
+                            <p class="text-brand-gold font-semibold">Phase 2: The Foundation (2024)</p>
+                            <h3 class="text-2xl font-bold text-brand-blue mt-1">Groundbreaking & Construction</h3>
+                            <p class="text-gray-700 mt-2">With world-renowned architects and engineers, we broke ground. Every beam laid and pane of glass installed was a step towards realizing a new icon on Nairobi's skyline.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot animate-on-scroll"></div>
+                        <div class="animate-on-scroll">
+                            <p class="text-brand-gold font-semibold">Phase 3: The Curation (2025)</p>
+                            <h3 class="text-2xl font-bold text-brand-blue mt-1">Tenant & Experience Partnership</h3>
+                            <p class="text-gray-700 mt-2">We meticulously handpicked a collection of premier local and international brands, culinary artists, and entertainment partners to create a truly world-class tenant mix.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item !border-l-0">
+                         <div class="timeline-dot animate-on-scroll"></div>
+                        <div class="animate-on-scroll">
+                            <p class="text-brand-gold font-semibold">Phase 4: The Future (2026 & Beyond)</p>
+                            <h3 class="text-2xl font-bold text-brand-blue mt-1">Innovation & Expansion</h3>
+                            <p class="text-gray-700 mt-2">Our journey does not end at opening. We are committed to continuous innovation, with plans for digital integration, exclusive loyalty programs, and Phase II expansion.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline End -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Countdown Section -->
+        <section id="countdown" class="py-20 bg-cover bg-fixed bg-center" style="background-image: url('https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?q=80&w=2070&auto=format&fit=crop');">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center text-white mb-12 animate-on-scroll">
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-brand-gold uppercase tracking-wider">The Grand Unveiling</h2>
+                    <p class="text-xl text-gray-200 mt-4 max-w-2xl mx-auto">Prepare to be captivated. The moment we open our doors to the world is fast approaching. Join us for a celebration like no other.</p>
+                </div>
+                <div id="countdown-timer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto text-white">
+                    <div class="text-center p-6 rounded-lg shadow-2xl countdown-box">
+                        <div id="days" class="font-bold countdown-number">00</div>
+                        <div class="text-lg uppercase text-gray-300">Days</div>
+                    </div>
+                    <div class="text-center p-6 rounded-lg shadow-2xl countdown-box">
+                        <div id="hours" class="font-bold countdown-number">00</div>
+                        <div class="text-lg uppercase text-gray-300">Hours</div>
+                    </div>
+                    <div class="text-center p-6 rounded-lg shadow-2xl countdown-box">
+                        <div id="minutes" class="font-bold countdown-number">00</div>
+                        <div class="text-lg uppercase text-gray-300">Minutes</div>
+                    </div>
+                    <div class="text-center p-6 rounded-lg shadow-2xl countdown-box">
+                        <div id="seconds" class="font-bold countdown-number">00</div>
+                        <div class="text-lg uppercase text-gray-300">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Stores Section -->
+        <section id="featured-stores" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">A Constellation of Brands</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Explore a curated collection of flagship stores and unique boutiques, each offering an exceptional standard of quality and service.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Cards will be animated with a stagger effect -->
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/400x300/e2e8f0/333?text=Fashion+Brand" alt="Fashion Brand" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-blue">Luxe Apparel</h3>
+                            <p class="text-gray-600 mt-2">The pinnacle of haute couture and ready-to-wear fashion.</p>
+                            <a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Explore Collection &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/400x300/e2e8f0/333?text=Electronics" alt="Electronics Store" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-blue">Gadget Hub</h3>
+                            <p class="text-gray-600 mt-2">Experience tomorrow's technology, today.</p>
+                            <a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Discover Innovation &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/400x300/e2e8f0/333?text=Dining" alt="Restaurant" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-blue">The Golden Fork</h3>
+                            <p class="text-gray-600 mt-2">A Michelin-starred journey for the senses.</p>
+                            <a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Reserve a Table &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/400x300/e2e8f0/333?text=Beauty" alt="Beauty Shop" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-blue">Serene Cosmetics</h3>
+                            <p class="text-gray-600 mt-2">Artisanal skincare and bespoke fragrances.</p>
+                            <a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Find Your Glow &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-16 animate-on-scroll">
+                    <a href="directory.html" class="bg-brand-blue text-white px-8 py-3 rounded-md font-semibold hover:bg-blue-900 transition duration-300 text-lg">Uncover All Treasures</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Luxury Services Section -->
+        <section id="services" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">An Unrivaled Experience</h2>
+                    <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">We believe luxury is personal. Our bespoke services are designed to anticipate your every need, ensuring a seamless and memorable visit.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll">
+                        <i class="fas fa-car text-4xl text-brand-gold"></i>
+                        <h3 class="text-2xl font-bold text-brand-blue mt-4">Valet Parking</h3>
+                        <p class="mt-2 text-gray-600">Arrive in style and comfort with our premium, hands-free valet service.</p>
+                    </div>
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll">
+                        <i class="fas fa-shopping-bag text-4xl text-brand-gold"></i>
+                        <h3 class="text-2xl font-bold text-brand-blue mt-4">Personal Shopper</h3>
+                        <p class="mt-2 text-gray-600">Let our expert stylists curate a wardrobe that is uniquely you.</p>
+                    </div>
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll">
+                        <i class="fas fa-concierge-bell text-4xl text-brand-gold"></i>
+                        <h3 class="text-2xl font-bold text-brand-blue mt-4">VIP Lounge</h3>
+                        <p class="mt-2 text-gray-600">An exclusive oasis of tranquility for our most esteemed guests.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Feed Section -->
+        <section id="social" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">The Digital Pulse</h2>
+                    <p class="text-lg text-gray-600 mt-4">Join our vibrant community and be the first to witness the magic as it unfolds. Follow @ASquareMall.</p>
+                </div>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="social-feed-col animate-on-scroll">
+                        <h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-instagram mr-2 text-brand-gold"></i>Instagram</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <img src="https://placehold.co/200x200/e0e0e0/333?text=Behind+the+Scenes" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105">
+                            <img src="https://placehold.co/200x200/d0d0d0/333?text=Architecture" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105">
+                            <img src="https://placehold.co/200x200/c0c0c0/333?text=First+Look" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105">
+                            <img src="https://placehold.co/200x200/b0b0b0/333?text=Team" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105">
+                        </div>
+                    </div>
+                     <div class="social-feed-col animate-on-scroll">
+                        <h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-facebook mr-2 text-brand-gold"></i>Facebook</h3>
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <p class="font-semibold text-brand-blue text-lg">A Square Mall</p>
+                            <p class="text-sm text-gray-500">2 hours ago</p>
+                            <p class="mt-3 text-lg">The countdown has officially begun! We are polishing every detail to bring you an experience beyond imagination. Are you ready for the new era of luxury in Nairobi? #ASquareUnveiling #LuxuryRedefined</p>
+                        </div>
+                    </div>
+                    <div class="social-feed-col animate-on-scroll">
+                        <h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-tiktok mr-2 text-brand-gold"></i>TikTok</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="relative rounded-lg overflow-hidden shadow-md"><video class="w-full" loop muted playsinline poster="https://placehold.co/200x355/909090/FFF?text=Tour+Preview"><source src="#" type="video/mp4"></video><i class="fas fa-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl opacity-75"></i></div>
+                            <div class="relative rounded-lg overflow-hidden shadow-md"><video class="w-full" loop muted playsinline poster="https://placehold.co/200x355/808080/FFF?text=Designer+Interview"><source src="#" type="video/mp4"></video><i class="fas fa-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl opacity-75"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-brand-blue text-white pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-10">
+                <div>
+                    <h3 class="text-2xl font-bold text-brand-gold mb-4">A SQUARE</h3>
+                    <p class="text-gray-300 leading-relaxed">The heart of Nairobi's urban lifestyle. An unparalleled mix of retail, dining, and entertainment, housed within an architectural masterpiece.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-brand-gold mb-4">Explore</h3>
+                    <ul class="space-y-3">
+                        <li><a href="directory.html" class="hover:text-brand-gold transition-colors">Stores & Brands</a></li>
+                        <li><a href="events.html" class="hover:text-brand-gold transition-colors">Events & Promotions</a></li>
+                         <li><a href="#services" class="hover:text-brand-gold transition-colors">Luxury Services</a></li>
+                        <li><a href="leasing.html" class="hover:text-brand-gold transition-colors">Leasing Opportunities</a></li>
+                        <li><a href="contact.html" class="hover:text-brand-gold transition-colors">Contact & Directions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-brand-gold mb-4">Visit Us</h3>
+                    <p class="text-gray-300">123 Uhuru Highway, Nairobi, Kenya</p>
+                    <p class="text-gray-300 mt-3">Email: info@asquaremall.co.ke</p>
+                    <p class="text-gray-300 mt-3">Phone: +254 700 123 456</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-brand-gold mb-4">Join Our Community</h3>
+                    <p class="text-gray-300 mb-4">Subscribe for exclusive updates and invitations.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your Email Address" class="w-full bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                        <button class="bg-brand-gold text-brand-blue px-4 py-2 rounded-r-md font-semibold hover:bg-yellow-400"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div class="flex space-x-5 mt-6">
+                        <a href="#" class="text-2xl hover:text-brand-gold transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-2xl hover:text-brand-gold transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-brand-gold transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-brand-gold transition-colors"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; <span id="year"></span> A Square Mall. All Rights Reserved. Conceived and coded with genius.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- 1. SET CURRENT YEAR IN FOOTER ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- 2. COUNTDOWN TIMER LOGIC ---
+        const countdownDate = new Date("Dec 31, 2025 00:00:00").getTime();
+        const countdownTimer = document.getElementById('countdown-timer');
+
+        if(countdownTimer) {
+             const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update DOM and animate with GSAP
+                updateCountdown('days', days);
+                updateCountdown('hours', hours);
+                updateCountdown('minutes', minutes);
+                updateCountdown('seconds', seconds);
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    countdownTimer.innerHTML = "<div class='col-span-full text-center text-3xl font-bold text-brand-gold'>THE DOORS ARE OPEN!</div>";
+                }
+            }, 1000);
+        }
+
+        function updateCountdown(id, value) {
+            const el = document.getElementById(id);
+            if (el && el.textContent !== String(value).padStart(2, '0')) {
+                gsap.to(el, {
+                    duration: 0.4,
+                    opacity: 0,
+                    y: -15,
+                    onComplete: () => {
+                        el.textContent = String(value).padStart(2, '0');
+                        gsap.fromTo(el, { y: 15, opacity: 0 }, { duration: 0.4, y: 0, opacity: 1 });
+                    }
+                });
+            }
+        }
+        
+        // --- 3. GSAP ANIMATIONS ---
+        if (typeof gsap !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- HERO SECTION ENTRANCE (FIXED) ---
+            const heroLines = document.querySelectorAll('.hero-title span[class*="hero-line-"]');
+            
+            heroLines.forEach(line => {
+                const text = line.textContent;
+                line.innerHTML = ''; // Clear original text
+                text.split('').forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'hero-title-char';
+                    span.innerHTML = char === ' ' ? '&nbsp;' : char;
+                    line.appendChild(span);
+                });
+            });
+            
+            const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+            heroTl.from('.hero-bg', { scale: 1.2, opacity: 0, duration: 2 })
+                  .from('.hero-title-char', { y: 80, opacity: 0, stagger: 0.03, duration: 1 }, '-=1.2')
+                  .from('.hero-subtitle', { y: 40, opacity: 0, duration: 1 }, '-=0.8')
+                  .from('.hero-cta', { y: 20, opacity: 0, scale: 0.9, duration: 1 }, '-=0.6');
+
+            // --- GENERAL ON-SCROLL FADE-IN/SLIDE-UP ANIMATIONS ---
+            const scrollElements = document.querySelectorAll('.animate-on-scroll');
+            scrollElements.forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    },
+                    opacity: 0,
+                    y: 60,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+            });
+
+            // --- STAGGERED ANIMATION FOR STORE & SERVICE CARDS ---
+            gsap.from(".store-card", {
+                scrollTrigger: {
+                    trigger: "#featured-stores",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2
+            });
+
+            gsap.from(".service-card", {
+                scrollTrigger: {
+                    trigger: "#services",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2
+            });
+
+        } else {
+            console.error('GSAP is not loaded. Animations will not run.');
+        }
+
+    });
+    </script>
+</body>
+</html>
