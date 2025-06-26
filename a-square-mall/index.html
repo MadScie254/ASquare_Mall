@@ -243,28 +243,28 @@
     </div>
 
     <!-- Header Section -->
-    <header x-data="header()" x-init="init()" class="bg-brand-blue text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-brand-gold tracking-wider page-link">A SQUARE</a>
+    <header x-data="header()" x-init="init()" class="bg-brand-blue text-white fixed top-0 left-0 right-0 z-50 shadow-lg border-b-2 border-brand-gold/30">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center font-serif">
+            <a href="index.html" class="text-3xl font-extrabold text-brand-gold tracking-[0.2em] page-link uppercase">A SQUARE</a>
             
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-6">
-                <a href="index.html" class="text-brand-gold border-b-2 border-brand-gold page-link">Home</a>
-                <a href="directory.html" class="hover:text-brand-gold transition duration-300 page-link">Store Directory</a>
-                <a href="events.html" class="hover:text-brand-gold transition duration-300 page-link">Events</a>
-                <a href="gallery.html" class="hover:text-brand-gold transition duration-300 page-link">Gallery</a>
-                <a href="map.html" class="hover:text-brand-gold transition duration-300 page-link">Mall Map</a>
-                <a href="leasing.html" class="hover:text-brand-gold transition duration-300 page-link">Leasing</a>
-                <a href="contact.html" class="bg-brand-gold text-brand-blue px-4 py-2 rounded-md font-semibold hover:bg-yellow-400 transition duration-300 page-link">Contact Us</a>
-                 <!-- Dark Mode Toggle -->
-                <button @click="toggleDarkMode" class="ml-4 text-2xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="text-brand-gold border-b-2 border-brand-gold page-link font-semibold tracking-wider uppercase">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-6 py-2 rounded-sm font-semibold hover:bg-yellow-400 transition duration-300 page-link tracking-wider uppercase shadow-md">Contact Us</a>
+                <!-- Dark Mode Toggle -->
+                <button @click="toggleDarkMode" class="ml-6 text-2xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
                     <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                 </button>
             </div>
 
             <!-- Mobile Menu Button -->
             <div class="lg:hidden flex items-center">
-                 <button @click="toggleDarkMode" class="mr-4 text-xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+                <button @click="toggleDarkMode" class="mr-4 text-xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
                     <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                 </button>
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="focus:outline-none" aria-label="Toggle Mobile Menu" title="Toggle Mobile Menu">
@@ -274,26 +274,26 @@
         </nav>
 
         <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" x-transition @click.away="mobileMenuOpen = false" class="lg:hidden absolute top-full left-0 right-0 bg-brand-blue shadow-xl">
-             <div class="flex flex-col items-center space-y-4 py-8">
-                <a href="index.html" class="text-brand-gold page-link">Home</a>
-                <a href="directory.html" class="hover:text-brand-gold page-link">Store Directory</a>
-                <a href="events.html" class="hover:text-brand-gold page-link">Events</a>
-                <a href="gallery.html" class="hover:text-brand-gold page-link">Gallery</a>
-                <a href="map.html" class="hover:text-brand-gold page-link">Mall Map</a>
-                <a href="leasing.html" class="hover:text-brand-gold page-link">Leasing</a>
-                <a href="contact.html" class="bg-brand-gold text-brand-blue px-6 py-3 rounded-md font-semibold page-link">Contact Us</a>
-                <div class="flex justify-center space-x-4 mt-2 py-3 border-t border-gray-700">
-                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Facebook">
+        <div x-show="mobileMenuOpen" x-transition @click.away="mobileMenuOpen = false" class="lg:hidden absolute top-full left-0 right-0 bg-brand-blue shadow-xl border-t-2 border-brand-gold/20">
+            <div class="flex flex-col items-center space-y-5 py-8 font-serif">
+                <a href="index.html" class="text-brand-gold page-link font-semibold tracking-wider uppercase">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-8 py-3 rounded-sm font-semibold page-link tracking-wider uppercase shadow-md">Contact Us</a>
+                <div class="flex justify-center space-x-6 mt-4 py-3 border-t border-brand-gold/20">
+                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Instagram">
+                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Twitter">
+                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="TikTok">
+                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="TikTok">
                         <i class="fab fa-tiktok"></i>
                     </a>
                 </div>
