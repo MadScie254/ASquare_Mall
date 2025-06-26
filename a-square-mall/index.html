@@ -80,11 +80,53 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 32, 64, 0.8), rgba(0, 32, 64, 0.4));
+            background: linear-gradient(to top, rgba(0, 32, 64, 0.6), rgba(0, 32, 64, 0.3));
             z-index: 1;
         }
         .hero-content { position: relative; z-index: 2; }
         .hero-title-char { display: inline-block; }
+        
+        /* Video background styles */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            /* Smooth playback and better contrast */
+            filter: brightness(0.6) contrast(1.1);
+        }
+        
+        /* Ensure all hero content is above video */
+        .hero-content,
+        .absolute.top-24,
+        .absolute.bottom-8 {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Fallback background for video */
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1579737920839-a9a35a822b31?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        /* Enhanced video overlay for mobile devices */
+        @media (max-width: 768px) {
+            .hero-video {
+                /* On mobile, prioritize performance */
+                filter: brightness(0.5) contrast(1.2);
+            }
+        }
 
         /* Timeline */
         .timeline-item { position: relative; padding-left: 3rem; }
@@ -262,7 +304,17 @@
     <main> <!-- Content starts visible -->
         <!-- Hero Section -->
         <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
-            <div class="hero-bg absolute inset-0 bg-cover bg-center"></div>
+            <!-- Video Background -->
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="assets/videos/background_globe.mp4" type="video/mp4">
+                <!-- Fallback for browsers that don't support the video element -->
+            </video>
+            
+            <!-- Fallback image if video doesn't load -->
+            <div class="hero-bg"></div>
+            
+            <!-- Video overlay for better text readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/40 z-5"></div>
             
             <!-- Floating particles animation -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -629,6 +681,38 @@
         pageEntry();
 
         function runPageAnimations() {
+            // --- 0. HERO VIDEO SETUP ---
+            const heroVideo = document.querySelector('.hero-video');
+            const heroFallback = document.querySelector('.hero-bg');
+            
+            if (heroVideo) {
+                // Ensure video loads and plays properly
+                heroVideo.load();
+                
+                // Handle video load error - fallback to image
+                heroVideo.addEventListener('error', () => {
+                    console.log('Video failed to load, using fallback image');
+                    heroVideo.style.display = 'none';
+                    if (heroFallback) {
+                        heroFallback.style.display = 'block';
+                    }
+                });
+                
+                // Ensure video plays (some browsers require user interaction)
+                heroVideo.addEventListener('loadeddata', () => {
+                    heroVideo.play().catch(e => {
+                        console.log('Video autoplay prevented:', e);
+                        // Video autoplay was prevented, but that's okay
+                    });
+                });
+                
+                // Loop the video seamlessly
+                heroVideo.addEventListener('ended', () => {
+                    heroVideo.currentTime = 0;
+                    heroVideo.play();
+                });
+            }
+            
             // --- 1. SET CURRENT YEAR IN FOOTER ---
             document.getElementById('year').textContent = new Date().getFullYear();
             
@@ -801,7 +885,7 @@
                 });
                 
                 const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-                heroTl.from('.hero-bg', { scale: 1.2, opacity: 0, duration: 2 })
+                heroTl.from('.hero-video, .hero-bg', { scale: 1.2, opacity: 0, duration: 2 })
                       .from('.hero-title-char', { y: 80, opacity: 0, stagger: 0.03, duration: 1 }, '-=1.2')
                       .from('.hero-subtitle', { y: 40, opacity: 0, duration: 1 }, '-=0.8')
                       .from('.hero-cta', { y: 20, opacity: 0, scale: 0.9, duration: 1, stagger: 0.2 }, '-=0.6')
