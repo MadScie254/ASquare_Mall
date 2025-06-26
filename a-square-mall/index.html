@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Alpine.js for lightweight interactivity -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- GSAP (GreenSock Animation Platform) & ScrollTrigger Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -60,16 +60,9 @@
         .dark .bg-white { background-color: #1f2937; }
         .dark .bg-gray-50 { background-color: #111827; }
         .dark .bg-gray-100 { background-color: #1f2937; }
-        .dark .bg-gray-800 { background-color: #1f2937; }
-        .dark .bg-gray-900 { background-color: #111827; }
-        .dark .text-brand-blue { color: #f5af19; }
+        .dark .text-brand-blue { color: #ffffff; }
         .dark .text-gray-600 { color: #9ca3af; }
         .dark .text-gray-700 { color: #d1d5db; }
-        .dark .text-gray-800 { color: #e5e7eb; }
-        .dark .text-gray-300 { color: #d1d5db; }
-        .dark .text-gray-200 { color: #e5e7eb; }
-        .dark .border-gray-200 { border-color: #374151; }
-        .dark .border-gray-700 { border-color: #4b5563; }
         .dark .shadow-lg { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .dark .timeline-item:not(:last-child) { border-color: #374151; }
         .dark .timeline-dot { background-color: #1f2937; }
@@ -240,55 +233,6 @@
         .countdown-bg {
             background-image: url('https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?q=80&w=2070&auto=format&fit=crop');
         }
-        
-        /* AI Section Animations */
-        .slow {
-            animation-duration: 20s;
-        }
-        
-        /* Enhanced gradient text */
-        .bg-gradient-to-r {
-            background: linear-gradient(90deg, #f5af19, #60a5fa);
-        }
-        
-        /* Chat animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .chat-message {
-            animation: fadeInUp 0.3s ease-out;
-        }
-        
-        /* Hover effects for feature cards */
-        .feature-card {
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        /* Pulse animation for online indicator */
-        @keyframes pulse-green {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-        
-        .animate-pulse-green {
-            animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -299,31 +243,28 @@
     </div>
 
     <!-- Header Section -->
-    <header x-data="header()" x-init="init()" class="bg-brand-blue text-white fixed top-0 left-0 right-0 z-50 shadow-lg border-b-2 border-brand-gold/30">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center font-serif">
-            <a href="index.html" class="text-3xl font-extrabold text-brand-gold tracking-[0.2em] page-link uppercase">A SQUARE</a>
+    <header x-data="header()" x-init="init()" class="bg-brand-blue text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-gold tracking-wider page-link">A SQUARE</a>
             
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-8">
-                <a href="index.html" class="text-brand-gold border-b-2 border-brand-gold page-link font-semibold tracking-wider uppercase">Home</a>
-                <a href="directory.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Store Directory</a>
-                <a href="events.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Events</a>
-                <a href="gallery.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Gallery</a>
-                <a href="map.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Mall Map</a>
-                <a href="leasing.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase">Leasing</a>
-                <a href="admin/login.html" class="hover:text-brand-gold transition duration-300 page-link tracking-wider uppercase flex items-center">
-                    <i class="fas fa-user-shield mr-2"></i>Login
-                </a>
-                <a href="contact.html" class="bg-brand-gold text-brand-blue px-6 py-2 rounded-sm font-semibold hover:bg-yellow-400 transition duration-300 page-link tracking-wider uppercase shadow-md">Contact Us</a>
-                <!-- Dark Mode Toggle -->
-                <button @click="toggleDarkMode" class="ml-6 text-2xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+            <div class="hidden lg:flex items-center space-x-6">
+                <a href="index.html" class="text-brand-gold border-b-2 border-brand-gold page-link">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold transition duration-300 page-link">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold transition duration-300 page-link">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold transition duration-300 page-link">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold transition duration-300 page-link">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold transition duration-300 page-link">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-4 py-2 rounded-md font-semibold hover:bg-yellow-400 transition duration-300 page-link">Contact Us</a>
+                 <!-- Dark Mode Toggle -->
+                <button @click="toggleDarkMode" class="ml-4 text-2xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
                     <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                 </button>
             </div>
 
             <!-- Mobile Menu Button -->
             <div class="lg:hidden flex items-center">
-                <button @click="toggleDarkMode" class="mr-4 text-xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+                 <button @click="toggleDarkMode" class="mr-4 text-xl focus:outline-none hover:text-brand-gold" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
                     <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                 </button>
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="focus:outline-none" aria-label="Toggle Mobile Menu" title="Toggle Mobile Menu">
@@ -333,29 +274,26 @@
         </nav>
 
         <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" x-transition @click.away="mobileMenuOpen = false" class="lg:hidden absolute top-full left-0 right-0 bg-brand-blue shadow-xl border-t-2 border-brand-gold/20">
-            <div class="flex flex-col items-center space-y-5 py-8 font-serif">
-                <a href="index.html" class="text-brand-gold page-link font-semibold tracking-wider uppercase">Home</a>
-                <a href="directory.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Store Directory</a>
-                <a href="events.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Events</a>
-                <a href="gallery.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Gallery</a>
-                <a href="map.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Mall Map</a>
-                <a href="leasing.html" class="hover:text-brand-gold page-link tracking-wider uppercase">Leasing</a>
-                <a href="admin/login.html" class="hover:text-brand-gold page-link tracking-wider uppercase flex items-center">
-                    <i class="fas fa-user-shield mr-2"></i>Login
-                </a>
-                <a href="contact.html" class="bg-brand-gold text-brand-blue px-8 py-3 rounded-sm font-semibold page-link tracking-wider uppercase shadow-md">Contact Us</a>
-                <div class="flex justify-center space-x-6 mt-4 py-3 border-t border-brand-gold/20">
-                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Facebook">
+        <div x-show="mobileMenuOpen" x-transition @click.away="mobileMenuOpen = false" class="lg:hidden absolute top-full left-0 right-0 bg-brand-blue shadow-xl">
+             <div class="flex flex-col items-center space-y-4 py-8">
+                <a href="index.html" class="text-brand-gold page-link">Home</a>
+                <a href="directory.html" class="hover:text-brand-gold page-link">Store Directory</a>
+                <a href="events.html" class="hover:text-brand-gold page-link">Events</a>
+                <a href="gallery.html" class="hover:text-brand-gold page-link">Gallery</a>
+                <a href="map.html" class="hover:text-brand-gold page-link">Mall Map</a>
+                <a href="leasing.html" class="hover:text-brand-gold page-link">Leasing</a>
+                <a href="contact.html" class="bg-brand-gold text-brand-blue px-6 py-3 rounded-md font-semibold page-link">Contact Us</a>
+                <div class="flex justify-center space-x-4 mt-2 py-3 border-t border-gray-700">
+                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Instagram">
+                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Twitter">
+                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="TikTok">
+                    <a href="#" class="text-xl hover:text-brand-gold transition-colors" aria-label="TikTok">
                         <i class="fab fa-tiktok"></i>
                     </a>
                 </div>
@@ -364,281 +302,111 @@
     </header>
 
     <main> <!-- Content starts visible -->
-        <!-- Hero Section - Redesigned -->
+        <!-- Hero Section -->
         <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
-            <!-- Modern gradient background -->
-            <div class="absolute inset-0 bg-gradient-to-br from-brand-blue via-purple-900 to-brand-blue"></div>
+            <!-- Video Background -->
+            <video autoplay muted loop class="hero-video">
+                <source src="assets/videos/background_globe.mp4" type="video/mp4">
+                <!-- Fallback for browsers that don't support the video element -->
+            </video>
             
-            <!-- Dynamic geometric patterns -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-20 left-20 w-32 h-32 border border-brand-gold rotate-45 animate-pulse"></div>
-                <div class="absolute bottom-32 right-32 w-24 h-24 border border-brand-gold rounded-full animate-spin slow"></div>
-                <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-brand-gold/20 transform rotate-12 animate-bounce"></div>
-            </div>
+            <!-- Fallback image if video doesn't load -->
+            <div class="hero-bg"></div>
             
-            <!-- Floating AI particles -->
+            <!-- Video overlay for better text readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/40 z-5"></div>
+            
+            <!-- Floating particles animation -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="floating-particles opacity-60"></div>
-                <!-- AI-themed floating elements -->
-                <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-brand-gold rounded-full animate-ping"></div>
-                <div class="absolute bottom-1/3 right-1/4 w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
-                <div class="absolute top-2/3 left-1/5 w-1 h-1 bg-green-400 rounded-full animate-bounce"></div>
+                <div class="floating-particles"></div>
             </div>
             
-            <!-- Top Info Bar -->
-            <div class="absolute top-28 left-0 right-0 z-10">
+            <!-- Top Hero Info Bar -->
+            <div class="absolute top-24 left-0 right-0 z-10">
                 <div class="container mx-auto px-6">
                     <div class="flex flex-wrap justify-between items-center text-sm">
                         <!-- Live Visitor Count -->
-                        <div class="bg-black/40 backdrop-blur-md px-5 py-2 rounded-lg border border-brand-gold/30">
+                        <div class="bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-brand-gold/30">
                             <i class="fas fa-users text-brand-gold mr-2"></i>
-                            <span id="visitor-count" class="font-serif">2,847</span> <span class="tracking-wider">visitors today</span>
+                            <span id="visitor-count">2,847</span> visitors today
                         </div>
                         
-                        <!-- AI Status Indicator -->
-                        <div class="hidden md:flex bg-black/40 backdrop-blur-md px-5 py-2 rounded-lg border border-brand-gold/30">
-                            <i class="fas fa-robot text-green-400 mr-2 animate-pulse"></i>
-                            <span class="tracking-wider">AI Assistant Online</span>
+                        <!-- Weather Widget -->
+                        <div class="bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-brand-gold/30">
+                            <i class="fas fa-sun text-brand-gold mr-2"></i>
+                            <span id="weather-temp">24°C</span> in Nairobi
                         </div>
                         
                         <!-- Live Time -->
-                        <div class="bg-black/40 backdrop-blur-md px-5 py-2 rounded-lg border border-brand-gold/30">
+                        <div class="bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-brand-gold/30">
                             <i class="fas fa-clock text-brand-gold mr-2"></i>
-                            <span id="live-time" class="font-serif"></span>
+                            <span id="live-time"></span>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Main Hero Content - Redesigned -->
-            <div class="hero-content relative z-10 max-w-6xl mx-auto">
-                <div class="text-center px-8 py-16">
-                    <!-- Modern brand accent -->
-                    <div class="mb-6">
-                        <div class="inline-flex items-center space-x-4">
-                            <div class="w-12 h-[2px] bg-gradient-to-r from-brand-gold to-blue-400"></div>
-                            <span class="text-brand-gold tracking-[0.3em] text-sm font-light uppercase">Next Generation Shopping</span>
-                            <div class="w-12 h-[2px] bg-gradient-to-l from-brand-gold to-blue-400"></div>
-                        </div>
+            <div class="hero-content text-center px-4 relative z-10">
+                <!-- Main Hero Content -->
+                <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase">
+                    <span class="hero-line-1 block">Where Legacy Meets</span>
+                    <span class="hero-line-2 block text-brand-gold">Lifestyle</span>
+                </h1>
+                
+                <!-- Typewriter Effect Subtitle -->
+                <div class="mt-6 h-16">
+                    <p class="hero-subtitle text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
+                        <span id="typewriter-text"></span>
+                        <span class="typewriter-cursor">|</span>
+                    </p>
+                </div>
+                
+                <!-- Hero Stats -->
+                <div class="flex flex-wrap justify-center gap-8 mt-8 mb-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-brand-gold counter" data-target="150">0</div>
+                        <div class="text-sm uppercase tracking-wide">Premium Stores</div>
                     </div>
-                    
-                    <!-- Enhanced Title -->
-                    <h1 class="hero-title font-serif text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
-                        <span class="hero-line-1 block bg-gradient-to-r from-white via-blue-200 to-brand-gold bg-clip-text text-transparent">
-                            Smart Shopping Experience
-                        </span>
-                        <span class="hero-line-2 block text-brand-gold mt-2">
-                            Powered by AI
-                        </span>
-                    </h1>
-                    
-                    <!-- Modern subtitle -->
-                    <div class="mt-6 mb-8">
-                        <p class="hero-subtitle text-lg md:text-xl max-w-4xl mx-auto leading-relaxed font-light tracking-wide text-gray-200">
-                            Experience the future of retail at A Square Mall, where artificial intelligence meets luxury shopping. 
-                            Get personalized recommendations, real-time assistance, and seamless navigation through our AI-powered platform.
-                        </p>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-brand-gold counter" data-target="25">0</div>
+                        <div class="text-sm uppercase tracking-wide">Dining Options</div>
                     </div>
-                    
-                    <!-- Enhanced Stats -->
-                    <div class="flex flex-wrap justify-center gap-8 mt-10 mb-10">
-                        <div class="text-center p-4 bg-black/20 backdrop-blur-sm rounded-lg border border-brand-gold/20">
-                            <div class="text-3xl font-serif font-bold text-brand-gold counter" data-target="150">0</div>
-                            <div class="text-sm uppercase tracking-[0.15em] mt-1 text-white/80">Premium Stores</div>
-                        </div>
-                        <div class="text-center p-4 bg-black/20 backdrop-blur-sm rounded-lg border border-brand-gold/20">
-                            <div class="text-3xl font-serif font-bold text-green-400 counter" data-target="24">0</div>
-                            <div class="text-sm uppercase tracking-[0.15em] mt-1 text-white/80">AI Features</div>
-                        </div>
-                        <div class="text-center p-4 bg-black/20 backdrop-blur-sm rounded-lg border border-brand-gold/20">
-                            <div class="text-3xl font-serif font-bold text-blue-400 counter" data-target="99">0</div>
-                            <div class="text-sm uppercase tracking-[0.15em] mt-1 text-white/80">Satisfaction Rate</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Enhanced CTA Buttons -->
-                    <div class="flex flex-wrap gap-6 justify-center mt-8">
-                        <a href="#ai-assistant" class="hero-cta inline-flex items-center bg-gradient-to-r from-brand-gold to-yellow-400 text-brand-blue px-8 py-4 text-lg font-medium uppercase tracking-widest hover:from-yellow-400 hover:to-brand-gold transition-all duration-300 shadow-lg rounded-lg transform hover:scale-105">
-                            <i class="fas fa-robot mr-3"></i>Try AI Assistant
-                        </a>
-                        <button onclick="requestVirtualTour()" class="hero-cta inline-flex items-center bg-transparent border-2 border-brand-gold text-brand-gold px-8 py-4 text-lg font-medium uppercase tracking-widest hover:bg-brand-gold hover:text-brand-blue transition-all duration-300 rounded-lg transform hover:scale-105">
-                            <i class="fas fa-vr-cardboard mr-3"></i>Virtual Tour
-                        </button>
-                        <a href="#journey" class="hero-cta inline-flex items-center bg-transparent border-2 border-blue-400 text-blue-400 px-8 py-4 text-lg font-medium uppercase tracking-widest hover:bg-blue-400 hover:text-white transition-all duration-300 rounded-lg transform hover:scale-105">
-                            <i class="fas fa-compass mr-3"></i>Explore Mall
-                        </a>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-brand-gold counter" data-target="5000">0</div>
+                        <div class="text-sm uppercase tracking-wide">Parking Spaces</div>
                     </div>
                 </div>
                 
-                <!-- Enhanced Social Proof -->
-                <div class="mt-8 bg-black/30 backdrop-blur-md border border-brand-gold/20 py-4 text-center rounded-lg">
-                    <div class="flex items-center justify-center space-x-4 text-sm">
-                        <i class="fas fa-star text-brand-gold animate-pulse"></i>
-                        <span id="social-ticker" class="tracking-wider">Powered by Google Gemini AI • Real-time Smart Recommendations</span>
-                        <i class="fas fa-brain text-blue-400 animate-pulse"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Enhanced Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-                <div class="flex flex-col items-center animate-bounce">
-                    <div class="w-[2px] h-12 bg-gradient-to-b from-brand-gold to-transparent mb-2"></div>
-                    <p class="text-xs uppercase tracking-[0.2em] text-brand-gold/70">Scroll for AI Features</p>
-                    <i class="fas fa-chevron-down text-brand-gold mt-2"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI Assistant Section -->
-        <section id="ai-assistant" class="py-24 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
-            <!-- Background pattern -->
-            <div class="absolute inset-0 opacity-5 dark:opacity-10">
-                <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 25% 25%, #004080 1px, transparent 1px); background-size: 50px 50px;"></div>
-            </div>
-            
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="text-center mb-16 animate-on-scroll">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-brand-blue to-blue-600 rounded-full mb-6">
-                        <i class="fas fa-robot text-white text-2xl"></i>
-                    </div>
-                    <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue dark:text-brand-gold mb-4">AI Shopping Assistant</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Meet your personal AI shopping companion, powered by Google Gemini. Get instant recommendations, real-time store information, and personalized assistance.</p>
+                <!-- Interactive CTA Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center mt-10">
+                    <a href="#journey" class="hero-cta inline-block bg-brand-gold text-brand-blue px-8 py-4 rounded-md text-lg font-bold uppercase hover:bg-yellow-400 transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-compass mr-2"></i>Discover Our Story
+                    </a>
+                    <button onclick="requestVirtualTour()" class="hero-cta inline-block bg-transparent border-2 border-brand-gold text-brand-gold px-8 py-4 rounded-md text-lg font-bold uppercase hover:bg-brand-gold hover:text-brand-blue transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-vr-cardboard mr-2"></i>Virtual Tour
+                    </button>
                 </div>
                 
-                <!-- AI Chat Interface -->
-                <div class="max-w-4xl mx-auto">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                        <!-- Chat Header -->
-                        <div class="bg-gradient-to-r from-brand-blue to-blue-600 p-6 text-white">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-12 h-12 bg-brand-gold rounded-full flex items-center justify-center">
-                                        <i class="fas fa-robot text-brand-blue text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-semibold text-white">A Square AI Assistant</h3>
-                                        <p class="text-blue-200 text-sm">Powered by Google Gemini • Online</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                                    <span class="text-sm text-white">Active</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Chat Messages -->
-                        <div id="chat-messages" class="h-96 overflow-y-auto p-6 space-y-4 bg-gray-50 dark:bg-gray-900">
-                            <!-- Welcome Message -->
-                            <div class="flex items-start space-x-3">
-                                <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-robot text-white text-sm"></i>
-                                </div>
-                                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm max-w-xs">
-                                    <p class="text-gray-800 dark:text-gray-200">Welcome to A Square Mall! I'm your AI assistant. How can I help you today? You can ask me about stores, directions, events, or anything else!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Sample conversation -->
-                            <div class="flex items-start space-x-3 justify-end">
-                                <div class="bg-brand-blue text-white p-4 rounded-lg shadow-sm max-w-xs">
-                                    <p class="text-white">What fashion stores do you have?</p>
-                                </div>
-                                <div class="w-8 h-8 bg-brand-gold rounded-full flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-user text-brand-blue text-sm"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start space-x-3">
-                                <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-robot text-white text-sm"></i>
-                                </div>
-                                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm max-w-md">
-                                    <p class="text-gray-800 dark:text-gray-200">We have amazing fashion stores including Zara, H&M, Nike, Adidas, and local boutiques. Would you like directions to any specific store or information about current sales?</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Chat Input -->
-                        <div class="p-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex space-x-4">
-                                <input 
-                                    type="text" 
-                                    id="user-input" 
-                                    placeholder="Ask me anything about A Square Mall..." 
-                                    class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-                                >
-                                <button 
-                                    id="send-button" 
-                                    onclick="sendMessage()"
-                                    class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                                >
-                                    <i class="fas fa-paper-plane"></i>
-                                    <span>Send</span>
-                                </button>
-                            </div>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <button onclick="quickQuestion('store hours')" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                    Store Hours
-                                </button>
-                                <button onclick="quickQuestion('parking info')" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                    Parking Info
-                                </button>
-                                <button onclick="quickQuestion('restaurants')" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                    Restaurants
-                                </button>
-                                <button onclick="quickQuestion('events today')" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                    Events Today
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- AI Features Grid -->
-                    <div class="grid md:grid-cols-3 gap-8 mt-16">
-                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow feature-card">
-                            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-map-marked-alt text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-brand-blue dark:text-brand-gold mb-2">Smart Navigation</h3>
-                            <p class="text-gray-600 dark:text-gray-300">Get real-time directions to any store, restaurant, or facility with optimal route suggestions.</p>
-                        </div>
-                        
-                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow feature-card">
-                            <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-shopping-bag text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-brand-blue dark:text-brand-gold mb-2">Personalized Recommendations</h3>
-                            <p class="text-gray-600 dark:text-gray-300">Discover new stores and products tailored to your preferences and shopping history.</p>
-                        </div>
-                        
-                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow feature-card">
-                            <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-calendar-alt text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-brand-blue dark:text-brand-gold mb-2">Event Notifications</h3>
-                            <p class="text-gray-600 dark:text-gray-300">Stay updated with real-time notifications about sales, events, and special offers.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- AI Powered By Section -->
-                    <div class="text-center mt-16 p-6 bg-gradient-to-r from-brand-blue to-blue-600 rounded-xl text-white shadow-lg">
-                        <div class="flex items-center justify-center space-x-4 mb-4">
-                            <i class="fab fa-google text-3xl text-white"></i>
-                            <span class="text-2xl font-semibold text-white">Powered by Google Gemini AI</span>
-                        </div>
-                        <p class="text-blue-100 max-w-2xl mx-auto">
-                            Our AI assistant leverages the power of Google's advanced Gemini AI technology to provide you with intelligent, 
-                            contextual responses and personalized shopping experiences.
-                        </p>
+                <!-- Social Proof Ticker -->
+                <div class="mt-12 bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 inline-block">
+                    <div class="flex items-center space-x-4 text-sm">
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <span id="social-ticker">Recently visited by Celebrity Chef Jamie Oliver!</span>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <div class="w-6 h-10 border-2 border-brand-gold rounded-full flex justify-center">
+                    <div class="w-1 h-3 bg-brand-gold rounded-full mt-2 animate-pulse"></div>
+                </div>
+                <p class="text-xs mt-2 uppercase tracking-wide">Scroll to Explore</p>
             </div>
         </section>
 
         <!-- The A Square Journey (Roadmap) Section -->
-        <section id="journey" class="py-24 bg-white dark:bg-gray-800">
+        <section id="journey" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">The A Square Journey</h2>
@@ -700,7 +468,7 @@
         </section>
 
         <!-- Featured Stores Section -->
-        <section id="featured-stores" class="py-24 bg-white dark:bg-gray-800">
+        <section id="featured-stores" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">A Constellation of Brands</h2>
@@ -708,23 +476,23 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Store Cards -->
-                    <div class="store-card bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Fashion+Brand" alt="Fashion Brand" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Luxe Apparel</h3><p class="text-gray-600 mt-2">The pinnacle of haute couture and ready-to-wear fashion.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Explore Collection &rarr;</a></div></div>
-                    <div class="store-card bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Electronics" alt="Electronics Store" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Gadget Hub</h3><p class="text-gray-600 mt-2">Experience tomorrow's technology, today.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Discover Innovation &rarr;</a></div></div>
-                    <div class="store-card bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Dining" alt="Restaurant" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">The Golden Fork</h3><p class="text-gray-600 mt-2">A Michelin-starred journey for the senses.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Reserve a Table &rarr;</a></div></div>
-                    <div class="store-card bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Beauty" alt="Beauty Shop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Serene Cosmetics</h3><p class="text-gray-600 mt-2">Artisanal skincare and bespoke fragrances.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Find Your Glow &rarr;</a></div></div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Fashion+Brand" alt="Fashion Brand" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Luxe Apparel</h3><p class="text-gray-600 mt-2">The pinnacle of haute couture and ready-to-wear fashion.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Explore Collection &rarr;</a></div></div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Electronics" alt="Electronics Store" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Gadget Hub</h3><p class="text-gray-600 mt-2">Experience tomorrow's technology, today.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Discover Innovation &rarr;</a></div></div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Dining" alt="Restaurant" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">The Golden Fork</h3><p class="text-gray-600 mt-2">A Michelin-starred journey for the senses.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Reserve a Table &rarr;</a></div></div>
+                    <div class="store-card bg-gray-50 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300"><img src="https://placehold.co/400x300/e2e8f0/333?text=Beauty" alt="Beauty Shop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="text-xl font-bold text-brand-blue">Serene Cosmetics</h3><p class="text-gray-600 mt-2">Artisanal skincare and bespoke fragrances.</p><a href="#" class="text-brand-gold font-semibold mt-4 inline-block">Find Your Glow &rarr;</a></div></div>
                 </div>
                 <div class="text-center mt-16 animate-on-scroll"><a href="directory.html" class="bg-brand-blue text-white px-8 py-3 rounded-md font-semibold hover:bg-blue-900 transition duration-300 text-lg page-link">Uncover All Treasures</a></div>
             </div>
         </section>
 
         <!-- NEW: Interactive Map Preview Section -->
-        <section id="map-teaser" class="py-24 bg-gray-100 dark:bg-gray-900">
+        <section id="map-teaser" class="py-24 bg-gray-100">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">Navigate Your Experience</h2>
                     <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Our state-of-the-art digital map provides an intuitive guide to A Square. Find your favourite stores, services, and dining spots with effortless ease.</p>
                 </div>
-                <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 sm:p-8 animate-on-scroll">
+                <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-4 sm:p-8 animate-on-scroll">
                     <svg id="interactive-map-svg" viewBox="0 0 800 500" class="w-full h-auto">
                         <defs>
                             <filter id="glow">
@@ -754,26 +522,26 @@
         </section>
 
         <!-- NEW: Testimonials Section -->
-        <section id="testimonials" class="py-24 bg-white dark:bg-gray-800">
+        <section id="testimonials" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">Voices of A Square</h2>
                     <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Hear from the shoppers, diners, and partners who make our community exceptional.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="testimonial-card p-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
+                    <div class="testimonial-card p-8 bg-gray-50 rounded-lg shadow-lg">
                         <i class="fas fa-quote-left text-3xl text-brand-gold"></i>
                         <p class="text-gray-700 mt-4 text-lg italic">An unparalleled shopping experience. The architecture is breathtaking, and the selection of stores is simply world-class. It's my new favorite place in Nairobi.</p>
                         <p class="font-bold text-brand-blue mt-6">- Grace M.</p>
                         <p class="text-sm text-gray-500">Avid Shopper</p>
                     </div>
-                    <div class="testimonial-card p-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
+                    <div class="testimonial-card p-8 bg-gray-50 rounded-lg shadow-lg">
                         <i class="fas fa-quote-left text-3xl text-brand-gold"></i>
                         <p class="text-gray-700 mt-4 text-lg italic">As a tenant, the support from mall management has been phenomenal. A Square isn't just a location; it's a partner in our success. We've seen incredible foot traffic.</p>
                         <p class="font-bold text-brand-blue mt-6">- David K.</p>
                         <p class="text-sm text-gray-500">Founder, Luxe Apparel</p>
                     </div>
-                    <div class="testimonial-card p-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
+                    <div class="testimonial-card p-8 bg-gray-50 rounded-lg shadow-lg">
                         <i class="fas fa-quote-left text-3xl text-brand-gold"></i>
                         <p class="text-gray-700 mt-4 text-lg italic">Dining at The Golden Fork was a culinary event. The ambiance of the mall complements the fine dining perfectly. A truly five-star evening from start to finish.</p>
                         <p class="font-bold text-brand-blue mt-6">- Fatma A.</p>
@@ -784,7 +552,7 @@
         </section>
         
         <!-- Luxury Services Section -->
-        <section id="services" class="py-24 bg-gray-100 dark:bg-gray-900">
+        <section id="services" class="py-24 bg-gray-100">
              <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">An Unrivaled Experience</h2>
@@ -792,15 +560,15 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <!-- Service Cards -->
-                    <div class="service-card p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-car text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">Valet Parking</h3><p class="mt-2 text-gray-600">Arrive in style and comfort with our premium, hands-free valet service.</p></div>
-                    <div class="service-card p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-shopping-bag text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">Personal Shopper</h3><p class="mt-2 text-gray-600">Let our expert stylists curate a wardrobe that is uniquely you.</p></div>
-                    <div class="service-card p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-concierge-bell text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">VIP Lounge</h3><p class="mt-2 text-gray-600">An exclusive oasis of tranquility for our most esteemed guests.</p></div>
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-car text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">Valet Parking</h3><p class="mt-2 text-gray-600">Arrive in style and comfort with our premium, hands-free valet service.</p></div>
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-shopping-bag text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">Personal Shopper</h3><p class="mt-2 text-gray-600">Let our expert stylists curate a wardrobe that is uniquely you.</p></div>
+                    <div class="service-card p-8 bg-white rounded-lg shadow-lg animate-on-scroll"><i class="fas fa-concierge-bell text-4xl text-brand-gold"></i><h3 class="text-2xl font-bold text-brand-blue mt-4">VIP Lounge</h3><p class="mt-2 text-gray-600">An exclusive oasis of tranquility for our most esteemed guests.</p></div>
                 </div>
             </div>
         </section>
 
         <!-- Social Media Feed Section -->
-        <section id="social" class="py-24 bg-white dark:bg-gray-800">
+        <section id="social" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 animate-on-scroll">
                     <h2 class="text-4xl lg:text-5xl font-bold text-brand-blue">The Digital Pulse</h2>
@@ -809,7 +577,7 @@
                  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Social media cards -->
                     <div class="social-feed-col animate-on-scroll"><h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-instagram mr-2 text-brand-gold"></i>Instagram</h3><div class="grid grid-cols-2 gap-4"><img src="https://placehold.co/200x200/e0e0e0/333?text=Behind+the+Scenes" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105"><img src="https://placehold.co/200x200/d0d0d0/333?text=Architecture" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105"><img src="https://placehold.co/200x200/c0c0c0/333?text=First+Look" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105"><img src="https://placehold.co/200x200/b0b0b0/333?text=Team" alt="Instagram Post" class="rounded-lg w-full h-auto shadow-md transition-transform hover:scale-105"></div></div>
-                     <div class="social-feed-col animate-on-scroll"><h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-facebook mr-2 text-brand-gold"></i>Facebook</h3><div class="bg-gray-100 dark:bg-gray-900 p-6 rounded-lg shadow-md"><p class="font-semibold text-brand-blue text-lg">A Square Mall</p><p class="text-sm text-gray-500">2 hours ago</p><p class="mt-3 text-lg">The countdown has officially begun! We are polishing every detail to bring you an experience beyond imagination. Are you ready for the new era of luxury in Nairobi? #ASquareUnveiling #LuxuryRedefined</p></div></div>
+                     <div class="social-feed-col animate-on-scroll"><h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-facebook mr-2 text-brand-gold"></i>Facebook</h3><div class="bg-gray-100 p-6 rounded-lg shadow-md"><p class="font-semibold text-brand-blue text-lg">A Square Mall</p><p class="text-sm text-gray-500">2 hours ago</p><p class="mt-3 text-lg">The countdown has officially begun! We are polishing every detail to bring you an experience beyond imagination. Are you ready for the new era of luxury in Nairobi? #ASquareUnveiling #LuxuryRedefined</p></div></div>
                     <div class="social-feed-col animate-on-scroll"><h3 class="text-3xl font-bold text-center mb-6"><i class="fab fa-tiktok mr-2 text-brand-gold"></i>TikTok</h3><div class="grid grid-cols-2 gap-4"><div class="relative rounded-lg overflow-hidden shadow-md"><video class="w-full mall-video" loop muted poster="https://placehold.co/200x355/909090/FFF?text=Tour+Preview"><source src="#" type="video/mp4"></video><i class="fas fa-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl opacity-75"></i></div><div class="relative rounded-lg overflow-hidden shadow-md"><video class="w-full mall-video" loop muted poster="https://placehold.co/200x355/808080/FFF?text=Designer+Interview"><source src="#" type="video/mp4"></video><i class="fas fa-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl opacity-75"></i></div></div></div>
                 </div>
             </div>
@@ -823,7 +591,7 @@
                 <!-- Footer content -->
                 <div><h3 class="text-2xl font-bold text-brand-gold mb-4">A SQUARE</h3><p class="text-gray-300 leading-relaxed">The heart of Nairobi's urban lifestyle. An unparalleled mix of retail, dining, and entertainment, housed within an architectural masterpiece.</p></div>
                 <div><h3 class="text-xl font-bold text-brand-gold mb-4">Explore</h3><ul class="space-y-3"><li><a href="directory.html" class="hover:text-brand-gold transition-colors page-link">Stores & Brands</a></li><li><a href="events.html" class="hover:text-brand-gold transition-colors page-link">Events & Promotions</a></li><li><a href="#services" class="hover:text-brand-gold transition-colors">Luxury Services</a></li><li><a href="leasing.html" class="hover:text-brand-gold transition-colors page-link">Leasing Opportunities</a></li><li><a href="contact.html" class="hover:text-brand-gold transition-colors page-link">Contact & Directions</a></li></ul></div>
-                <div><h3 class="text-xl font-bold text-brand-gold mb-4">Visit Us</h3><p class="text-gray-300">123 Uhuru Highway, Nairobi, Kenya</p><p class="text-gray-300 mt-3">Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e777078715e7f6d6f6b7f6c7b737f7272307d7130757b">[email&#160;protected]</a></p><p class="text-gray-300 mt-3">Phone: +254 700 123 456</p></div>
+                <div><h3 class="text-xl font-bold text-brand-gold mb-4">Visit Us</h3><p class="text-gray-300">123 Uhuru Highway, Nairobi, Kenya</p><p class="text-gray-300 mt-3">Email: info@asquaremall.co.ke</p><p class="text-gray-300 mt-3">Phone: +254 700 123 456</p></div>
                 <div><h3 class="text-xl font-bold text-brand-gold mb-4">Join Our Community</h3><p class="text-gray-300 mb-4">Subscribe for exclusive updates and invitations.</p><div class="flex"><input type="email" placeholder="Your Email Address" class="w-full bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-brand-gold"><button class="bg-brand-gold text-brand-blue px-4 py-2 rounded-r-md font-semibold hover:bg-yellow-400" aria-label="Subscribe" title="Subscribe"><i class="fas fa-paper-plane"></i></button></div><div class="flex space-x-5 mt-6"><a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" class="text-2xl hover:text-brand-gold transition-colors" aria-label="TikTok"><i class="fab fa-tiktok"></i></a></div></div>
             </div>
             <div class="border-t border-gray-700 dark:border-gray-600 pt-8 text-center text-gray-400 text-sm">
@@ -833,7 +601,7 @@
     </footer>
 
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
     // Alpine.js component for header and dark mode logic
     // Moved to global scope to be accessible by Alpine
     function header() {
@@ -950,8 +718,6 @@
             
             // --- 2. LIVE TIME UPDATE ---
             function updateTime() {
-                const liveTimeEl = document.getElementById('live-time');
-                if (!liveTimeEl) return;
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('en-US', { 
                     hour12: false, 
@@ -959,62 +725,83 @@
                     minute: '2-digit',
                     timeZone: 'Africa/Nairobi'
                 });
-                liveTimeEl.textContent = timeString;
+                document.getElementById('live-time').textContent = timeString;
             }
             updateTime();
             setInterval(updateTime, 1000);
             
+            // --- 3. WEATHER API (Using OpenWeatherMap free tier) ---
+            async function fetchWeather() {
+                try {
+                    // Using a free weather API - you can replace with your own API key
+                    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Nairobi&appid=demo&units=metric');
+                    if (response.ok) {
+                        const data = await response.json();
+                        document.getElementById('weather-temp').textContent = `${Math.round(data.main.temp)}°C`;
+                    } else {
+                        // Fallback to simulated weather
+                        simulateWeather();
+                    }
+                } catch (error) {
+                    // Fallback to simulated weather
+                    simulateWeather();
+                }
+            }
+            
+            function simulateWeather() {
+                const temps = [22, 24, 26, 28, 25, 23];
+                const temp = temps[Math.floor(Math.random() * temps.length)];
+                document.getElementById('weather-temp').textContent = `${temp}°C`;
+            }
+            
+            fetchWeather();
             
             // --- 4. VISITOR COUNTER SIMULATION ---
             function updateVisitorCount() {
-                const visitorCountEl = document.getElementById('visitor-count');
-                if (!visitorCountEl) return;
                 const baseCount = 2800;
                 const randomIncrement = Math.floor(Math.random() * 100);
                 const currentCount = baseCount + randomIncrement;
-                visitorCountEl.textContent = currentCount.toLocaleString();
+                document.getElementById('visitor-count').textContent = currentCount.toLocaleString();
             }
             updateVisitorCount();
             setInterval(updateVisitorCount, 30000); // Update every 30 seconds
             
             // --- 5. TYPEWRITER EFFECT ---
-            const typewriterElement = document.getElementById('typewriter-text');
-            if (typewriterElement) {
-                const typewriterTexts = [
-                    "A Square is more than a destination; it is the definitive statement of urban sophistication.",
-                    "An architectural marvel in the heart of Kenya, curated for the discerning individual.",
-                    "Where world-class brands meet local craftsmanship in perfect harmony.",
-                    "Experience the future of retail in an environment designed for luxury."
-                ];
+            const typewriterTexts = [
+                "A Square is more than a destination; it is the definitive statement of urban sophistication.",
+                "An architectural marvel in the heart of Kenya, curated for the discerning individual.",
+                "Where world-class brands meet local craftsmanship in perfect harmony.",
+                "Experience the future of retail in an environment designed for luxury."
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function typeWriter() {
+                const currentText = typewriterTexts[textIndex];
+                const typewriterElement = document.getElementById('typewriter-text');
                 
-                let textIndex = 0;
-                let charIndex = 0;
-                let isDeleting = false;
-                
-                function typeWriter() {
-                    const currentText = typewriterTexts[textIndex];
-                    
-                    if (isDeleting) {
-                        typewriterElement.textContent = currentText.substring(0, charIndex - 1);
-                        charIndex--;
-                    } else {
-                        typewriterElement.textContent = currentText.substring(0, charIndex + 1);
-                        charIndex++;
-                    }
-                    
-                    if (!isDeleting && charIndex === currentText.length) {
-                        setTimeout(() => { isDeleting = true; }, 2000);
-                    } else if (isDeleting && charIndex === 0) {
-                        isDeleting = false;
-                        textIndex = (textIndex + 1) % typewriterTexts.length;
-                    }
-                    
-                    const typingSpeed = isDeleting ? 50 : 100;
-                    setTimeout(typeWriter, typingSpeed);
+                if (isDeleting) {
+                    typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
                 }
                 
-                setTimeout(typeWriter, 1000);
+                if (!isDeleting && charIndex === currentText.length) {
+                    setTimeout(() => { isDeleting = true; }, 2000);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % typewriterTexts.length;
+                }
+                
+                const typingSpeed = isDeleting ? 50 : 100;
+                setTimeout(typeWriter, typingSpeed);
             }
+            
+            setTimeout(typeWriter, 1000);
             
             // --- 6. COUNTER ANIMATIONS ---
             function animateCounters() {
@@ -1038,24 +825,21 @@
             }
             
             // --- 7. SOCIAL PROOF TICKER ---
-            const socialTickerEl = document.getElementById('social-ticker');
-            if(socialTickerEl) {
-                const socialMessages = [
-                    "Recently visited by Celebrity Chef Jamie Oliver!",
-                    "Featured in Architectural Digest as 'Mall of the Future'",
-                    "Preferred shopping destination of Kenya's elite",
-                    "Winner of East Africa's Best Retail Experience 2025",
-                    "Over 1 million satisfied visitors since opening"
-                ];
-                
-                let messageIndex = 0;
-                function updateSocialTicker() {
-                    socialTickerEl.textContent = socialMessages[messageIndex];
-                    messageIndex = (messageIndex + 1) % socialMessages.length;
-                }
-                
-                setInterval(updateSocialTicker, 5000);
+            const socialMessages = [
+                "Recently visited by Celebrity Chef Jamie Oliver!",
+                "Featured in Architectural Digest as 'Mall of the Future'",
+                "Preferred shopping destination of Kenya's elite",
+                "Winner of East Africa's Best Retail Experience 2025",
+                "Over 1 million satisfied visitors since opening"
+            ];
+            
+            let messageIndex = 0;
+            function updateSocialTicker() {
+                document.getElementById('social-ticker').textContent = socialMessages[messageIndex];
+                messageIndex = (messageIndex + 1) % socialMessages.length;
             }
+            
+            setInterval(updateSocialTicker, 5000);
 
             // --- 8. COUNTDOWN TIMER LOGIC ---
             const countdownDate = new Date("Dec 31, 2025 00:00:00").getTime();
@@ -1108,7 +892,7 @@
                       .from('.counter', { scale: 0, opacity: 0, duration: 0.8, stagger: 0.1, onComplete: animateCounters }, '-=0.4');
 
                 // Hero info bar animation
-                gsap.from('.absolute.top-28 > div > div', {
+                gsap.from('.absolute.top-24 > div > div > div', {
                     y: -50, opacity: 0, duration: 1, stagger: 0.2, delay: 1.5
                 });
 
@@ -1180,18 +964,18 @@
         const modal = document.createElement('div');
         modal.className = 'fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4';
         modal.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full p-8 text-center relative">
+            <div class="bg-white rounded-lg max-w-2xl w-full p-8 text-center relative">
                 <button onclick="this.parentElement.parentElement.remove()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-2xl"></i>
                 </button>
                 <div class="mb-6">
                     <i class="fas fa-vr-cardboard text-6xl text-brand-gold mb-4"></i>
-                    <h3 class="text-3xl font-bold text-brand-blue dark:text-brand-gold mb-2">Virtual Tour Experience</h3>
-                    <p class="text-gray-600 dark:text-gray-300">Immerse yourself in A Square Mall from the comfort of your home</p>
+                    <h3 class="text-3xl font-bold text-brand-blue mb-2">Virtual Tour Experience</h3>
+                    <p class="text-gray-600">Immerse yourself in A Square Mall from the comfort of your home</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <button onclick="launch360Tour()" class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition">
-                        <i class="fas fa-vr-cardboard mr-2"></i>360° Virtual Walk
+                        <i class="fas fa-360-degrees mr-2"></i>360° Virtual Walk
                     </button>
                     <button onclick="launchARPreview()" class="bg-brand-gold text-brand-blue px-6 py-3 rounded-lg hover:bg-yellow-400 transition">
                         <i class="fas fa-mobile-alt mr-2"></i>AR Preview
@@ -1211,198 +995,15 @@
     }
     
     function launch360Tour() {
-        // You can replace this alert with an actual modal or integration
-        alert('🎮 Launching 360° Virtual Tour!\n\n(This would integrate with a platform like Matterport)');
+        // Simulate 360 tour launch
+        alert('🎮 Launching 360° Virtual Tour!\n\nFeatures:\n• Full mall walkthrough\n• Interactive store exploration\n• Real-time navigation\n• VR headset compatible\n\n(This would integrate with a 360° tour platform like Matterport or similar)');
     }
     
     function launchARPreview() {
-        // You can replace this alert with an actual modal or integration
-        alert('📱 AR Preview Coming Soon!\n\n(This would use WebXR or ARCore/ARKit)');
+        // Simulate AR preview
+        alert('📱 AR Preview Coming Soon!\n\nFeatures:\n• Point your phone camera\n• See mall layout in AR\n• Find stores and amenities\n• Get walking directions\n\n(This would use WebXR or ARCore/ARKit)');
     }
     
-    // --- AI ASSISTANT FUNCTIONALITY ---
-    const GEMINI_API_KEY = 'AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84';
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-    
-    // Mall context for AI responses
-    const mallContext = `
-    You are an AI assistant for A Square Mall in Nairobi, Kenya. Here's what you need to know:
-    
-    STORES: Fashion (Zara, H&M, Nike, Adidas, local boutiques), Electronics (Apple Store, Samsung), 
-    Supermarket (Carrefour), Books (Textbook Centre), Beauty (MAC, Sephora)
-    
-    RESTAURANTS: McDonald's, KFC, Java House, Artcaffe, Mama's Kitchen, Sushi restaurants
-    
-    FACILITIES: 5000 parking spaces, free WiFi, prayer rooms, baby changing stations, ATMs, 
-    wheelchair accessibility, security services
-    
-    HOURS: 9:00 AM - 10:00 PM (Monday-Sunday)
-    
-    LOCATION: Central Nairobi, easily accessible by public transport
-    
-    Always be helpful, friendly, and provide specific information about A Square Mall.
-    `;
-    
-    async function sendToGemini(userMessage) {
-        try {
-            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `${mallContext}\n\nUser question: ${userMessage}`
-                        }]
-                    }]
-                })
-            });
-            
-            if (!response.ok) {
-                const errorBody = await response.text();
-                console.error('API Error Response:', errorBody);
-                throw new Error(`Failed to get AI response. Status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            if (data.candidates && data.candidates.length > 0) {
-                 return data.candidates[0].content.parts[0].text;
-            } else {
-                console.warn('No candidates returned from API:', data);
-                return "I'm sorry, I couldn't process that. Could you try rephrasing?";
-            }
-        } catch (error) {
-            console.error('Error calling Gemini API:', error);
-            return getDefaultResponse(userMessage);
-        }
-    }
-    
-    function getDefaultResponse(userMessage) {
-        const lowerMessage = userMessage.toLowerCase();
-        
-        if (lowerMessage.includes('hours') || lowerMessage.includes('time')) {
-            return "A Square Mall is open from 9:00 AM to 10:00 PM, Monday through Sunday. All our stores follow these hours, though some restaurants may stay open later.";
-        } else if (lowerMessage.includes('parking')) {
-            return "We have 5,000 parking spaces available with both covered and open-air options. Parking is free for the first 3 hours, then 50 KES per hour. VIP parking is available near the main entrance.";
-        } else if (lowerMessage.includes('food') || lowerMessage.includes('restaurant')) {
-            return "Our food court features international and local cuisine including McDonald's, KFC, Java House, Artcaffe, Mama's Kitchen, and several sushi restaurants. We also have fine dining options on the upper floors.";
-        } else if (lowerMessage.includes('store') || lowerMessage.includes('shop')) {
-            return "We have over 150 premium stores including Zara, H&M, Nike, Adidas, Apple Store, Samsung, Carrefour supermarket, and many local boutiques. Would you like directions to a specific store?";
-        } else if (lowerMessage.includes('event')) {
-            return "We regularly host fashion shows, cultural events, and seasonal celebrations. Check our events page or ask at the information desk for current happenings.";
-        } else {
-            return "I'm sorry, I'm having trouble connecting to my knowledge base right now. Please try asking about store hours, parking, or restaurants.";
-        }
-    }
-    
-    async function sendMessage() {
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const message = userInput.value.trim();
-        
-        if (!message) return;
-        
-        addMessageToChat(message, 'user');
-        userInput.value = '';
-        userInput.disabled = true;
-        sendButton.disabled = true;
-
-        const typingId = addTypingIndicator();
-        
-        try {
-            const aiResponse = await sendToGemini(message);
-            removeTypingIndicator(typingId);
-            addMessageToChat(aiResponse, 'ai');
-        } catch (error) {
-            removeTypingIndicator(typingId);
-            addMessageToChat("I'm sorry, I'm having a technical issue at the moment. Please try again in a moment.", 'ai');
-        } finally {
-            userInput.disabled = false;
-            sendButton.disabled = false;
-            userInput.focus();
-        }
-    }
-    
-    function quickQuestion(question) {
-        document.getElementById('user-input').value = question;
-        sendMessage();
-    }
-    
-    function addMessageToChat(message, sender) {
-        const chatMessages = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-message';
-        
-        if (sender === 'user') {
-            messageDiv.className += ' flex items-start space-x-3 justify-end';
-            messageDiv.innerHTML = `
-                <div class="bg-brand-blue text-white p-4 rounded-lg shadow-sm max-w-xs">
-                    <p class="text-white">${message}</p>
-                </div>
-                <div class="w-8 h-8 bg-brand-gold rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-user text-brand-blue text-sm"></i>
-                </div>
-            `;
-        } else {
-            messageDiv.className += ' flex items-start space-x-3';
-            messageDiv.innerHTML = `
-                <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-robot text-white text-sm"></i>
-                </div>
-                <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm max-w-md">
-                    <p class="text-gray-800 dark:text-gray-200">${message.replace(/\n/g, '<br>')}</p>
-                </div>
-            `;
-        }
-        
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    function addTypingIndicator() {
-        const chatMessages = document.getElementById('chat-messages');
-        const typingDiv = document.createElement('div');
-        const typingId = 'typing-' + Date.now();
-        typingDiv.id = typingId;
-        typingDiv.className = 'flex items-start space-x-3';
-        typingDiv.innerHTML = `
-            <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-robot text-white text-sm"></i>
-            </div>
-            <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm">
-                <div class="flex space-x-1">
-                    <div class="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce"></div>
-                    <div class="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                    <div class="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                </div>
-            </div>
-        `;
-        
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        return typingId;
-    }
-    
-    function removeTypingIndicator(typingId) {
-        const typingDiv = document.getElementById(typingId);
-        if (typingDiv) {
-            typingDiv.remove();
-        }
-    }
-    
-    // Enter key support for chat input
-    document.addEventListener('DOMContentLoaded', function() {
-        const userInput = document.getElementById('user-input');
-        if (userInput) {
-            userInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-        }
-    });
-
     // --- EASTER EGG: KONAMI CODE ---
     let konamiSequence = [];
     const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
@@ -1415,7 +1016,6 @@
         
         if (konamiSequence.join(',') === konamiCode.join(',')) {
             // Easter egg activated!
-            document.body.style.transition = 'filter 0.5s ease';
             document.body.style.filter = 'hue-rotate(180deg)';
             const celebration = document.createElement('div');
             celebration.innerHTML = '🎊 LUXURY MODE ACTIVATED! 🎊';

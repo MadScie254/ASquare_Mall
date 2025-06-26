@@ -319,7 +319,7 @@
     </section>
     <!-- Lightbox Modal -->
     <div x-show="showLightbox" x-transition class="fixed inset-0 z-50 overflow-hidden">
-        <div class="lightbox-overlay fixed inset-0 flex items-center justify-center p-4" @click="closeLightbox()">
+        <div class="lightbox-overlay fixed inset-0 flex items-center justify-center p-4" @click="closeLightbox()" @keydown.window.escape="closeLightbox()" tabindex="0">
             <div class="lightbox-content relative" @click.stop x-show="selectedPhoto">
                 <div class="relative">
                     <div 
@@ -334,7 +334,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <!-- Navigation Arrows -->
                     <button 
                         @click="previousPhoto()" 
@@ -347,7 +346,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    
                     <button 
                         @click="nextPhoto()" 
                         class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
@@ -359,7 +357,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
-                    
                     <!-- Close Button -->
                     <button 
                         @click="closeLightbox()" 
@@ -371,7 +368,6 @@
                         </svg>
                     </button>
                 </div>
-                
                 <!-- Photo Info -->
                 <div class="bg-white rounded-b-lg p-6" x-show="selectedPhoto">
                     <h3 class="text-2xl font-poppins font-bold text-brand-blue mb-2" x-text="selectedPhoto ? selectedPhoto.title : ''"></h3>
@@ -729,12 +725,12 @@
                     this.selectedPhoto = photo;
                     this.currentPhotoIndex = this.filteredPhotos.findIndex(p => p.id === photo.id);
                     this.showLightbox = true;
-                    document.body.style.overflow = 'hidden';
+                    document.body.classList.add('overflow-hidden');
                 },
                 closeLightbox() {
                     this.showLightbox = false;
                     this.selectedPhoto = null;
-                    document.body.style.overflow = 'auto';
+                    document.body.classList.remove('overflow-hidden');
                 },
                 nextPhoto() {
                     if (this.currentPhotoIndex < this.filteredPhotos.length - 1) {
