@@ -350,6 +350,8 @@
                         @click="nextPhoto()" 
                         class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
                         x-show="currentPhotoIndex < filteredPhotos.length - 1"
+                        title="Next photo"
+                        aria-label="Next photo"
                     >
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
