@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - A Square Mall Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="../js/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .admin-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+        .rich-editor {
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="eventManager()" class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-lg">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-building text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">A Square Mall</h2>
+                        <p class="text-sm text-gray-500">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="mt-6">
+                <div class="px-6 py-2">
+                    <p class="text-xs uppercase text-gray-500 font-semibold tracking-wider">Main</p>
+                </div>
+                <ul class="mt-2 space-y-1">
+                    <li>
+                        <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-tachometer-alt w-5"></i>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manage-stores.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-store w-5"></i>
+                            <span class="ml-3">Stores</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manage-events.html" class="flex items-center px-6 py-3 text-blue-600 bg-blue-50 border-r-2 border-blue-600">
+                            <i class="fas fa-calendar-alt w-5"></i>
+                            <span class="ml-3 font-medium">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-images w-5"></i>
+                            <span class="ml-3">Gallery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-envelope w-5"></i>
+                            <span class="ml-3">Inquiries</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="px-6 py-2 mt-8">
+                    <p class="text-xs uppercase text-gray-500 font-semibold tracking-wider">System</p>
+                </div>
+                <ul class="mt-2 space-y-1">
+                    <li>
+                        <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-cog w-5"></i>
+                            <span class="ml-3">Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt w-5"></i>
+                            <span class="ml-3">View Website</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html" @click="logout()" class="flex items-center px-6 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors">
+                            <i class="fas fa-sign-out-alt w-5"></i>
+                            <span class="ml-3">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Event Management</h1>
+                    <p class="text-gray-500 mt-1">Create and manage mall events and promotions</p>
+                </div>
+                <button @click="showAddModal = true" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center space-x-2">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Event</span>
+                </button>
+            </div>
+            <!-- Filters and Search -->
+            <div class="admin-card rounded-xl p-6 mb-8">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <div class="relative">
+                            <label for="search-events" class="sr-only">Search events</label>
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input 
+                                id="search-events"
+                                type="text" 
+                                x-model="searchTerm"
+                                placeholder="Search events..."
+                                title="Search for events by title or description"
+                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full sm:w-80"
+                            >
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="filter-status" class="text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+                            <select id="filter-status" x-model="filterStatus" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">All Status</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="filter-type" class="text-sm font-medium text-gray-700 mb-2">Filter by Type</label>
+                            <select id="filter-type" x-model="filterType" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">All Types</option>
+                                <option value="promotion">Promotion</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="fashion">Fashion Show</option>
+                                <option value="exhibition">Exhibition</option>
+                                <option value="workshop">Workshop</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500" x-text="`${filteredEvents.length} events`"></span>
+                        <button @click="exportEvents()" class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1">
+                            <i class="fas fa-download"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Events List -->
+            <div class="space-y-6">
+                <template x-for="event in filteredEvents" :key="event.id">
+                    <div class="admin-card rounded-xl p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <h3 class="text-xl font-bold text-gray-900" x-text="event.title"></h3>
+                                    <span :class="getStatusClass(event.status)" class="px-2 py-1 rounded-full text-xs font-medium" x-text="event.status"></span>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-calendar w-4 mr-2"></i>
+                                        <span x-text="formatDate(event.startDate)"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-clock w-4 mr-2"></i>
+                                        <span x-text="`${event.startTime} - ${event.endTime}`"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-map-marker-alt w-4 mr-2"></i>
+                                        <span x-text="event.location"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-tag w-4 mr-2"></i>
+                                        <span x-text="event.type"></span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4" x-text="event.description"></p>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <i class="fas fa-users w-4 mr-1"></i>
+                                        <span x-text="`${event.attendees || 0} attendees`"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <i class="fas fa-eye w-4 mr-1"></i>
+                                        <span x-text="`${event.views || 0} views`"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2 ml-6">
+                                <button @click="editEvent(event)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button @click="duplicateEvent(event)" class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button @click="toggleEventStatus(event)" class="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                                    <i class="fas fa-toggle-on" x-show="event.status === 'ongoing'"></i>
+                                    <i class="fas fa-toggle-off" x-show="event.status !== 'ongoing'"></i>
+                                </button>
+                                <button @click="deleteEvent(event.id)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- Empty State -->
+            <div x-show="filteredEvents.length === 0" class="text-center py-12">
+                <i class="fas fa-calendar-alt text-4xl text-gray-300 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No events found</h3>
+                <p class="text-gray-500 mb-6">Try adjusting your search or filter criteria, or create a new event.</p>
+                <button @click="showAddModal = true" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                    Create Your First Event
+                </button>
+            </div>
+        </main>
+    </div>
+    <!-- Add/Edit Event Modal -->
+    <div x-show="showAddModal || showEditModal" class="fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4" x-transition>
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-gray-900" x-text="showEditModal ? 'Edit Event' : 'Create New Event'"></h2>
+                    <button @click="closeModal()" class="text-gray-400 hover:text-gray-600" title="Close modal">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <form @submit.prevent="saveEvent()" class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label for="event-title" class="block text-sm font-medium text-gray-700 mb-2">Event Title *</label>
+                        <input 
+                            id="event-title"
+                            type="text" 
+                            x-model="currentEvent.title"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Enter event title"
+                            title="Enter the title of the event"
+                        >
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="event-type" class="block text-sm font-medium text-gray-700 mb-2">Event Type *</label>
+                        <select id="event-type" x-model="currentEvent.type" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select type</option>
+                            <option value="promotion">Promotion</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="fashion">Fashion Show</option>
+                            <option value="exhibition">Exhibition</option>
+                            <option value="workshop">Workshop</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="event-status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select id="event-status" x-model="currentEvent.status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="event-location" class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                        <input 
+                            id="event-location"
+                            type="text" 
+                            x-model="currentEvent.location"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="e.g., Central Atrium"
+                            title="Location where the event will be held"
+                        >
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Start Date *</label>
+                        <input 
+                            type="date" 
+                            x-model="currentEvent.startDate"
+                            required
+                            title="Start date of the event"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                    </div>
+                    <div>
+                        <label for="event-end-date" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                        <input 
+                            id="event-end-date"
+                            type="date" 
+                            x-model="currentEvent.endDate"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                    </div>
+                    <div>
+                        <label for="event-start-time" class="block text-sm font-medium text-gray-700 mb-2">Start Time *</label>
+                        <input 
+                            id="event-start-time"
+                            type="time" 
+                            x-model="currentEvent.startTime"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                    </div>
+                    <div>
+                        <label for="event-end-time" class="block text-sm font-medium text-gray-700 mb-2">End Time</label>
+                        <input 
+                            id="event-end-time"
+                            type="time" 
+                            x-model="currentEvent.endTime"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="HH:MM"
+                        >
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Description *</label>
+                    <textarea 
+                        x-model="currentEvent.description"
+                        required
+                        rows="4"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Describe the event..."
+                    ></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="event-image" class="block text-sm font-medium text-gray-700 mb-2">Event Image URL</label>
+                        <input 
+                            id="event-image"
+                            type="url" 
+                            x-model="currentEvent.image"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="https://example.com/image.jpg"
+                            title="URL for the event image"
+                        >
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Registration Link</label>
+                        <input 
+                            type="url" 
+                            x-model="currentEvent.registrationLink"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="https://registration-link.com"
+                        >
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="max-attendees" class="block text-sm font-medium text-gray-700 mb-2">Max Attendees</label>
+                        <input 
+                            id="max-attendees"
+                            type="number" 
+                            x-model="currentEvent.maxAttendees"
+                            min="1"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="e.g., 500"
+                        >
+                    </div>
+                    <div>
+                        <label for="ticket-price" class="block text-sm font-medium text-gray-700 mb-2">Ticket Price (KSh)</label>
+                        <input 
+                            id="ticket-price"
+                            type="number" 
+                            x-model="currentEvent.ticketPrice"
+                            min="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="0 for free event"
+                            title="Ticket Price in Kenyan Shillings"
+                        >
+                    </div>
+                    <div>
+                        <label for="contact-phone" class="block text-sm font-medium text-gray-700 mb-2">Contact Phone</label>
+                        <input 
+                            id="contact-phone"
+                            type="tel" 
+                            x-model="currentEvent.contactPhone"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="+254 700 123 456"
+                            title="Contact phone number for the event"
+                        >
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Additional Information</label>
+                    <div class="rich-editor border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+                        <div contenteditable="true" 
+                             x-model="currentEvent.additionalInfo"
+                             class="min-h-[100px] outline-none"
+                             placeholder="Add any additional event details, special instructions, etc...">
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">You can format text using bold, italic, and other basic formatting.</p>
+                </div>
+                <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" x-model="currentEvent.featured" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span class="ml-2 text-sm text-gray-700">Feature this event</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" x-model="currentEvent.requiresRegistration" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span class="ml-2 text-sm text-gray-700">Requires registration</span>
+                        </label>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button type="button" @click="closeModal()" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors" title="Save Event" aria-label="Save Event">
+                            <span x-text="showEditModal ? 'Update Event' : 'Create Event'"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function eventManager() {
+            return {
+                events: [
+                    {
+                        id: 1,
+                        title: "Kenya Fashion Week 2024",
+                        type: "fashion",
+                        status: "upcoming",
+                        startDate: "2024-12-30",
+                        endDate: "2025-01-02",
+                        startTime: "18:00",
+                        endTime: "22:00",
+                        location: "Central Atrium",
+                        description: "The biggest fashion event in East Africa featuring local and international designers.",
+                        image: "https://via.placeholder.com/400x300",
+                        attendees: 245,
+                        views: 1520,
+                        maxAttendees: 500,
+                        ticketPrice: 2500,
+                        contactPhone: "+254 700 123 456",
+                        featured: true,
+                        requiresRegistration: true
+                    },
+                    {
+                        id: 2,
+                        title: "Tech Innovation Expo",
+                        type: "exhibition",
+                        status: "ongoing",
+                        startDate: "2024-12-26",
+                        endDate: "2024-12-28",
+                        startTime: "10:00",
+                        endTime: "18:00",
+                        location: "Second Floor Exhibition Hall",
+                        description: "Discover the latest in technology innovation from Kenyan startups and tech companies.",
+                        image: "https://via.placeholder.com/400x300",
+                        attendees: 89,
+                        views: 892,
+                        maxAttendees: 200,
+                        ticketPrice: 0,
+                        contactPhone: "+254 700 234 567",
+                        featured: false,
+                        requiresRegistration: true
+                    }
+                ],
+                searchTerm: '',
+                filterStatus: '',
+                filterType: '',
+                showAddModal: false,
+                showEditModal: false,
+                currentEvent: this.getEmptyEvent(),
+                get filteredEvents() {
+                    return this.events.filter(event => {
+                        const matchesSearch = !this.searchTerm || 
+                            event.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                            event.description.toLowerCase().includes(this.searchTerm.toLowerCase());
+                        
+                        const matchesStatus = !this.filterStatus || event.status === this.filterStatus;
+                        const matchesType = !this.filterType || event.type === this.filterType;
+                        
+                        return matchesSearch && matchesStatus && matchesType;
+                    });
+                },
+                getEmptyEvent() {
+                    return {
+                        id: null,
+                        title: '',
+                        type: '',
+                        status: 'upcoming',
+                        startDate: '',
+                        endDate: '',
+                        startTime: '',
+                        endTime: '',
+                        location: '',
+                        description: '',
+                        image: '',
+                        attendees: 0,
+                        views: 0,
+                        maxAttendees: null,
+                        ticketPrice: 0,
+                        contactPhone: '',
+                        registrationLink: '',
+                        additionalInfo: '',
+                        featured: false,
+                        requiresRegistration: false
+                    };
+                },
+                getStatusClass(status) {
+                    const classes = {
+                        upcoming: 'bg-blue-100 text-blue-800',
+                        ongoing: 'bg-green-100 text-green-800',
+                        completed: 'bg-gray-100 text-gray-800',
+                        cancelled: 'bg-red-100 text-red-800'
+                    };
+                    return classes[status] || 'bg-gray-100 text-gray-800';
+                },
+                formatDate(dateString) {
+                    return new Date(dateString).toLocaleDateString('en-KE', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                },
+                editEvent(event) {
+                    this.currentEvent = { ...event };
+                    this.showEditModal = true;
+                },
+                duplicateEvent(event) {
+                    const newEvent = { ...event };
+                    newEvent.id = Date.now();
+                    newEvent.title = `${event.title} (Copy)`;
+                    newEvent.status = 'upcoming';
+                    this.events.push(newEvent);
+                    this.showSuccessMessage('Event duplicated successfully!');
+                },
+                toggleEventStatus(event) {
+                    const newStatus = event.status === 'ongoing' ? 'upcoming' : 'ongoing';
+                    event.status = newStatus;
+                    this.showSuccessMessage(`Event status changed to ${newStatus}!`);
+                },
+                deleteEvent(eventId) {
+                    if (confirm('Are you sure you want to delete this event? This action cannot be undone.')) {
+                        this.events = this.events.filter(event => event.id !== eventId);
+                        this.showSuccessMessage('Event deleted successfully!');
+                    }
+                },
+                saveEvent() {
+                    if (this.showEditModal) {
+                        // Update existing event
+                        const index = this.events.findIndex(event => event.id === this.currentEvent.id);
+                        if (index !== -1) {
+                            this.events[index] = { ...this.currentEvent };
+                            this.showSuccessMessage('Event updated successfully!');
+                        }
+                    } else {
+                        // Add new event
+                        this.currentEvent.id = Date.now();
+                        this.events.push({ ...this.currentEvent });
+                        this.showSuccessMessage('Event created successfully!');
+                    }
+                    
+                    this.closeModal();
+                },
+                closeModal() {
+                    this.showAddModal = false;
+                    this.showEditModal = false;
+                    this.currentEvent = this.getEmptyEvent();
+                },
+                exportEvents() {
+                    const csv = this.generateCSV(this.filteredEvents);
+                    this.downloadCSV(csv, 'events.csv');
+                    this.showSuccessMessage('Events exported successfully!');
+                },
+                generateCSV(events) {
+                    const headers = ['Title', 'Type', 'Status', 'Start Date', 'End Date', 'Start Time', 'End Time', 'Location', 'Description', 'Max Attendees', 'Ticket Price'];
+                    const rows = events.map(event => [
+                        event.title,
+                        event.type,
+                        event.status,
+                        event.startDate,
+                        event.endDate,
+                        event.startTime,
+                        event.endTime,
+                        event.location,
+                        event.description,
+                        event.maxAttendees || '',
+                        event.ticketPrice || 0
+                    ]);
+                    
+                    return [headers, ...rows].map(row => 
+                        row.map(field => `"${field || ''}"`).join(',')
+                    ).join('\n');
+                },
+                downloadCSV(csv, filename) {
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                },
+                showSuccessMessage(message) {
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                    notification.textContent = message;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                },
+                logout() {
+                    localStorage.removeItem('adminAuthenticated');
+                    window.location.href = 'login.html';
+                },
+                init() {
+                    // Check authentication
+                    if (localStorage.getItem('adminAuthenticated') !== 'true') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    // Initialize animations
+                    gsap.from(".admin-card", {
+                        duration: 0.6,
+                        y: 30,
+                        opacity: 0,
+                        stagger: 0.1,
+                        ease: "power2.out"
+                    });
+                }
+            }
+        }
+        // Initialize page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.from("aside", {
+                duration: 0.5,
+                x: -250,
+                ease: "power2.out"
+            });
+            gsap.from("main > *", {
+                duration: 0.6,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power2.out",
+                delay: 0.2
+            });
+        });
+    </script>
+</body>
+</html>
