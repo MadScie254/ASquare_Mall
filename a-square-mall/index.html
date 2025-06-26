@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Alpine.js for lightweight interactivity -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- GSAP (GreenSock Animation Platform) & ScrollTrigger Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -198,11 +198,11 @@
                         <i class="fab fa-tiktok"></i>
                     </a>
                 </div>
-        <!-- Hero Section -->
-        <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
-            <div class="hero-bg absolute inset-0 bg-cover bg-center"></div>
+            </div>
+        </div>
+    </header>
 
-    <main class="opacity-0"> <!-- Content starts invisible for entry animation -->
+    <main> <!-- Content starts visible -->
         <!-- Hero Section -->
         <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
             <div class="hero-bg absolute inset-0 bg-cover bg-center"></div>
@@ -256,6 +256,10 @@
                             <h3 class="text-2xl font-bold text-brand-blue mt-1">Innovation & Expansion</h3>
                             <p class="text-gray-700 mt-2">Our journey does not end at opening. We are committed to continuous innovation, with plans for digital integration, exclusive loyalty programs, and Phase II expansion.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Event Countdown Section -->
         <section id="countdown" class="py-20 bg-cover bg-fixed bg-center countdown-bg">
              <div class="absolute inset-0 bg-black/60"></div>
@@ -449,10 +453,7 @@
                 duration: 0.8,
                 y: '-100%',
                 ease: 'power3.inOut'
-            }, "-=0.2").to(mainContent, {
-                duration: 0.1,
-                opacity: 1
-            }, "-=0.8").add(runPageAnimations, "-=0.7");
+            }, "-=0.2").add(runPageAnimations, "-=0.7");
         }
 
         // Exit animation
