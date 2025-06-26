@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leasing Opportunities - A Square Mall Kenya</title>
+    <meta name="description" content="Discover prime retail spaces for lease at A Square Mall Kenya. Join over 100 successful businesses in Nairobi's premier shopping destination.">
+    <meta name="keywords" content="retail space, leasing, A Square Mall, Kenya, Nairobi, commercial space, shops for rent">
+    <meta property="og:title" content="Leasing Opportunities - A Square Mall">
+    <meta property="og:description" content="Prime retail spaces available for lease at A Square Mall Kenya">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+        .space-card {
+            transition: all 0.3s ease;
+        }
+        .space-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .form-field {
+            transition: all 0.3s ease;
+        }
+        .form-field:focus-within {
+            transform: translateY(-2px);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #004080 0%, #f5af19 100%);
+        }
+        .mpesa-button {
+            background: #1a5c3a;
+        }
+        .mpesa-button:hover {
+            background: #0e3922;
+        }
+        .payment-modal {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .space-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .space-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="leasingApp()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="directory.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="events.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Events</a>
+                        <a href="gallery.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Gallery</a>
+                        <a href="map.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Map</a>
+                        <a href="leasing.html" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue" aria-label="Toggle mobile menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                <a href="directory.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Stores</a>
+                <a href="events.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Events</a>
+                <a href="gallery.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Gallery</a>
+                <a href="map.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Map</a>
+                <a href="leasing.html" class="block px-3 py-2 text-brand-blue font-medium">Leasing</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Leasing Opportunities</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                Join Kenya's most successful retail destination. Prime spaces available in Nairobi's premier shopping mall.
+            </p>
+        </div>
+    </section>
+    <!-- Benefits Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-poppins font-bold text-brand-blue mb-4">Why Choose A Square Mall?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Join over 100 successful businesses in Kenya's premier shopping destination
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">Prime Location</h3>
+                    <p class="text-gray-600">Heart of Nairobi CBD with excellent accessibility and high foot traffic from business professionals and shoppers.</p>
+                </div>
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">High Footfall</h3>
+                    <p class="text-gray-600">Over 50,000 daily visitors with diverse demographics including families, professionals, and tourists.</p>
+                </div>
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">Modern Facilities</h3>
+                    <p class="text-gray-600">State-of-the-art infrastructure, 24/7 security, HVAC, elevators, and comprehensive support services.</p>
+                </div>
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">Proven Success</h3>
+                    <p class="text-gray-600">95% occupancy rate with established brands and growing businesses reporting strong performance.</p>
+                </div>
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a1 1 0 01-1-1V9a1 1 0 011-1h1a2 2 0 100-4H4a1 1 0 01-1-1V4a1 1 0 011-1h3a1 1 0 011 1v1a2 2 0 102 0V4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">Marketing Support</h3>
+                    <p class="text-gray-600">Comprehensive marketing campaigns, events, and digital promotion to drive customer traffic to your store.</p>
+                </div>
+                <div class="benefit-card text-center group">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-brand-gold/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8 text-brand-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3">Flexible Terms</h3>
+                    <p class="text-gray-600">Competitive rates with flexible lease terms, fit-out support, and customizable space configurations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Available Spaces -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-poppins font-bold text-brand-blue mb-4">Available Spaces</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose from a variety of retail spaces designed for different business needs
+                </p>
+            </div>
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button 
+                    @click="selectedCategory = 'all'; filterSpaces()"
+                    :class="selectedCategory === 'all' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    All Spaces
+                </button>
+                <button 
+                    @click="selectedCategory = 'retail'; filterSpaces()"
+                    :class="selectedCategory === 'retail' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    Retail Stores
+                </button>
+                <button 
+                    @click="selectedCategory = 'restaurant'; filterSpaces()"
+                    :class="selectedCategory === 'restaurant' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    Restaurants
+                </button>
+                <button 
+                    @click="selectedCategory = 'anchor'; filterSpaces()"
+                    :class="selectedCategory === 'anchor' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    Anchor Stores
+                </button>
+                <button 
+                    @click="selectedCategory = 'kiosk'; filterSpaces()"
+                    :class="selectedCategory === 'kiosk' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    Kiosks
+                </button>
+            </div>
+            <!-- Spaces Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="space in filteredSpaces" :key="space.id">
+                    <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="space-gallery p-4">
+                            <div class="space-image" x-text="space.name + ' - ' + space.size"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-poppins font-semibold text-brand-blue" x-text="space.name"></h3>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium" x-text="space.status"></span>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-4" x-text="space.description"></p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Size:</span>
+                                    <span class="font-semibold" x-text="space.size"></span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Floor:</span>
+                                    <span class="font-semibold" x-text="space.floor"></span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Monthly Rent:</span>
+                                    <span class="font-semibold text-brand-blue" x-text="space.rent"></span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Category:</span>
+                                    <span class="font-semibold" x-text="space.category"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col space-y-3">
+                                <button 
+                                    @click="selectSpace(space)"
+                                    class="w-full bg-brand-blue text-white py-3 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors"
+                                >
+                                    Inquire Now
+                                </button>
+                                <button 
+                                    @click="viewSpaceDetails(space)"
+                                    class="w-full bg-brand-gold text-brand-blue py-3 rounded-lg font-medium hover:bg-yellow-400 transition-colors"
+                                >
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+    <!-- Leasing Inquiry Form -->
+    <section class="py-16 bg-white" x-show="showInquiryForm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-poppins font-bold text-brand-blue mb-4">Leasing Inquiry</h2>
+                <p class="text-xl text-gray-600">
+                    Complete the form below to start your leasing journey with us
+                </p>
+            </div>
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700">Application Progress</span>
+                    <span class="text-sm font-medium text-gray-700" x-text="`${Math.round((currentStep / totalSteps) * 100)}%`"></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="progress-bar h-2 rounded-full transition-all duration-500" :style="`width: ${(currentStep / totalSteps) * 100}%`"></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <form @submit.prevent="submitInquiry()">
+                    <!-- Step 1: Personal Information -->
+                    <div x-show="currentStep === 1" class="space-y-6">
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-6">Personal Information</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                <input 
+                                    type="text" 
+                                    x-model="formData.firstName"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                    placeholder="Enter your first name"
+                                >
+                            </div>
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                <input 
+                                    type="text" 
+                                    x-model="formData.lastName"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                    placeholder="Enter your last name"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                <input 
+                                    type="email" 
+                                    x-model="formData.email"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                    placeholder="Enter your email"
+                                >
+                            </div>
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                <input 
+                                    type="tel" 
+                                    x-model="formData.phone"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                    placeholder="+254 700 000 000"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Company/Business Name *</label>
+                            <input 
+                                type="text" 
+                                x-model="formData.company"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                placeholder="Enter your company name"
+                            >
+                        </div>
+                    </div>
+                    <!-- Step 2: Business Information -->
+                    <div x-show="currentStep === 2" class="space-y-6">
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-6">Business Information</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label for="businessType" class="block text-sm font-medium text-gray-700 mb-2">Business Type *</label>
+                                <select 
+                                    id="businessType"
+                                    x-model="formData.businessType"
+                                    required
+                                    aria-label="Business Type"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select business type</option>
+                                    <option value="retail">Retail Store</option>
+                                    <option value="restaurant">Restaurant/Cafe</option>
+                                    <option value="services">Professional Services</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="beauty">Beauty & Wellness</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion & Apparel</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="yearsInBusiness" class="block text-sm font-medium text-gray-700 mb-2">Years in Business *</label>
+                                <select 
+                                    id="yearsInBusiness"
+                                    x-model="formData.yearsInBusiness"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select experience</option>
+                                    <option value="startup">Startup/New Business</option>
+                                    <option value="1-2">1-2 years</option>
+                                    <option value="3-5">3-5 years</option>
+                                    <option value="6-10">6-10 years</option>
+                                    <option value="10+">10+ years</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Business Description *</label>
+                            <textarea 
+                                x-model="formData.businessDescription"
+                                required
+                                rows="4"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                placeholder="Describe your business, products/services, and target customers..."
+                            ></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Expected Monthly Revenue *</label>
+                                <select 
+                                    x-model="formData.expectedRevenue"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select revenue range</option>
+                                    <option value="0-500k">KSh 0 - 500,000</option>
+                                    <option value="500k-1m">KSh 500,000 - 1,000,000</option>
+                                    <option value="1m-2m">KSh 1,000,000 - 2,000,000</option>
+                                    <option value="2m-5m">KSh 2,000,000 - 5,000,000</option>
+                                    <option value="5m+">KSh 5,000,000+</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Number of Employees</label>
+                                <input 
+                                    type="number" 
+                                    x-model="formData.employees"
+                                    min="1"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                    placeholder="Number of employees"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 3: Space Requirements -->
+                    <div x-show="currentStep === 3" class="space-y-6">
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-6">Space Requirements</h3>
+                        
+                        <div class="bg-brand-blue/5 rounded-lg p-4 mb-6" x-show="selectedSpace">
+                            <h4 class="font-semibold text-brand-blue mb-2">Selected Space:</h4>
+                            <p x-text="selectedSpace ? `${selectedSpace.name} - ${selectedSpace.size} (${selectedSpace.rent}/month)` : ''"></p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Floor</label>
+                                <select 
+                                    x-model="formData.preferredFloor"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">No preference</option>
+                                    <option value="ground">Ground Floor</option>
+                                    <option value="first">First Floor</option>
+                                    <option value="second">Second Floor</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Desired Move-in Date *</label>
+                                <input 
+                                    type="date" 
+                                    x-model="formData.moveInDate"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lease Duration Preference</label>
+                                <select 
+                                    x-model="formData.leaseDuration"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select duration</option>
+                                    <option value="1-year">1 Year</option>
+                                    <option value="2-year">2 Years</option>
+                                    <option value="3-year">3 Years</option>
+                                    <option value="5-year">5 Years</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Budget Range (Monthly) *</label>
+                                <select 
+                                    x-model="formData.budget"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select budget range</option>
+                                    <option value="50k-100k">KSh 50,000 - 100,000</option>
+                                    <option value="100k-200k">KSh 100,000 - 200,000</option>
+                                    <option value="200k-500k">KSh 200,000 - 500,000</option>
+                                    <option value="500k-1m">KSh 500,000 - 1,000,000</option>
+                                    <option value="1m+">KSh 1,000,000+</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Requirements</label>
+                            <textarea 
+                                x-model="formData.additionalRequirements"
+                                rows="4"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                placeholder="Any specific requirements, customizations, or questions..."
+                            ></textarea>
+                        </div>
+                    </div>
+                    <!-- Step 4: Payment Information -->
+                    <div x-show="currentStep === 4" class="space-y-6">
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-6">Application Fee Payment</h3>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p class="text-yellow-800">
+                                    <strong>Application Fee: KSh 5,000</strong> - This non-refundable fee covers application processing and site visit arrangements.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <button 
+                                type="button"
+                                @click="initiatePayment('mpesa')"
+                                class="mpesa-button text-white py-4 px-6 rounded-lg font-medium hover:bg-opacity-90 transition-colors flex items-center justify-center"
+                            >
+                                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7v10c0 5.55 3.84 9.95 9 11 5.16-1.05 9-5.45 9-11V7l-10-5z"/>
+                                </svg>
+                                Pay with M-Pesa
+                            </button>
+                            <button 
+                                type="button"
+                                @click="initiatePayment('card')"
+                                class="bg-blue-600 text-white py-4 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
+                            >
+                                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                                Pay with Card
+                            </button>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="text-gray-600">Secure payment processing • SSL encrypted</p>
+                        </div>
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between mt-8">
+                        <button 
+                            type="button"
+                            @click="previousStep()"
+                            x-show="currentStep > 1"
+                            class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                        >
+                            Previous
+                        </button>
+                        
+                        <div class="flex space-x-4">
+                            <button 
+                                type="button"
+                                @click="nextStep()"
+                                x-show="currentStep < totalSteps"
+                                class="px-6 py-3 bg-brand-blue text-white rounded-lg font-medium hover:bg-brand-blue/90 transition-colors"
+                            >
+                                Next Step
+                            </button>
+                            
+                            <button 
+                                type="submit"
+                                x-show="currentStep === totalSteps && paymentCompleted"
+                                class="px-6 py-3 bg-brand-gold text-brand-blue rounded-lg font-medium hover:bg-yellow-400 transition-colors"
+                                :disabled="submitting"
+                            >
+                                <span x-show="!submitting">Submit Application</span>
+                                <span x-show="submitting">Submitting...</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Payment Modal -->
+    <div x-show="showPaymentModal" x-transition class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="payment-modal fixed inset-0" @click="closePaymentModal()"></div>
+            
+            <div class="relative bg-white rounded-2xl max-w-md w-full mx-auto shadow-2xl">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-poppins font-semibold text-brand-blue">Complete Payment</h3>
+                        <button @click="closePaymentModal()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div x-show="paymentMethod === 'mpesa'" class="space-y-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7v10c0 5.55 3.84 9.95 9 11 5.16-1.05 9-5.45 9-11V7l-10-5z"/>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">M-Pesa Payment</h4>
+                            <p class="text-gray-600 mb-4">Amount: <strong>KSh 5,000</strong></p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <input 
+                                    type="tel" 
+                                    x-model="paymentData.phone"
+                                    placeholder="254700000000"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                >
+                            </div>
+                            
+                            <button 
+                                @click="processMpesaPayment()"
+                                :disabled="processing"
+                                class="w-full mpesa-button text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                            >
+                                <span x-show="!processing">Send STK Push</span>
+                                <span x-show="processing">Processing...</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div x-show="paymentMethod === 'card'" class="space-y-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Card Payment</h4>
+                            <p class="text-gray-600 mb-4">Amount: <strong>KSh 5,000</strong></p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
+                                <input 
+                                    type="text" 
+                                    x-model="paymentData.cardNumber"
+                                    placeholder="1234 5678 9012 3456"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Expiry</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="paymentData.expiry"
+                                        placeholder="MM/YY"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="paymentData.cvv"
+                                        placeholder="123"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <button 
+                                @click="processCardPayment()"
+                                :disabled="processing"
+                                class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                            >
+                                <span x-show="!processing">Pay Now</span>
+                                <span x-show="processing">Processing...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-poppins font-bold mb-4 text-brand-gold">A Square Mall</h3>
+                    <p class="text-white/80 mb-4">Kenya's premier shopping destination offering world-class retail, dining, and entertainment experiences.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="directory.html" class="text-white/80 hover:text-white transition-colors">Store Directory</a></li>
+                        <li><a href="events.html" class="text-white/80 hover:text-white transition-colors">Events & Promotions</a></li>
+                        <li><a href="gallery.html" class="text-white/80 hover:text-white transition-colors">Photo Gallery</a></li>
+                        <li><a href="map.html" class="text-white/80 hover:text-white transition-colors">Mall Map</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Leasing Info</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Available Spaces</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Lease Terms</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Application Process</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Virtual Tours</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Tenant Benefits</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Contact Leasing</h4>
+                    <div class="space-y-2 text-white/80">
+                        <p>Kimathi Street, Nairobi CBD</p>
+                        <p>Nairobi, Kenya</p>
+                        <p>Phone: +254 700 123 456</p>
+                        <p>Email: leasing@asquaremall.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">&copy; 2024 A Square Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/alpine.min.js" defer></script>
+    <script>
+        function leasingApp() {
+            return {
+                selectedCategory: 'all',
+                selectedSpace: null,
+                showInquiryForm: false,
+                showPaymentModal: false,
+                currentStep: 1,
+                totalSteps: 4,
+                paymentMethod: '',
+                paymentCompleted: false,
+                processing: false,
+                submitting: false,
+                formData: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    company: '',
+                    businessType: '',
+                    yearsInBusiness: '',
+                    businessDescription: '',
+                    expectedRevenue: '',
+                    employees: '',
+                    preferredFloor: '',
+                    moveInDate: '',
+                    leaseDuration: '',
+                    budget: '',
+                    additionalRequirements: ''
+                },
+                paymentData: {
+                    phone: '',
+                    cardNumber: '',
+                    expiry: '',
+                    cvv: ''
+                },
+                spaces: [
+                    {
+                        id: 1,
+                        name: "Prime Retail Space A1",
+                        category: "retail",
+                        size: "450 sq ft",
+                        floor: "Ground Floor",
+                        rent: "KSh 180,000",
+                        status: "Available",
+                        description: "High-traffic location near main entrance, perfect for fashion retail or electronics."
+                    },
+                    {
+                        id: 2,
+                        name: "Restaurant Space R1",
+                        category: "restaurant",
+                        size: "800 sq ft",
+                        floor: "Food Court",
+                        rent: "KSh 320,000",
+                        status: "Available",
+                        description: "Premium restaurant space in food court with kitchen facilities and seating area."
+                    },
+                    {
+                        id: 3,
+                        name: "Anchor Store AS1",
+                        category: "anchor",
+                        size: "2,500 sq ft",
+                        floor: "Ground Floor",
+                        rent: "KSh 750,000",
+                        status: "Available",
+                        description: "Large anchor store space ideal for department stores or major retailers."
+                    },
+                    {
+                        id: 4,
+                        name: "Boutique Space B1",
+                        category: "retail",
+                        size: "250 sq ft",
+                        floor: "First Floor",
+                        rent: "KSh 95,000",
+                        status: "Available",
+                        description: "Intimate boutique space perfect for luxury brands or specialized retail."
+                    },
+                    {
+                        id: 5,
+                        name: "Coffee Kiosk K1",
+                        category: "kiosk",
+                        size: "120 sq ft",
+                        floor: "Ground Floor",
+                        rent: "KSh 45,000",
+                        status: "Available",
+                        description: "High-visibility kiosk location perfect for coffee, snacks, or quick service."
+                    },
+                    {
+                        id: 6,
+                        name: "Casual Dining D1",
+                        category: "restaurant",
+                        size: "600 sq ft",
+                        floor: "Second Floor",
+                        rent: "KSh 240,000",
+                        status: "Available",
+                        description: "Casual dining space with outdoor terrace access and modern kitchen."
+                    },
+                    {
+                        id: 7,
+                        name: "Tech Store T1",
+                        category: "retail",
+                        size: "350 sq ft",
+                        floor: "Second Floor",
+                        rent: "KSh 140,000",
+                        status: "Available",
+                        description: "Modern space with enhanced electrical infrastructure for electronics retail."
+                    },
+                    {
+                        id: 8,
+                        name: "Service Kiosk K2",
+                        category: "kiosk",
+                        size: "80 sq ft",
+                        floor: "First Floor",
+                        rent: "KSh 30,000",
+                        status: "Available",
+                        description: "Compact kiosk ideal for mobile services, repairs, or accessories."
+                    },
+                    {
+                        id: 9,
+                        name: "Premium Retail P1",
+                        category: "retail",
+                        size: "650 sq ft",
+                        floor: "First Floor",
+                        rent: "KSh 260,000",
+                        status: "Available",
+                        description: "Premium retail space with high ceilings and excellent natural lighting."
+                    }
+                ],
+                filteredSpaces: [],
+                init() {
+                    this.filteredSpaces = this.spaces;
+                    this.$nextTick(() => {
+                        this.animateSpaces();
+                    });
+                },
+                filterSpaces() {
+                    if (this.selectedCategory === 'all') {
+                        this.filteredSpaces = this.spaces;
+                    } else {
+                        this.filteredSpaces = this.spaces.filter(space => space.category === this.selectedCategory);
+                    }
+                    
+                    this.$nextTick(() => {
+                        this.animateSpaces();
+                    });
+                },
+                selectSpace(space) {
+                    this.selectedSpace = space;
+                    this.showInquiryForm = true;
+                    document.querySelector('section.py-16.bg-white').scrollIntoView({ behavior: 'smooth' });
+                },
+                viewSpaceDetails(space) {
+                    alert(`Space Details:\n\nName: ${space.name}\nSize: ${space.size}\nFloor: ${space.floor}\nRent: ${space.rent}\n\nDescription: ${space.description}`);
+                },
+                nextStep() {
+                    if (this.validateCurrentStep()) {
+                        this.currentStep++;
+                    }
+                },
+                previousStep() {
+                    this.currentStep--;
+                },
+                validateCurrentStep() {
+                    // Basic validation - in a real app, this would be more comprehensive
+                    if (this.currentStep === 1) {
+                        return this.formData.firstName && this.formData.lastName && this.formData.email && this.formData.phone && this.formData.company;
+                    }
+                    if (this.currentStep === 2) {
+                        return this.formData.businessType && this.formData.yearsInBusiness && this.formData.businessDescription && this.formData.expectedRevenue;
+                    }
+                    if (this.currentStep === 3) {
+                        return this.formData.moveInDate && this.formData.budget;
+                    }
+                    return true;
+                },
+                initiatePayment(method) {
+                    this.paymentMethod = method;
+                    this.showPaymentModal = true;
+                },
+                closePaymentModal() {
+                    this.showPaymentModal = false;
+                    this.paymentMethod = '';
+                },
+                async processMpesaPayment() {
+                    this.processing = true;
+                    
+                    // Simulate M-Pesa STK Push
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    
+                    this.processing = false;
+                    this.paymentCompleted = true;
+                    this.closePaymentModal();
+                    
+                    alert('M-Pesa payment successful! Please check your phone for confirmation.');
+                },
+                async processCardPayment() {
+                    this.processing = true;
+                    
+                    // Simulate card payment processing
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    this.processing = false;
+                    this.paymentCompleted = true;
+                    this.closePaymentModal();
+                    
+                    alert('Card payment successful! Payment confirmation sent to your email.');
+                },
+                async submitInquiry() {
+                    if (!this.paymentCompleted) {
+                        alert('Please complete the application fee payment first.');
+                        return;
+                    }
+                    
+                    this.submitting = true;
+                    
+                    // Simulate form submission
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    this.submitting = false;
+                    
+                    alert('Application submitted successfully! Our leasing team will contact you within 24 hours.');
+                    
+                    // Reset form
+                    this.showInquiryForm = false;
+                    this.currentStep = 1;
+                    this.paymentCompleted = false;
+                    this.formData = {
+                        firstName: '', lastName: '', email: '', phone: '', company: '',
+                        businessType: '', yearsInBusiness: '', businessDescription: '', expectedRevenue: '', employees: '',
+                        preferredFloor: '', moveInDate: '', leaseDuration: '', budget: '', additionalRequirements: ''
+                    };
+                },
+                animateSpaces() {
+                    gsap.fromTo('.space-card', 
+                        {
+                            opacity: 0,
+                            y: 50,
+                            scale: 0.95
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: 'power3.out'
+                        }
+                    );
+                }
+            }
+        }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        // Header animation
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+        // Benefits animation
+        ScrollTrigger.create({
+            trigger: '.benefit-card',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.benefit-card',
+                    { opacity: 0, y: 30 },
+                    { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
+                );
+            }
+        });
+        // Form animations
+        gsap.set('.form-field', { opacity: 0, y: 20 });
+        document.addEventListener('alpine:init', () => {
+            Alpine.effect(() => {
+                gsap.fromTo('.form-field',
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out' }
+                );
+            });
+        });
+    </script>
+</body>
+</html>
