@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - A Square Mall Kenya</title>
+    <meta name="description" content="Explore our beautiful photo gallery showcasing the elegant spaces, stores, events, and experiences at A Square Mall Kenya.">
+    <meta name="keywords" content="gallery, photos, A Square Mall, Kenya, shopping mall, interior, stores, events">
+    <meta property="og:title" content="Photo Gallery - A Square Mall">
+    <meta property="og:description" content="Discover the beauty and elegance of A Square Mall through our photo gallery">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .lightbox-overlay {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .category-filter.active {
+            @apply bg-brand-gold text-brand-blue;
+        }
+        .masonry-grid {
+            columns: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .masonry-grid {
+                columns: 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                columns: 3;
+            }
+        }
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                columns: 4;
+            }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+        .image-placeholder {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 12px;
+        }
+        .virtual-tour-frame {
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="galleryApp()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="directory.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="events.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Events</a>
+                        <a href="gallery.html" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Gallery</a>
+                        <a href="map.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Map</a>
+                        <a href="leasing.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                <a href="directory.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Stores</a>
+                <a href="events.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Events</a>
+                <a href="gallery.html" class="block px-3 py-2 text-brand-blue font-medium">Gallery</a>
+                <a href="map.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Map</a>
+                <a href="leasing.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Leasing</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Photo Gallery</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                Discover the elegance and beauty of A Square Mall through our curated photo collection
+            </p>
+        </div>
+    </section>
+    <!-- Category Filters -->
+    <section class="py-8 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button 
+                    @click="selectedCategory = 'all'; filterGallery()"
+                    :class="selectedCategory === 'all' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    All Photos
+                </button>
+                <button 
+                    @click="selectedCategory = 'architecture'; filterGallery()"
+                    :class="selectedCategory === 'architecture' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Architecture
+                </button>
+                <button 
+                    @click="selectedCategory = 'stores'; filterGallery()"
+                    :class="selectedCategory === 'stores' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Stores
+                </button>
+                <button 
+                    @click="selectedCategory = 'events'; filterGallery()"
+                    :class="selectedCategory === 'events' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Events
+                </button>
+                <button 
+                    @click="selectedCategory = 'dining'; filterGallery()"
+                    :class="selectedCategory === 'dining' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Dining
+                </button>
+                <button 
+                    @click="selectedCategory = 'exterior'; filterGallery()"
+                    :class="selectedCategory === 'exterior' ? 'active' : ''"
+                    class="category-filter px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue bg-gray-200 text-gray-700"
+                >
+                    Exterior
+                </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="mt-8 max-w-2xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        x-model="searchQuery" 
+                        @input="filterGallery()"
+                        placeholder="Search photos..."
+                        class="w-full px-6 py-3 pl-12 text-lg border-2 border-gray-200 rounded-full focus:border-brand-blue focus:outline-none focus:ring-4 focus:ring-brand-blue/20 transition-all"
+                    >
+                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Virtual Tour Section -->
+    <section class="py-16 bg-brand-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-poppins font-bold text-white mb-4">Virtual Tour</h2>
+                <p class="text-xl text-white/90">Experience A Square Mall from anywhere in the world</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="virtual-tour-frame bg-gray-800 flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <svg class="w-20 h-20 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        <h3 class="text-2xl font-poppins font-bold mb-2">360° Virtual Tour</h3>
+                        <p class="text-lg opacity-80 mb-6">Take a virtual walk through our mall</p>
+                        <button class="bg-brand-gold text-brand-blue px-8 py-3 rounded-full font-semibold hover:bg-yellow-400 transition-colors">
+                            Start Virtual Tour
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Photo Gallery Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Results Counter -->
+            <div class="text-center mb-8">
+                <p class="text-gray-600" x-text="`Showing ${filteredPhotos.length} of ${photos.length} photos`"></p>
+            </div>
+            <!-- Masonry Grid -->
+            <div class="masonry-grid">
+                <template x-for="photo in filteredPhotos" :key="photo.id">
+                    <div class="masonry-item">
+                        <div class="gallery-item bg-white rounded-2xl shadow-lg overflow-hidden" @click="openLightbox(photo)">
+                            <div :style="`background: ${photo.placeholder}`" class="image-placeholder" :class="`h-${photo.height}`">
+                                <div class="text-center p-4">
+                                    <div class="text-lg font-bold mb-2" x-text="photo.title"></div>
+                                    <div class="text-sm opacity-80" x-text="photo.category"></div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-poppins font-semibold text-brand-blue mb-2" x-text="photo.title"></h3>
+                                <p class="text-gray-600 text-sm mb-3" x-text="photo.description"></p>
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-full text-xs font-medium" x-text="photo.category"></span>
+                                    <span class="text-gray-500 text-xs" x-text="photo.date"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- No Results -->
+            <div x-show="filteredPhotos.length === 0" class="text-center py-16">
+                <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-2xl font-poppins font-semibold text-gray-600 mb-2">No photos found</h3>
+                <p class="text-gray-500">Try adjusting your search or filter criteria</p>
+                <button @click="searchQuery = ''; selectedCategory = 'all'; filterGallery()" class="mt-4 px-6 py-3 bg-brand-gold text-brand-blue rounded-full font-semibold hover:shadow-lg transition-all">
+                    Clear Filters
+                </button>
+            </div>
+            <!-- Load More Button -->
+            <div class="text-center mt-12" x-show="filteredPhotos.length > 0 && filteredPhotos.length >= displayLimit">
+                <button 
+                    @click="loadMore()"
+                    class="px-8 py-4 bg-brand-blue text-white rounded-full font-semibold hover:bg-brand-blue/90 transition-colors"
+                    :disabled="loading"
+                    title="Load More Photos"
+                >
+                    <span x-show="!loading">Load More Photos</span>
+                    <span x-show="loading">Loading...</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Photo Statistics -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="photo-stat">
+                    <div class="text-4xl font-poppins font-bold text-brand-blue mb-2" x-text="photos.length"></div>
+                    <div class="text-gray-600">Total Photos</div>
+                </div>
+                <div class="photo-stat">
+                    <div class="text-4xl font-poppins font-bold text-brand-blue mb-2">6</div>
+                    <div class="text-gray-600">Categories</div>
+                </div>
+                <div class="photo-stat">
+                    <div class="text-4xl font-poppins font-bold text-brand-blue mb-2">3</div>
+                    <div class="text-gray-600">Floors</div>
+                </div>
+                <div class="photo-stat">
+                    <div class="text-4xl font-poppins font-bold text-brand-blue mb-2">1</div>
+                    <div class="text-gray-600">Virtual Tour</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Lightbox Modal -->
+    <div x-show="showLightbox" x-transition class="fixed inset-0 z-50 overflow-hidden">
+        <div class="lightbox-overlay fixed inset-0 flex items-center justify-center p-4" @click="closeLightbox()">
+            <div class="lightbox-content relative" @click.stop x-show="selectedPhoto">
+                <div class="relative">
+                    <div 
+                        :style="`background: ${selectedPhoto ? selectedPhoto.placeholder : ''}`" 
+                        class="image-placeholder w-full h-96 md:h-[600px] rounded-lg"
+                        x-show="selectedPhoto"
+                    >
+                        <div class="absolute inset-0 flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-4" x-text="selectedPhoto ? selectedPhoto.title : ''"></div>
+                                <div class="text-lg opacity-80" x-text="selectedPhoto ? selectedPhoto.description : ''"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <button 
+                        @click="previousPhoto()" 
+                        title="Previous photo"
+                        aria-label="Previous photo"
+                        class="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
+                        x-show="currentPhotoIndex > 0"
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        @click="nextPhoto()" 
+                        class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
+                        x-show="currentPhotoIndex < filteredPhotos.length - 1"
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Close Button -->
+                    <button 
+                        @click="closeLightbox()" 
+                        class="absolute top-4 right-4 w-12 h-12 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
+                        title="Close lightbox"
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Photo Info -->
+                <div class="bg-white rounded-b-lg p-6" x-show="selectedPhoto">
+                    <h3 class="text-2xl font-poppins font-bold text-brand-blue mb-2" x-text="selectedPhoto ? selectedPhoto.title : ''"></h3>
+                    <p class="text-gray-700 mb-4" x-text="selectedPhoto ? selectedPhoto.description : ''"></p>
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-full text-sm font-medium" x-text="selectedPhoto ? selectedPhoto.category : ''"></span>
+                        <span class="text-gray-500 text-sm" x-text="selectedPhoto ? selectedPhoto.date : ''"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-poppins font-bold mb-4 text-brand-gold">A Square Mall</h3>
+                    <p class="text-white/80 mb-4">Kenya's premier shopping destination offering world-class retail, dining, and entertainment experiences.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="directory.html" class="text-white/80 hover:text-white transition-colors">Store Directory</a></li>
+                        <li><a href="events.html" class="text-white/80 hover:text-white transition-colors">Events & Promotions</a></li>
+                        <li><a href="map.html" class="text-white/80 hover:text-white transition-colors">Mall Map</a></li>
+                        <li><a href="leasing.html" class="text-white/80 hover:text-white transition-colors">Leasing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Gallery Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Architecture</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Store Interiors</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Events</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Dining Areas</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Exterior Views</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Contact Info</h4>
+                    <div class="space-y-2 text-white/80">
+                        <p>Kimathi Street, Nairobi CBD</p>
+                        <p>Nairobi, Kenya</p>
+                        <p>Phone: +254 700 123 456</p>
+                        <p>Email: info@asquaremall.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">&copy; 2024 A Square Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/alpine.min.js" defer></script>
+    <script>
+        function galleryApp() {
+            return {
+                selectedCategory: 'all',
+                searchQuery: '',
+                showLightbox: false,
+                selectedPhoto: null,
+                currentPhotoIndex: 0,
+                displayLimit: 12,
+                loading: false,
+                photos: [
+                    // Architecture
+                    {
+                        id: 1,
+                        title: "Grand Atrium",
+                        description: "The spectacular three-story atrium with natural lighting and modern architecture.",
+                        category: "architecture",
+                        date: "2024-01-15",
+                        height: "64",
+                        placeholder: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    },
+                    {
+                        id: 2,
+                        title: "Escalator Design",
+                        description: "Modern escalator system connecting all three floors with elegant design.",
+                        category: "architecture",
+                        date: "2024-01-16",
+                        height: "48",
+                        placeholder: "linear-gradient(45deg, #f093fb 0%, #f5576c 100%)"
+                    },
+                    {
+                        id: 3,
+                        title: "Skylight Ceiling",
+                        description: "Beautiful skylight design allowing natural light to flood the interior spaces.",
+                        category: "architecture",
+                        date: "2024-01-17",
+                        height: "56",
+                        placeholder: "linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)"
+                    },
+                    {
+                        id: 4,
+                        title: "Marble Flooring",
+                        description: "Premium marble flooring throughout the main walkways and common areas.",
+                        category: "architecture",
+                        date: "2024-01-18",
+                        height: "40",
+                        placeholder: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)"
+                    },
+                    // Stores
+                    {
+                        id: 5,
+                        title: "Fashion Boutique",
+                        description: "Elegant fashion store with contemporary interior design and premium displays.",
+                        category: "stores",
+                        date: "2024-02-01",
+                        height: "52",
+                        placeholder: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)"
+                    },
+                    {
+                        id: 6,
+                        title: "Electronics Showroom",
+                        description: "State-of-the-art electronics store featuring the latest gadgets and technology.",
+                        category: "stores",
+                        date: "2024-02-02",
+                        height: "48",
+                        placeholder: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    },
+                    {
+                        id: 7,
+                        title: "Jewelry Store",
+                        description: "Luxury jewelry store with sophisticated lighting and security displays.",
+                        category: "stores",
+                        date: "2024-02-03",
+                        height: "60",
+                        placeholder: "linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)"
+                    },
+                    {
+                        id: 8,
+                        title: "Bookstore Corner",
+                        description: "Cozy bookstore with reading nooks and extensive collection of local and international titles.",
+                        category: "stores",
+                        date: "2024-02-04",
+                        height: "44",
+                        placeholder: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)"
+                    },
+                    // Events
+                    {
+                        id: 9,
+                        title: "Fashion Week Runway",
+                        description: "Kenya Fashion Week 2024 runway show in the main atrium.",
+                        category: "events",
+                        date: "2024-03-01",
+                        height: "56",
+                        placeholder: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    },
+                    {
+                        id: 10,
+                        title: "Tech Expo Display",
+                        description: "Technology innovation exhibition featuring latest gadgets and startups.",
+                        category: "events",
+                        date: "2024-03-02",
+                        height: "48",
+                        placeholder: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)"
+                    },
+                    {
+                        id: 11,
+                        title: "Cultural Performance",
+                        description: "Traditional Kenyan dance and music performance during cultural week.",
+                        category: "events",
+                        date: "2024-03-03",
+                        height: "52",
+                        placeholder: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)"
+                    },
+                    {
+                        id: 12,
+                        title: "Art Exhibition",
+                        description: "Contemporary art exhibition featuring works by local Kenyan artists.",
+                        category: "events",
+                        date: "2024-03-04",
+                        height: "60",
+                        placeholder: "linear-gradient(45deg, #f093fb 0%, #f5576c 100%)"
+                    },
+                    // Dining
+                    {
+                        id: 13,
+                        title: "Food Court Central",
+                        description: "Spacious food court with diverse dining options and modern seating arrangements.",
+                        category: "dining",
+                        date: "2024-04-01",
+                        height: "48",
+                        placeholder: "linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)"
+                    },
+                    {
+                        id: 14,
+                        title: "Coffee Corner",
+                        description: "Premium coffee shop with artisanal brews and comfortable seating area.",
+                        category: "dining",
+                        date: "2024-04-02",
+                        height: "44",
+                        placeholder: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)"
+                    },
+                    {
+                        id: 15,
+                        title: "Restaurant Terrace",
+                        description: "Outdoor restaurant terrace with garden views and al fresco dining.",
+                        category: "dining",
+                        date: "2024-04-03",
+                        height: "56",
+                        placeholder: "linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)"
+                    },
+                    {
+                        id: 16,
+                        title: "Fast Food Zone",
+                        description: "Quick service dining area with popular fast food chains and grab-and-go options.",
+                        category: "dining",
+                        date: "2024-04-04",
+                        height: "40",
+                        placeholder: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)"
+                    },
+                    // Exterior
+                    {
+                        id: 17,
+                        title: "Main Entrance",
+                        description: "Impressive main entrance with modern glass facade and welcoming design.",
+                        category: "exterior",
+                        date: "2024-05-01",
+                        height: "64",
+                        placeholder: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    },
+                    {
+                        id: 18,
+                        title: "Parking Area",
+                        description: "Multi-level parking facility with clear signage and security features.",
+                        category: "exterior",
+                        date: "2024-05-02",
+                        height: "48",
+                        placeholder: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)"
+                    },
+                    {
+                        id: 19,
+                        title: "Garden Landscape",
+                        description: "Beautifully landscaped gardens surrounding the mall with native Kenyan plants.",
+                        category: "exterior",
+                        date: "2024-05-03",
+                        height: "52",
+                        placeholder: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)"
+                    },
+                    {
+                        id: 20,
+                        title: "Night Illumination",
+                        description: "Stunning night lighting showcasing the mall's architectural features.",
+                        category: "exterior",
+                        date: "2024-05-04",
+                        height: "60",
+                        placeholder: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    }
+                ],
+                filteredPhotos: [],
+                init() {
+                    this.filteredPhotos = this.photos.slice(0, this.displayLimit);
+                    this.$nextTick(() => {
+                        this.animateGallery();
+                    });
+                },
+                filterGallery() {
+                    let filtered = this.photos;
+                    // Filter by category
+                    if (this.selectedCategory !== 'all') {
+                        filtered = filtered.filter(photo => 
+                            photo.category === this.selectedCategory
+                        );
+                    }
+                    // Filter by search query
+                    if (this.searchQuery.trim() !== '') {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(photo => 
+                            photo.title.toLowerCase().includes(query) ||
+                            photo.description.toLowerCase().includes(query) ||
+                            photo.category.toLowerCase().includes(query)
+                        );
+                    }
+                    this.filteredPhotos = filtered.slice(0, this.displayLimit);
+                    
+                    this.$nextTick(() => {
+                        this.animateGallery();
+                    });
+                },
+                loadMore() {
+                    this.loading = true;
+                    
+                    setTimeout(() => {
+                        const currentLength = this.filteredPhotos.length;
+                        const morePhotos = this.getFilteredData().slice(currentLength, currentLength + 8);
+                        this.filteredPhotos = [...this.filteredPhotos, ...morePhotos];
+                        this.loading = false;
+                        
+                        this.$nextTick(() => {
+                            this.animateNewItems();
+                        });
+                    }, 1000);
+                },
+                getFilteredData() {
+                    let filtered = this.photos;
+                    if (this.selectedCategory !== 'all') {
+                        filtered = filtered.filter(photo => photo.category === this.selectedCategory);
+                    }
+                    if (this.searchQuery.trim() !== '') {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(photo => 
+                            photo.title.toLowerCase().includes(query) ||
+                            photo.description.toLowerCase().includes(query) ||
+                            photo.category.toLowerCase().includes(query)
+                        );
+                    }
+                    return filtered;
+                },
+                animateGallery() {
+                    gsap.fromTo('.gallery-item', 
+                        {
+                            opacity: 0,
+                            y: 50,
+                            scale: 0.9
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: 'power3.out'
+                        }
+                    );
+                },
+                animateNewItems() {
+                    const newItems = document.querySelectorAll('.gallery-item:not(.animated)');
+                    gsap.fromTo(newItems, 
+                        {
+                            opacity: 0,
+                            y: 50,
+                            scale: 0.9
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: 'power3.out',
+                            onComplete: () => {
+                                newItems.forEach(item => item.classList.add('animated'));
+                            }
+                        }
+                    );
+                },
+                openLightbox(photo) {
+                    this.selectedPhoto = photo;
+                    this.currentPhotoIndex = this.filteredPhotos.findIndex(p => p.id === photo.id);
+                    this.showLightbox = true;
+                    document.body.style.overflow = 'hidden';
+                },
+                closeLightbox() {
+                    this.showLightbox = false;
+                    this.selectedPhoto = null;
+                    document.body.style.overflow = 'auto';
+                },
+                nextPhoto() {
+                    if (this.currentPhotoIndex < this.filteredPhotos.length - 1) {
+                        this.currentPhotoIndex++;
+                        this.selectedPhoto = this.filteredPhotos[this.currentPhotoIndex];
+                    }
+                },
+                previousPhoto() {
+                    if (this.currentPhotoIndex > 0) {
+                        this.currentPhotoIndex--;
+                        this.selectedPhoto = this.filteredPhotos[this.currentPhotoIndex];
+                    }
+                }
+            }
+        }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        // Header animation
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+        // Filter buttons animation
+        gsap.fromTo('.category-filter', 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 0.5, ease: 'power3.out' }
+        );
+        // Virtual tour animation
+        ScrollTrigger.create({
+            trigger: '.py-16.bg-brand-blue',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.virtual-tour-frame',
+                    { opacity: 0, scale: 0.9 },
+                    { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)' }
+                );
+            }
+        });
+        // Statistics animation
+        ScrollTrigger.create({
+            trigger: '.photo-stat',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.photo-stat',
+                    { opacity: 0, y: 30 },
+                    { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
+                );
+            }
+        });
+    </script>
+</body>
+</html>
