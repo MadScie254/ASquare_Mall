@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - A Square Mall Kenya</title>
+    <meta name="description" content="Get in touch with A Square Mall Kenya. Find our location, operating hours, contact information, and send us a message.">
+    <meta name="keywords" content="contact, A Square Mall, Kenya, Nairobi, phone, email, address, customer service">
+    <meta property="og:title" content="Contact Us - A Square Mall">
+    <meta property="og:description" content="Contact A Square Mall Kenya - Your premier shopping destination">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+        .form-field {
+            transition: all 0.3s ease;
+        }
+        .form-field:focus-within {
+            transform: translateY(-2px);
+        }
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .success-message {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #004080;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="contactApp()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="directory.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="events.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Events</a>
+                        <a href="gallery.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Gallery</a>
+                        <a href="map.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Map</a>
+                        <a href="leasing.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="contact.html" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                <a href="directory.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Stores</a>
+                <a href="events.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Events</a>
+                <a href="gallery.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Gallery</a>
+                <a href="map.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Map</a>
+                <a href="leasing.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Leasing</a>
+                <a href="contact.html" class="block px-3 py-2 text-brand-blue font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Contact Us</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                We're here to help! Get in touch with our team for any questions, feedback, or assistance.
+            </p>
+        </div>
+    </section>
+    <!-- Quick Contact Cards -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Phone -->
+                <div class="contact-card bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-brand-gold/10 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-brand-blue mb-2">Call Us</h3>
+                    <p class="text-gray-600 mb-4">Speak to our customer service team</p>
+                    <a href="tel:+254700123456" class="text-brand-blue font-semibold hover:text-brand-gold transition-colors">
+                        +254 700 123 456
+                    </a>
+                </div>
+                <!-- Email -->
+                <div class="contact-card bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-brand-gold/10 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-brand-blue mb-2">Email Us</h3>
+                    <p class="text-gray-600 mb-4">Send us a detailed message</p>
+                    <a href="mailto:info@asquaremall.co.ke" class="text-brand-blue font-semibold hover:text-brand-gold transition-colors">
+                        info@asquaremall.co.ke
+                    </a>
+                </div>
+                <!-- WhatsApp -->
+                <div class="contact-card bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-brand-blue mb-2">WhatsApp</h3>
+                    <p class="text-gray-600 mb-4">Quick chat and support</p>
+                    <a href="https://wa.me/254700123456" target="_blank" class="text-green-600 font-semibold hover:text-green-700 transition-colors">
+                        Chat with us
+                    </a>
+                </div>
+                <!-- Visit -->
+                <div class="contact-card bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-brand-gold/10 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-brand-blue mb-2">Visit Us</h3>
+                    <p class="text-gray-600 mb-4">Come see us in person</p>
+                    <p class="text-brand-blue font-semibold">
+                        Kimathi Street<br>Nairobi CBD
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Form & Map -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div>
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-poppins font-bold text-brand-blue mb-4">Send us a Message</h2>
+                        <p class="text-gray-600">
+                            Have a question or feedback? We'd love to hear from you. Fill out the form below and we'll get back to you within 24 hours.
+                        </p>
+                    </div>
+                    <!-- Success Message -->
+                    <div x-show="showSuccess" x-transition class="mb-6 p-4 success-message text-white rounded-lg">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="font-medium">Message sent successfully! We'll get back to you soon.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <form @submit.prevent="submitForm()" class="space-y-6">
+                            <!-- Name Fields -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-field">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="formData.firstName"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                        placeholder="Enter your first name"
+                                    >
+                                </div>
+                                <div class="form-field">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="formData.lastName"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                        placeholder="Enter your last name"
+                                    >
+                                </div>
+                            </div>
+                            <!-- Contact Fields -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-field">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                    <input 
+                                        type="email" 
+                                        x-model="formData.email"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                        placeholder="Enter your email"
+                                    >
+                                </div>
+                                <div class="form-field">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                    <input 
+                                        type="tel" 
+                                        x-model="formData.phone"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                        placeholder="+254 700 000 000"
+                                    >
+                                </div>
+                            </div>
+                            <!-- Subject -->
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                                <select 
+                                    x-model="formData.subject"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all"
+                                >
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="store">Store Information</option>
+                                    <option value="events">Events & Promotions</option>
+                                    <option value="leasing">Leasing Opportunities</option>
+                                    <option value="customer-service">Customer Service</option>
+                                    <option value="feedback">Feedback & Suggestions</option>
+                                    <option value="complaint">Complaint</option>
+                                    <option value="media">Media & Press</option>
+                                </select>
+                            </div>
+                            <!-- Message -->
+                            <div class="form-field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                                <textarea 
+                                    x-model="formData.message"
+                                    required
+                                    rows="6"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-all resize-none"
+                                    placeholder="Write your message here..."
+                                ></textarea>
+                                <div class="text-right text-sm text-gray-500 mt-1">
+                                    <span x-text="formData.message.length"></span>/500 characters
+                                </div>
+                            </div>
+                            <!-- Privacy Consent -->
+                            <div class="flex items-start space-x-3">
+                                <input 
+                                    type="checkbox" 
+                                    x-model="formData.consent"
+                                    required
+                                    class="w-5 h-5 text-brand-blue focus:ring-brand-blue border-gray-300 rounded mt-0.5"
+                                >
+                                <label class="text-sm text-gray-600">
+                                    I agree to the <a href="#" class="text-brand-blue hover:underline">Privacy Policy</a> and consent to my data being used to respond to my inquiry. *
+                                </label>
+                            </div>
+                            <!-- Submit Button -->
+                            <button 
+                                type="submit"
+                                :disabled="submitting"
+                                class="w-full bg-brand-blue text-white py-4 px-6 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors flex items-center justify-center"
+                            >
+                                <span x-show="!submitting">Send Message</span>
+                                <span x-show="submitting" class="flex items-center">
+                                    <div class="loading-spinner mr-2"></div>
+                                    Sending...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Map & Information -->
+                <div class="space-y-8">
+                    <!-- Map -->
+                    <div>
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-4">Find Us</h3>
+                        <div class="map-container">
+                            <div class="h-80 bg-gradient-to-r from-brand-blue to-brand-gold flex items-center justify-center">
+                                <div class="text-white text-center">
+                                    <svg class="w-16 h-16 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                    </svg>
+                                    <h4 class="text-xl font-poppins font-bold mb-2">A Square Mall</h4>
+                                    <p class="text-lg opacity-90">Kimathi Street, Nairobi CBD</p>
+                                    <button class="mt-4 bg-white text-brand-blue px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                                        Open in Maps
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-poppins font-semibold text-brand-blue mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Address -->
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Address</h4>
+                                    <p class="text-gray-600">Kimathi Street, Nairobi CBD<br>Nairobi, Kenya<br>P.O. Box 12345-00100</p>
+                                </div>
+                            </div>
+                            <!-- Phone -->
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Phone Numbers</h4>
+                                    <p class="text-gray-600">
+                                        Main: +254 700 123 456<br>
+                                        Security: +254 700 123 457<br>
+                                        Leasing: +254 700 123 458
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Email -->
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Email Addresses</h4>
+                                    <p class="text-gray-600">
+                                        General: info@asquaremall.co.ke<br>
+                                        Events: events@asquaremall.co.ke<br>
+                                        Leasing: leasing@asquaremall.co.ke
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Hours -->
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Operating Hours</h4>
+                                    <p class="text-gray-600">
+                                        Monday - Sunday: 9:00 AM - 10:00 PM<br>
+                                        Public Holidays: 10:00 AM - 8:00 PM<br>
+                                        Security: 24/7
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Department Contacts -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-poppins font-bold text-brand-blue mb-4">Department Contacts</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Need specific assistance? Contact our specialized departments directly
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Customer Service -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Customer Service</h3>
+                    <p class="text-gray-600 mb-4">General inquiries, complaints, and assistance</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Phone:</strong> +254 700 123 456</p>
+                        <p><strong>Email:</strong> customer@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <!-- Leasing -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Leasing Office</h3>
+                    <p class="text-gray-600 mb-4">Retail space inquiries and applications</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Phone:</strong> +254 700 123 458</p>
+                        <p><strong>Email:</strong> leasing@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 8:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+                <!-- Events -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Events & Marketing</h3>
+                    <p class="text-gray-600 mb-4">Event planning and promotional activities</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Phone:</strong> +254 700 123 459</p>
+                        <p><strong>Email:</strong> events@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <!-- Security -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Security</h3>
+                    <p class="text-gray-600 mb-4">Emergency response and security issues</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Emergency:</strong> +254 700 123 457</p>
+                        <p><strong>Email:</strong> security@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 24/7</p>
+                    </div>
+                </div>
+                <!-- Management -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-yellow-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 112 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Management</h3>
+                    <p class="text-gray-600 mb-4">Senior management and partnership inquiries</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Phone:</strong> +254 700 123 460</p>
+                        <p><strong>Email:</strong> management@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 8:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+                <!-- Media -->
+                <div class="department-card text-center p-6 bg-gray-50 rounded-2xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-indigo-100 rounded-2xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-poppins font-semibold text-gray-900 mb-2">Media & Press</h3>
+                    <p class="text-gray-600 mb-4">Press releases and media inquiries</p>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Phone:</strong> +254 700 123 461</p>
+                        <p><strong>Email:</strong> media@asquaremall.co.ke</p>
+                        <p><strong>Hours:</strong> 9:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Social Media -->
+    <section class="py-16 bg-brand-blue">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-poppins font-bold text-white mb-4">Follow Us</h2>
+            <p class="text-xl text-white/90 mb-8">Stay connected and get the latest updates</p>
+            
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-brand-blue transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.184-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-brand-blue transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-brand-blue transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.03 4.5c-3.03 0-5.48 2.45-5.48 5.48s2.45 5.48 5.48 5.48 5.48-2.45 5.48-5.48-2.45-5.48-5.48-5.48zm0 9.06c-1.98 0-3.58-1.6-3.58-3.58s1.6-3.58 3.58-3.58 3.58 1.6 3.58 3.58-1.6 3.58-3.58 3.58z"/>
+                        <circle cx="17.8" cy="6.2" r="1.28"/>
+                        <path d="M19.94 6.96c-.05-1.03-.24-1.78-.51-2.41-.28-.65-.66-1.2-1.31-1.31-.63-.27-1.38-.46-2.41-.51C14.68 2.68 14.35 2.67 12.03 2.67s-2.65.01-3.68.06c-1.03.05-1.78.24-2.41.51-.65.28-1.2.66-1.31 1.31-.27.63-.46 1.38-.51 2.41C4.07 8 4.06 8.33 4.06 10.65s.01 2.65.06 3.68c.05 1.03.24 1.78.51 2.41.28.65.66 1.2 1.31 1.31.63.27 1.38.46 2.41.51 1.03.05 1.36.06 3.68.06s2.65-.01 3.68-.06c1.03-.05 1.78-.24 2.41-.51.65-.28 1.2-.66 1.31-1.31.27-.63.46-1.38.51-2.41.05-1.03.06-1.36.06-3.68s-.01-2.65-.06-3.68z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-brand-blue transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-brand-blue transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-2xl font-bold text-brand-gold">15K+</div>
+                    <div class="text-white/80">Facebook Followers</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-brand-gold">8K+</div>
+                    <div class="text-white/80">Instagram Followers</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-brand-gold">5K+</div>
+                    <div class="text-white/80">Twitter Followers</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-brand-gold">2K+</div>
+                    <div class="text-white/80">YouTube Subscribers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/254700123456" target="_blank" class="whatsapp-float">
+        <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-green-600 transition-colors">
+            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+            </svg>
+        </div>
+    </a>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-poppins font-bold mb-4 text-brand-gold">A Square Mall</h3>
+                    <p class="text-white/80 mb-4">Kenya's premier shopping destination offering world-class retail, dining, and entertainment experiences.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="directory.html" class="text-white/80 hover:text-white transition-colors">Store Directory</a></li>
+                        <li><a href="events.html" class="text-white/80 hover:text-white transition-colors">Events & Promotions</a></li>
+                        <li><a href="gallery.html" class="text-white/80 hover:text-white transition-colors">Photo Gallery</a></li>
+                        <li><a href="map.html" class="text-white/80 hover:text-white transition-colors">Mall Map</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Contact Methods</h4>
+                    <ul class="space-y-2">
+                        <li><a href="tel:+254700123456" class="text-white/80 hover:text-white transition-colors">Phone Support</a></li>
+                        <li><a href="mailto:info@asquaremall.co.ke" class="text-white/80 hover:text-white transition-colors">Email Support</a></li>
+                        <li><a href="https://wa.me/254700123456" class="text-white/80 hover:text-white transition-colors">WhatsApp Chat</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Live Chat</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Feedback Form</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Visit Us</h4>
+                    <div class="space-y-2 text-white/80">
+                        <p>Kimathi Street, Nairobi CBD</p>
+                        <p>Nairobi, Kenya</p>
+                        <p>Phone: +254 700 123 456</p>
+                        <p>Email: info@asquaremall.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">&copy; 2024 A Square Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/alpine.min.js" defer></script>
+    <script>
+        function contactApp() {
+            return {
+                showSuccess: false,
+                submitting: false,
+                formData: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    subject: '',
+                    message: '',
+                    consent: false
+                },
+                async submitForm() {
+                    if (!this.formData.consent) {
+                        alert('Please accept the privacy policy to continue.');
+                        return;
+                    }
+                    this.submitting = true;
+                    // Simulate form submission
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    this.submitting = false;
+                    this.showSuccess = true;
+                    // Reset form
+                    this.formData = {
+                        firstName: '',
+                        lastName: '',
+                        email: '',
+                        phone: '',
+                        subject: '',
+                        message: '',
+                        consent: false
+                    };
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        this.showSuccess = false;
+                    }, 5000);
+                    // Simulate email and SMS notifications
+                    console.log('Email notification sent to:', this.formData.email);
+                    console.log('SMS notification sent to admin');
+                }
+            }
+        }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        // Header animation
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+        // Contact cards animation
+        gsap.fromTo('.contact-card', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, delay: 0.5, ease: 'power3.out' }
+        );
+        // Form fields animation
+        ScrollTrigger.create({
+            trigger: '.form-field',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.form-field',
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out' }
+                );
+            }
+        });
+        // Department cards animation
+        ScrollTrigger.create({
+            trigger: '.department-card',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.department-card',
+                    { opacity: 0, y: 30 },
+                    { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
+                );
+            }
+        });
+        // Social icons animation
+        ScrollTrigger.create({
+            trigger: '.social-icon',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.social-icon',
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.7)' }
+                );
+            }
+        });
+        // Map animation
+        ScrollTrigger.create({
+            trigger: '.map-container',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.map-container',
+                    { opacity: 0, scale: 0.95 },
+                    { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' }
+                );
+            }
+        });
+    </script>
+</body>
+</html>

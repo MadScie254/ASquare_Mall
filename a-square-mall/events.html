@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Promotions - A Square Mall Kenya</title>
+    <meta name="description" content="Discover exciting events, promotions, and special offers at A Square Mall Kenya. Don't miss out on our latest activities and discounts.">
+    <meta name="keywords" content="events, promotions, offers, discounts, A Square Mall, Kenya, shopping events">
+    <meta property="og:title" content="Events & Promotions - A Square Mall">
+    <meta property="og:description" content="Join us for exciting events and exclusive promotions at A Square Mall Kenya">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .promotion-banner {
+            background: linear-gradient(45deg, #f5af19 0%, #ff6b6b 100%);
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .share-button {
+            transition: all 0.3s ease;
+        }
+        .share-button:hover {
+            transform: scale(1.1);
+        }
+        .modal-overlay {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .calendar-nav {
+            transition: all 0.3s ease;
+        }
+        .calendar-nav:hover {
+            transform: scale(1.1);
+        }
+        .event-status.upcoming {
+            @apply bg-green-100 text-green-800;
+        }
+        .event-status.ongoing {
+            @apply bg-blue-100 text-blue-800;
+        }
+        .event-status.ended {
+            @apply bg-gray-100 text-gray-600;
+        }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="eventsApp()" x-init="init()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="directory.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="events.html" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Events</a>
+                        <a href="gallery.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Gallery</a>
+                        <a href="map.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Map</a>
+                        <a href="leasing.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue" title="Toggle mobile menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                <a href="directory.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Stores</a>
+                <a href="events.html" class="block px-3 py-2 text-brand-blue font-medium">Events</a>
+                <a href="gallery.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Gallery</a>
+                <a href="map.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Map</a>
+                <a href="leasing.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Leasing</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Events & Promotions</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                Experience unforgettable moments and exclusive offers at A Square Mall
+            </p>
+        </div>
+    </section>
+    <!-- Promotional Banner -->
+    <section class="py-4 promotion-banner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-white">
+                <h2 class="text-2xl md:text-3xl font-poppins font-bold mb-2">🎉 Weekend Sale - Up to 70% OFF!</h2>
+                <p class="text-lg">Valid until December 31st, 2024 | Terms and conditions apply</p>
+            </div>
+        </div>
+    </section>
+    <!-- Filter Tabs -->
+    <section class="py-8 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button 
+                    @click="selectedFilter = 'all'; filterEvents()"
+                    :class="selectedFilter === 'all' ? 'bg-brand-gold text-brand-blue' : 'bg-gray-200 text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue"
+                >
+                    All Events
+                </button>
+                <button 
+                    @click="selectedFilter = 'upcoming'; filterEvents()"
+                    :class="selectedFilter === 'upcoming' ? 'bg-brand-gold text-brand-blue' : 'bg-gray-200 text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue"
+                >
+                    Upcoming
+                </button>
+                <button 
+                    @click="selectedFilter = 'ongoing'; filterEvents()"
+                    :class="selectedFilter === 'ongoing' ? 'bg-brand-gold text-brand-blue' : 'bg-gray-200 text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue"
+                >
+                    Ongoing
+                </button>
+                <button 
+                    @click="selectedFilter = 'promotions'; filterEvents()"
+                    :class="selectedFilter === 'promotions' ? 'bg-brand-gold text-brand-blue' : 'bg-gray-200 text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue"
+                >
+                    Promotions
+                </button>
+                <button 
+                    @click="selectedFilter = 'entertainment'; filterEvents()"
+                    :class="selectedFilter === 'entertainment' ? 'bg-brand-gold text-brand-blue' : 'bg-gray-200 text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue"
+                >
+                    Entertainment
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Events Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="events-grid">
+                <template x-for="event in filteredEvents" :key="event.id">
+                    <div class="event-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="relative">
+                            <div class="h-48 flex items-center justify-center text-white font-bold text-xl" :style="`background: ${event.bgColor}`">
+                                <div class="text-center">
+                                    <div x-text="event.title" class="text-xl font-poppins font-bold mb-2"></div>
+                                    <div x-text="event.subtitle" class="text-sm opacity-90"></div>
+                                </div>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span :class="`event-status ${event.status}`" class="px-3 py-1 rounded-full text-sm font-medium" x-text="event.status.charAt(0).toUpperCase() + event.status.slice(1)"></span>
+                            </div>
+                            <div class="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm" x-text="event.category"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-poppins font-semibold text-brand-blue mb-3" x-text="event.title"></h3>
+                            <p class="text-gray-600 mb-4 text-sm" x-text="event.description"></p>
+                            
+                            <!-- Event Details -->
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-gray-700 text-sm" x-text="event.date"></span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span class="text-gray-700 text-sm" x-text="event.time"></span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <span class="text-gray-700 text-sm" x-text="event.location"></span>
+                                </div>
+                                <div class="flex items-center space-x-3" x-show="event.price">
+                                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                    </svg>
+                                    <span class="text-gray-700 text-sm" x-text="event.price"></span>
+                                </div>
+                            </div>
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col space-y-3">
+                                <button 
+                                    @click="openEventModal(event)"
+                                    class="w-full bg-brand-blue text-white py-3 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors"
+                                >
+                                    View Details
+                                </button>
+                                
+                                <!-- Share Buttons -->
+                                <div class="flex justify-center space-x-4">
+                                    <button 
+                                        @click="shareEvent(event, 'whatsapp')"
+                                        class="share-button w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors"
+                                        title="Share on WhatsApp"
+                                    >
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1
+                                        </svg>
+                                    </button>
+                                    <button 
+                                        @click="shareEvent(event, 'facebook')"
+                                        class="share-button w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+                                        title="Share on Facebook"
+                                    >
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                        </svg>
+                                    </button>
+                                    <button 
+                                        @click="shareEvent(event, 'twitter')"
+                                        class="share-button w-10 h-10 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors"
+                                        title="Share on Twitter"
+                                    >
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- No Events Message -->
+            <div x-show="filteredEvents.length === 0" class="text-center py-16">
+                <svg class="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-2xl font-poppins font-semibold text-gray-600 mb-2">No events found</h3>
+                <p class="text-gray-500">Check back later for exciting events and promotions</p>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter Signup -->
+    <section class="py-16 bg-brand-blue">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-poppins font-bold text-white mb-4">Stay Updated</h2>
+            <p class="text-xl text-white/90 mb-8">Subscribe to our newsletter for the latest events and exclusive offers</p>
+            
+            <form @submit.prevent="subscribeNewsletter()" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                <input 
+                    type="email" 
+                    x-model="newsletterEmail"
+                    placeholder="Enter your email address"
+                    required
+                    class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-4 focus:ring-brand-gold/50"
+                >
+                <button 
+                    type="submit"
+                    class="px-8 py-4 bg-brand-gold text-brand-blue rounded-full font-semibold hover:bg-yellow-400 transition-colors"
+                    :disabled="subscribing"
+                >
+                    <span x-show="!subscribing">Subscribe</span>
+                    <span x-show="subscribing">Subscribing...</span>
+                </button>
+            </form>
+        </div>
+    </section>
+    <!-- Event Modal -->
+    <div x-show="showModal" x-transition class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="modal-overlay fixed inset-0" @click="closeModal()"></div>
+            
+            <div class="relative bg-white rounded-2xl max-w-2xl w-full mx-auto shadow-2xl" x-show="selectedEvent">
+                <div class="relative">
+                    <div class="h-64 flex items-center justify-center text-white font-bold text-2xl rounded-t-2xl" :style="`background: ${selectedEvent ? selectedEvent.bgColor : ''}`">
+                        <div class="text-center" x-show="selectedEvent">
+                            <div x-text="selectedEvent ? selectedEvent.title : ''" class="text-2xl font-poppins font-bold mb-2"></div>
+                            <div x-text="selectedEvent ? selectedEvent.subtitle : ''" class="text-lg opacity-90"></div>
+                        </div>
+                    </div>
+                    <button @click="closeModal()" title="Close modal" class="absolute top-4 right-4 w-10 h-10 bg-black/30 text-white rounded-full flex items-center justify-center hover:bg-black/50 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="p-8" x-show="selectedEvent">
+                    <h2 class="text-2xl font-poppins font-bold text-brand-blue mb-4" x-text="selectedEvent ? selectedEvent.title : ''"></h2>
+                    <p class="text-gray-700 mb-6" x-text="selectedEvent ? selectedEvent.fullDescription : ''"></p>
+                    
+                    <!-- Event Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold text-gray-900">Date</div>
+                                    <div class="text-gray-600" x-text="selectedEvent ? selectedEvent.date : ''"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold text-gray-900">Time</div>
+                                    <div class="text-gray-600" x-text="selectedEvent ? selectedEvent.time : ''"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold text-gray-900">Location</div>
+                                    <div class="text-gray-600" x-text="selectedEvent ? selectedEvent.location : ''"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3" x-show="selectedEvent && selectedEvent.price">
+                                <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold text-gray-900">Price</div>
+                                    <div class="text-gray-600" x-text="selectedEvent ? selectedEvent.price : ''"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="flex-1 bg-brand-gold text-brand-blue py-3 px-6 rounded-lg font-semibold hover:bg-yellow-400 transition-colors">
+                            Get Tickets
+                        </button>
+                        <button class="flex-1 bg-brand-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-brand-blue/90 transition-colors">
+                            Add to Calendar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-poppins font-bold mb-4 text-brand-gold">A Square Mall</h3>
+                    <p class="text-white/80 mb-4">Kenya's premier shopping destination offering world-class retail, dining, and entertainment experiences.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="directory.html" class="text-white/80 hover:text-white transition-colors">Store Directory</a></li>
+                        <li><a href="gallery.html" class="text-white/80 hover:text-white transition-colors">Photo Gallery</a></li>
+                        <li><a href="map.html" class="text-white/80 hover:text-white transition-colors">Mall Map</a></li>
+                        <li><a href="leasing.html" class="text-white/80 hover:text-white transition-colors">Leasing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Event Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Fashion Shows</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Sales & Promotions</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Entertainment</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Food Festivals</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors">Tech Exhibitions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-poppins font-semibold mb-4 text-brand-gold">Contact Info</h4>
+                    <div class="space-y-2 text-white/80">
+                        <p>Kimathi Street, Nairobi CBD</p>
+                        <p>Nairobi, Kenya</p>
+                        <p>Phone: +254 700 123 456</p>
+                        <p>Email: events@asquaremall.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">&copy; 2024 A Square Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/alpine.min.js" defer></script>
+    <script src="js/htmx.min.js"></script>
+    <script>
+        function eventsApp() {
+            return {
+                selectedFilter: 'all',
+                filteredEvents: [],
+                showModal: false,
+                selectedEvent: null,
+                newsletterEmail: '',
+                subscribing: false,
+                events: [
+                    {
+                        id: 1,
+                        title: "Kenya Fashion Week 2024",
+                        subtitle: "Fashion Extravaganza",
+                        description: "Showcase of the latest fashion trends by top Kenyan designers.",
+                        fullDescription: "Join us for the most anticipated fashion event of the year. Kenya Fashion Week 2024 brings together top designers, models, and fashion enthusiasts for a week of stunning runway shows, exclusive collections, and industry networking. Discover the future of Kenyan fashion.",
+                        date: "August 15-22, 2024",
+                        time: "6:00 PM - 10:00 PM Daily",
+                        location: "Grand Ballroom, A Square Mall",
+                        price: "From KES 2,500",
+                        category: "Entertainment",
+                        status: "upcoming",
+                        bgColor: "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+                    },
+                    {
+                        id: 2,
+                        title: "Tech Expo 2024",
+                        subtitle: "Future of Technology",
+                        description: "Explore the latest innovations in tech from leading companies.",
+                        fullDescription: "The Tech Expo is your gateway to the future. Experience groundbreaking technology, from AI and robotics to sustainable tech and smart home solutions. Engage with industry leaders, attend insightful talks, and witness live demos.",
+                        date: "September 5-7, 2024",
+                        time: "10:00 AM - 6:00 PM",
+                        location: "Exhibition Hall 2, A Square Mall",
+                        price: "Free Entry",
+                        category: "Entertainment",
+                        status: "upcoming",
+                        bgColor: "linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)"
+                    },
+                    {
+                        id: 3,
+                        title: "Grand Holiday Sale",
+                        subtitle: "Up to 70% Off",
+                        description: "Get the best deals on your favorite brands this holiday season.",
+                        fullDescription: "Our annual Grand Holiday Sale is back! Enjoy massive discounts of up to 70% across participating stores. From fashion and electronics to home goods and more, it's the perfect time to shop for yourself and your loved ones.",
+                        date: "December 1-31, 2024",
+                        time: "10:00 AM - 9:00 PM",
+                        location: "Participating Stores Mall-wide",
+                        price: null,
+                        category: "Promotions",
+                        status: "ongoing",
+                        bgColor: "linear-gradient(45deg, #ff6b6b 0%, #f9a825 100%)"
+                    },
+                    {
+                        id: 4,
+                        title: "Kids Fun Day",
+                        subtitle: "Magic & Games",
+                        description: "A day of fun, games, and magical performances for the little ones.",
+                        fullDescription: "Bring your kids for a day packed with excitement! Our Kids Fun Day features magic shows, face painting, balloon art, and interactive games. It's a perfect family outing with guaranteed smiles and laughter.",
+                        date: "Every Saturday",
+                        time: "12:00 PM - 4:00 PM",
+                        location: "Kids Zone, 3rd Floor",
+                        price: "Free",
+                        category: "Entertainment",
+                        status: "ongoing",
+                        bgColor: "linear-gradient(45deg, #29b6f6 0%, #80deea 100%)"
+                    }
+                ],
+
+                init() {
+                    this.filterEvents();
+                },
+
+                filterEvents() {
+                    if (this.selectedFilter === 'all') {
+                        this.filteredEvents = this.events;
+                    } else {
+                        this.filteredEvents = this.events.filter(event => 
+                            event.status === this.selectedFilter || event.category.toLowerCase() === this.selectedFilter
+                        );
+                    }
+                },
+
+                openEventModal(event) {
+                    this.selectedEvent = event;
+                    this.showModal = true;
+                },
+
+                closeModal() {
+                    this.showModal = false;
+                    this.selectedEvent = null;
+                },
+
+                shareEvent(event, platform) {
+                    const url = window.location.href;
+                    const text = `Check out this event at A Square Mall: ${event.title} - ${event.description}`;
+                    let shareUrl = '';
+
+                    if (platform === 'whatsapp') {
+                        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`;
+                    } else if (platform === 'facebook') {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`;
+                    } else if (platform === 'twitter') {
+                        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+                    }
+                    
+                    if(shareUrl) {
+                        window.open(shareUrl, '_blank');
+                    }
+                },
+
+                subscribeNewsletter() {
+                    this.subscribing = true;
+                    // Simulate API call
+                    setTimeout(() => {
+                        this.subscribing = false;
+                        alert(`Thank you for subscribing with ${this.newsletterEmail}!`);
+                        this.newsletterEmail = '';
+                    }, 1500);
+                }
+            }
+        }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        // Header animation
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+        // Promotional banner animation
+        gsap.fromTo('.promotion-banner', 
+            { opacity: 0, scale: 0.95 },
+            { opacity: 1, scale: 1, duration: 0.8, delay: 0.5, ease: 'back.out(1.7)' }
+        );
+        // Filter tabs animation
+        gsap.fromTo('.flex.flex-wrap button', 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 0.7, ease: 'power3.out' }
+        );
+        // Newsletter section animation
+        ScrollTrigger.create({
+            trigger: '.py-16.bg-brand-blue',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.fromTo('.py-16.bg-brand-blue > div > *',
+                    { opacity: 0, y: 30 },
+                    { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
+                );
+            }
+        });
+    </script>
+</body>
+</html>
