@@ -129,6 +129,11 @@
             70% { transform: scale(1.4); opacity: 0; }
             100% { transform: scale(0.95); opacity: 0; }
         }
+        
+        /* Background Images */
+        .countdown-bg {
+            background-image: url('https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?q=80&w=2070&auto=format&fit=crop');
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -200,7 +205,7 @@
     <main class="opacity-0"> <!-- Content starts invisible for entry animation -->
         <!-- Hero Section -->
         <section id="hero" class="relative h-screen flex items-center justify-center text-white hero-overlay overflow-hidden">
-            <div class="hero-bg absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579737920839-a9a35a822b31?q=80&w=2071&auto=format&fit=crop');"></div>
+            <div class="hero-bg absolute inset-0 bg-cover bg-center"></div>
             <div class="hero-content text-center px-4">
                 <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase">
                     <span class="hero-line-1 block">Where Legacy Meets</span>
@@ -251,13 +256,8 @@
                             <h3 class="text-2xl font-bold text-brand-blue mt-1">Innovation & Expansion</h3>
                             <p class="text-gray-700 mt-2">Our journey does not end at opening. We are committed to continuous innovation, with plans for digital integration, exclusive loyalty programs, and Phase II expansion.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Event Countdown Section -->
-        <section id="countdown" class="py-20 bg-cover bg-fixed bg-center" style="background-image: url('https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?q=80&w=2070&auto=format&fit=crop');">
+        <section id="countdown" class="py-20 bg-cover bg-fixed bg-center countdown-bg">
              <div class="absolute inset-0 bg-black/60"></div>
             <div class="container mx-auto px-6 relative z-10">
                 <div class="text-center text-white mb-12 animate-on-scroll">
