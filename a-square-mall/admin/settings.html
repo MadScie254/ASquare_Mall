@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - A Square Mall Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="../js/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .admin-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .setting-section {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .setting-section:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div x-data="settingsManager()" class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-lg">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-building text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">A Square Mall</h2>
+                        <p class="text-sm text-gray-500">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="mt-6">
+                <div class="px-6 py-2">
+                    <p class="text-xs uppercase text-gray-500 font-semibold tracking-wider">Main</p>
+                </div>
+                <ul class="mt-2 space-y-1">
+                    <li>
+                        <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-tachometer-alt w-5"></i>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manage-stores.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-store w-5"></i>
+                            <span class="ml-3">Stores</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manage-events.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-calendar-alt w-5"></i>
+                            <span class="ml-3">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-images w-5"></i>
+                            <span class="ml-3">Gallery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-envelope w-5"></i>
+                            <span class="ml-3">Inquiries</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="px-6 py-2 mt-8">
+                    <p class="text-xs uppercase text-gray-500 font-semibold tracking-wider">System</p>
+                </div>
+                <ul class="mt-2 space-y-1">
+                    <li>
+                        <a href="settings.html" class="flex items-center px-6 py-3 text-blue-600 bg-blue-50 border-r-2 border-blue-600">
+                            <i class="fas fa-cog w-5"></i>
+                            <span class="ml-3 font-medium">Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt w-5"></i>
+                            <span class="ml-3">View Website</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html" @click="logout()" class="flex items-center px-6 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors">
+                            <i class="fas fa-sign-out-alt w-5"></i>
+                            <span class="ml-3">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
+                    <p class="text-gray-500 mt-1">Manage your mall website configuration and preferences</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button @click="resetToDefaults()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                        Reset to Defaults
+                    </button>
+                    <button @click="saveAllSettings()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+            <!-- Settings Sections -->
+            <div class="space-y-8">
+                <!-- General Settings -->
+                <div class="admin-card rounded-xl">
+                    <div class="setting-section p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">General Settings</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mall Name</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.general.mallName"
+                                    placeholder="Enter mall name"
+                                    title="Mall Name"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.general.tagline"
+                                    placeholder="Enter mall tagline"
+                                    title="Tagline"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <input 
+                                    type="tel" 
+                                    x-model="settings.general.mainPhone"
+                                    placeholder="Enter main phone number"
+                                    title="Main Phone"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <input 
+                                    type="email" 
+                                    x-model="settings.general.mainEmail"
+                                    placeholder="Enter main email address"
+                                    title="Main Email"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                <textarea 
+                                    x-model="settings.general.address"
+                                    rows="3"
+                                    placeholder="Enter mall address"
+                                    title="Address"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                ></textarea>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                <textarea 
+                                    x-model="settings.general.address"
+                                    rows="3"
+                                    placeholder="Enter mall address"
+                                    title="Address"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-section p-6">
+                        <h4 class="text-md font-semibold text-gray-900 mb-4">Operating Hours</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                    placeholder="10:00 AM - 10:00 PM"
+                                    title="Weekday Hours"
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Weekday Hours</label>
+                                <input 
+                                    type="text"
+                                    x-model="settings.general.weekdayHours"
+                                    placeholder="10:00 AM - 10:00 PM"
+                                    title="Weekday Hours"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Weekend Hours</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.general.weekendHours"
+                                    placeholder="9:00 AM - 11:00 PM"
+                                    title="Weekend Hours"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Website URL</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.website.url"
+                                    placeholder="https://example.com"
+                                    title="Website URL"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">SEO Title</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.website.seoTitle"
+                                    placeholder="Enter SEO title"
+                                    title="SEO Title"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                                    id="seo-description"
+                                    x-model="settings.website.seoDescription"
+                                    rows="3"
+                                    maxlength="160"
+                                    placeholder="Enter a concise description of your mall for search engines (max 160 characters)"
+                                    title="SEO Description"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                ></textarea>
+                                <p class="text-xs text-gray-500 mt-1" x-text="`${settings.website.seoDescription.length}/160 characters`"></p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Keywords (comma-separated)</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.website.keywords"
+                                    placeholder="shopping mall, nairobi, kenya, fashion, electronics"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-section p-6">
+                        <h4 class="text-md font-semibold text-gray-900 mb-4">Features</h4>
+                        <div class="space-y-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="settings.website.enableNewsletter" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Enable Newsletter Subscription">
+                                <span class="ml-3 text-sm text-gray-700">Enable Newsletter Subscription</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="settings.website.enableEventRegistration" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Enable Event Registration">
+                                <span class="ml-3 text-sm text-gray-700">Enable Event Registration</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="settings.website.enableOnlinePayments" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Enable Online Payments">
+                                <span class="ml-3 text-sm text-gray-700">Enable Online Payments (M-Pesa)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="settings.website.enableSocialSharing" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Enable Social Media Sharing">
+                                <span class="ml-3 text-sm text-gray-700">Enable Social Media Sharing</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social Media Settings -->
+                <div class="admin-card rounded-xl">
+                    <div class="setting-section p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Social Media</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Page</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.social.facebook"
+                                    placeholder="https://facebook.com/asquaremall"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Instagram</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.social.instagram"
+                                    placeholder="https://instagram.com/asquaremall"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.social.twitter"
+                                    placeholder="https://twitter.com/asquaremall"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">YouTube</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.social.youtube"
+                                    placeholder="https://youtube.com/asquaremall"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">WhatsApp Number</label>
+                                <input 
+                                    type="tel" 
+                                    x-model="settings.social.whatsapp"
+                                    placeholder="+254700123456"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">TikTok</label>
+                                <input 
+                                    type="url" 
+                                    x-model="settings.social.tiktok"
+                                    placeholder="https://tiktok.com/@asquaremall"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- API & Integration Settings -->
+                <div class="admin-card rounded-xl">
+                    <div class="setting-section p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">API & Integrations</h3>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Google Maps API Key</label>
+                                <input 
+                                    type="password" 
+                                    x-model="settings.apis.googleMaps"
+                                    placeholder="Enter your Google Maps API key"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <p class="text-xs text-gray-500 mt-1">Required for map functionality and location services</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Google Analytics ID</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.apis.googleAnalytics"
+                                    placeholder="G-XXXXXXXXXX"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Pixel ID</label>
+                                <input 
+                                    type="text" 
+                                    x-model="settings.apis.facebookPixel"
+                                    placeholder="1234567890123456"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mailchimp API Key</label>
+                                <input 
+                                    type="password" 
+                                    x-model="settings.apis.mailchimp"
+                                    placeholder="Enter Mailchimp API key for newsletter"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Notification Settings -->
+                <div class="admin-card rounded-xl">
+                    <div class="setting-section p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Notifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900 mb-3">Email Notifications</h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.email.contactForms" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Contact Form Submissions">
+                                        <span class="ml-2 text-sm text-gray-700">Contact Form Submissions</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.email.leasingInquiries" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Leasing Inquiries">
+                                        <span class="ml-2 text-sm text-gray-700">Leasing Inquiries</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.email.eventRegistrations" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Event Registrations">
+                                        <span class="ml-2 text-sm text-gray-700">Event Registrations</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900 mb-3">SMS Notifications</h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.sms.urgentInquiries" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Urgent Inquiries">
+                                        <span class="ml-2 text-sm text-gray-700">Urgent Inquiries</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.sms.paymentConfirmations" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="Payment Confirmations">
+                                        <span class="ml-2 text-sm text-gray-700">Payment Confirmations</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" x-model="settings.notifications.sms.systemAlerts" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" title="System Alerts">
+                                        <span class="ml-2 text-sm text-gray-700">System Alerts</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Maintenance Mode -->
+                <div class="admin-card rounded-xl">
+                    <div class="setting-section p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Maintenance Mode</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" x-model="settings.maintenance.enabled" class="rounded border-gray-300 text-red-600 focus:ring-red-500" title="Enable Maintenance Mode">
+                                <span class="ml-3 text-sm text-gray-700">Enable Maintenance Mode</span>
+                            </label>
+                            <div x-show="settings.maintenance.enabled" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Maintenance Message</label>
+                                    <textarea 
+                                        x-model="settings.maintenance.message"
+                                        rows="3"
+                                        placeholder="We're currently performing scheduled maintenance. Please check back soon!"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Expected Completion</label>
+                                    <input 
+                                        type="datetime-local" 
+                                        x-model="settings.maintenance.expectedCompletion"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Save Button (Fixed) -->
+            <div class="fixed bottom-8 right-8">
+                <button @click="saveAllSettings()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-medium shadow-lg transition-all transform hover:scale-105">
+                    <i class="fas fa-save mr-2"></i>
+                    Save All Settings
+                </button>
+            </div>
+        </main>
+    </div>
+    <script>
+        function settingsManager() {
+            return {
+                settings: {
+                    general: {
+                        mallName: 'A Square Mall',
+                        tagline: 'Your Premier Shopping Destination in Nairobi',
+                        mainPhone: '+254 700 123 456',
+                        mainEmail: 'info@asquaremall.co.ke',
+                        address: 'CBD, Nairobi, Kenya\\nP.O. Box 12345-00100',
+                        weekdayHours: '10:00 AM - 10:00 PM',
+                        weekendHours: '9:00 AM - 11:00 PM'
+                    },
+                    website: {
+                        url: 'https://asquaremall.co.ke',
+                        seoTitle: 'A Square Mall - Premier Shopping Destination in Nairobi',
+                        seoDescription: 'Discover the best shopping experience at A Square Mall in Nairobi. Fashion, electronics, dining, entertainment and more all under one roof.',
+                        keywords: 'shopping mall, nairobi, kenya, fashion, electronics, dining, entertainment, stores'
+                    },
+                    social: {
+                        facebook: 'https://facebook.com/asquaremall',
+                        instagram: 'https://instagram.com/asquaremall',
+                        twitter: 'https://twitter.com/asquaremall',
+                        youtube: 'https://youtube.com/asquaremall',
+                        whatsapp: '+254700123456',
+                        tiktok: 'https://tiktok.com/@asquaremall'
+                    },
+                    apis: {
+                        googleMaps: '',
+                        googleAnalytics: 'G-XXXXXXXXXX',
+                        facebookPixel: '',
+                        mailchimp: ''
+                    },
+                    notifications: {
+                        email: {
+                            contactForms: true,
+                            leasingInquiries: true,
+                            eventRegistrations: true
+                        },
+                        sms: {
+                            urgentInquiries: true,
+                            paymentConfirmations: true,
+                            systemAlerts: false
+                        }
+                    },
+                    maintenance: {
+                        enabled: false,
+                        message: "We're currently performing scheduled maintenance. Please check back soon!",
+                        expectedCompletion: ''
+                    },
+                    website: {
+                        ...this.settings?.website || {},
+                        enableNewsletter: true,
+                        enableEventRegistration: true,
+                        enableOnlinePayments: true,
+                        enableSocialSharing: true
+                    }
+                },
+                saveAllSettings() {
+                    // In a real application, this would send the settings to the server
+                    localStorage.setItem('mallSettings', JSON.stringify(this.settings));
+                    this.showSuccessMessage('Settings saved successfully!');
+                    
+                    // Apply settings to the website
+                    this.applySettings();
+                },
+                loadSettings() {
+                    const saved = localStorage.getItem('mallSettings');
+                    if (saved) {
+                        try {
+                            const parsedSettings = JSON.parse(saved);
+                            this.settings = { ...this.settings, ...parsedSettings };
+                        } catch (e) {
+                            console.error('Error loading settings:', e);
+                        }
+                    }
+                },
+                resetToDefaults() {
+                    if (confirm('Are you sure you want to reset all settings to defaults? This action cannot be undone.')) {
+                        localStorage.removeItem('mallSettings');
+                        location.reload();
+                    }
+                },
+                applySettings() {
+                    // Update page title
+                    document.title = this.settings.website.seoTitle;
+                    
+                    // Update meta description
+                    let metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc) {
+                        metaDesc.content = this.settings.website.seoDescription;
+                    }
+                    
+                    // Apply maintenance mode
+                    if (this.settings.maintenance.enabled) {
+                        this.showMaintenanceWarning();
+                    }
+                },
+                showMaintenanceWarning() {
+                    const warning = document.createElement('div');
+                    warning.className = 'fixed top-0 left-0 right-0 bg-yellow-500 text-white p-3 text-center z-50';
+                    warning.innerHTML = `
+                        <strong>⚠️ Maintenance Mode Enabled</strong><br>
+                        <small>Website visitors will see maintenance page</small>
+                    `;
+                    document.body.prepend(warning);
+                },
+                showSuccessMessage(message) {
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                    notification.textContent = message;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                },
+                logout() {
+                    localStorage.removeItem('adminAuthenticated');
+                    window.location.href = 'login.html';
+                },
+                init() {
+                    // Check authentication
+                    if (localStorage.getItem('adminAuthenticated') !== 'true') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    // Load saved settings
+                    this.loadSettings();
+                    // Initialize animations
+                    gsap.from(".admin-card", {
+                        duration: 0.6,
+                        y: 30,
+                        opacity: 0,
+                        stagger: 0.1,
+                        ease: "power2.out"
+                    });
+                    // Auto-save functionality
+                    setInterval(() => {
+                        this.saveAllSettings();
+                    }, 30000); // Auto-save every 30 seconds
+                }
+            }
+        }
+        // Initialize page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.from("aside", {
+                duration: 0.5,
+                x: -250,
+                ease: "power2.out"
+            });
+            gsap.from("main > *", {
+                duration: 0.6,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power2.out",
+                delay: 0.2
+            });
+        });
+    </script>
+</body>
+</html>
