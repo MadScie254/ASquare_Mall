@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leasing Opportunities - A Square Mall Kenya</title>
+    <meta name="description" content="Discover prime retail spaces for lease at A Square Mall Kenya. Join over 100 successful businesses in Nairobi's premier shopping destination.">
+    <meta name="keywords" content="retail space, leasing, A Square Mall, Kenya, Nairobi, commercial space, shops for rent">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Leasing Opportunities - A Square Mall">
+    <meta property="og:description" content="Prime retail spaces available for lease at A Square Mall Kenya">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use the new, maintained version of Faker.js and defer loading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/8.4.1/faker.min.js"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+
+    <script>
+        // Tailwind CSS Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#004080',
+                        'brand-gold': '#f5af19',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'opensans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
+        }
+        .gradient-text {
+            background: -webkit-linear-gradient(#004080, #f5af19);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .space-card {
+            transition: all 0.3s ease;
+        }
+        .space-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .form-field {
+            transition: all 0.3s ease;
+        }
+        .form-field:focus-within {
+            transform: translateY(-2px);
+        }
+        .modal-overlay {
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .space-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .space-image {
+            aspect-ratio: 4/3;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="font-opensans bg-gray-50" x-data="leasingApp()" x-cloak>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="#" class="text-2xl font-poppins font-bold gradient-text">A Square Mall</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Home</a>
+                        <a href="#" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Stores</a>
+                        <a href="#" class="text-brand-blue hover:text-brand-gold font-medium transition-colors">Leasing</a>
+                        <a href="#" class="text-gray-700 hover:text-brand-gold font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-brand-blue" aria-label="Toggle mobile menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                 <a href="#" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Home</a>
+                 <a href="#" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Stores</a>
+                 <a href="#" class="block px-3 py-2 text-brand-blue font-medium">Leasing</a>
+                 <a href="#" class="block px-3 py-2 text-gray-700 hover:text-brand-gold">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Header Section -->
+    <section class="pt-20 pb-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">Leasing Opportunities</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                Join Kenya's most successful retail destination. Prime spaces available in Nairobi's premier shopping mall.
+            </p>
+        </div>
+    </section>
+
+    <!-- Available Spaces -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-poppins font-bold text-brand-blue mb-4">Available Spaces</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose from a variety of retail spaces designed for different business needs
+                </p>
+            </div>
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button 
+                    @click="selectedCategory = 'all'; filterSpaces()"
+                    :class="selectedCategory === 'all' ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                    class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                >
+                    All Spaces
+                </button>
+                <template x-for="category in categories" :key="category.id">
+                    <button
+                        @click="selectedCategory = category.id; filterSpaces()"
+                        :class="selectedCategory === category.id ? 'bg-brand-gold text-brand-blue' : 'bg-white text-gray-700'"
+                        class="px-6 py-3 rounded-full font-medium transition-all hover:bg-brand-gold hover:text-brand-blue shadow-sm"
+                        x-text="category.name"
+                    ></button>
+                </template>
+            </div>
+
+            <!-- Spaces Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="space in filteredSpaces" :key="space.id">
+                    <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                         <div class="relative">
+                            <img :src="space.images[0]" :alt="space.name" class="w-full h-48 object-cover">
+                            <span class="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium"
+                                :class="{ 'bg-green-100 text-green-800': space.status === 'Available', 'bg-yellow-100 text-yellow-800': space.status === 'Reserved', 'bg-red-100 text-red-800': space.status === 'Leased' }"
+                                x-text="space.status"></span>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-xl font-poppins font-semibold text-brand-blue" x-text="space.name"></h3>
+                            <p class="text-gray-600 my-4 flex-grow" x-text="space.description"></p>
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">Size:</span>
+                                    <span class="font-semibold text-gray-800" x-text="space.size"></span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">Floor:</span>
+                                    <span class="font-semibold text-gray-800" x-text="space.floor"></span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">Category:</span>
+                                    <span class="font-semibold text-gray-800 capitalize" x-text="getCategoryName(space.category)"></span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Monthly Rent:</span>
+                                    <span class="font-semibold text-brand-blue text-lg" x-text="space.rent"></span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-3 mt-auto">
+                                <button @click="selectSpace(space)" class="w-full bg-brand-blue text-white py-3 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors">
+                                    Inquire Now
+                                </button>
+                                <button @click="viewSpaceDetails(space)" class="w-full bg-brand-gold text-brand-blue py-3 rounded-lg font-medium hover:bg-yellow-400 transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Inquiry Form Section -->
+    <section id="inquiry-form" x-show="showInquiryForm" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-12" x-transition:enter-end="opacity-100 transform translate-y-0" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <template x-if="selectedSpace">
+                <div class="text-center mb-8">
+                     <h2 class="text-3xl font-poppins font-bold text-brand-blue mb-2" x-text="`Inquiry for: ${selectedSpace.name}`"></h2>
+                     <p class="text-lg text-gray-600">Please fill out the form below and our leasing agent will contact you.</p>
+                </div>
+            </template>
+            <form @submit.prevent="submitInquiry" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" x-model="form.name" placeholder="Full Name" required class="w-full px-4 py-3 rounded-lg border-gray-300 focus:border-brand-gold focus:ring focus:ring-brand-gold/50 transition">
+                    <input type="email" x-model="form.email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-lg border-gray-300 focus:border-brand-gold focus:ring focus:ring-brand-gold/50 transition">
+                    <input type="tel" x-model="form.phone" placeholder="Phone Number" required class="w-full px-4 py-3 rounded-lg border-gray-300 focus:border-brand-gold focus:ring focus:ring-brand-gold/50 transition">
+                    <input type="text" x-model="form.company" placeholder="Company Name (Optional)" class="w-full px-4 py-3 rounded-lg border-gray-300 focus:border-brand-gold focus:ring focus:ring-brand-gold/50 transition">
+                </div>
+                <div>
+                    <textarea x-model="form.message" placeholder="Your Message" rows="5" class="w-full px-4 py-3 rounded-lg border-gray-300 focus:border-brand-gold focus:ring focus:ring-brand-gold/50 transition"></textarea>
+                </div>
+                <div class="flex justify-end items-center gap-4">
+                    <button type="button" @click="resetForm()" class="px-6 py-3 rounded-lg text-gray-700 bg-gray-200 hover:bg-gray-300 font-medium transition-colors">Cancel</button>
+                    <button type="submit" class="px-8 py-3 rounded-lg text-brand-blue bg-brand-gold hover:bg-yellow-400 font-medium transition-colors">Submit Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Success Message -->
+    <div x-show="showSuccessMessage" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm">
+            <svg class="w-16 h-16 mx-auto mb-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="text-2xl font-poppins font-bold text-brand-blue mb-2">Thank You!</h3>
+            <p class="text-gray-600 mb-6">Your inquiry has been sent successfully. We will be in touch shortly.</p>
+            <button @click="showSuccessMessage = false" class="bg-brand-blue text-white py-2 px-8 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+    
+    <!-- Space Details Modal -->
+    <div x-show="showSpaceDetailsModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+        <div @click.away="showSpaceDetailsModal = false" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto" x-show="showSpaceDetailsModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90">
+            <template x-if="selectedSpace">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-3xl font-poppins font-bold text-brand-blue" x-text="selectedSpace.name"></h2>
+                            <p class="text-gray-500" x-text="`Located on the ${selectedSpace.floor} Floor`"></p>
+                        </div>
+                        <button @click="showSpaceDetailsModal = false" class="text-gray-400 hover:text-brand-gold transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="space-gallery mb-6">
+                        <template x-for="(image, index) in selectedSpace.images" :key="index">
+                            <div class="space-image" :style="`background-image: url('${image}')`"></div>
+                        </template>
+                    </div>
+
+                    <p class="text-gray-700 mb-6" x-text="selectedSpace.fullDescription"></p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mb-8">
+                        <div>
+                            <div class="text-gray-500 text-sm">Size</div>
+                            <div class="font-bold text-xl text-brand-blue" x-text="selectedSpace.size"></div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-sm">Status</div>
+                            <div class="font-bold text-xl text-brand-blue" x-text="selectedSpace.status"></div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-sm">Category</div>
+                            <div class="font-bold text-xl text-brand-blue capitalize" x-text="getCategoryName(selectedSpace.category)"></div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-sm">Rent</div>
+                            <div class="font-bold text-xl text-brand-blue" x-text="selectedSpace.rent"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button @click="selectSpace(selectedSpace); showSpaceDetailsModal = false;" class="bg-brand-gold text-brand-blue py-3 px-12 rounded-lg font-medium hover:bg-yellow-400 transition-colors text-lg">
+                            Inquire About This Space
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+
+    <script>
+    function leasingApp() {
+        return {
+            allSpaces: [],
+            filteredSpaces: [],
+            categories: [],
+            selectedCategory: 'all',
+            showInquiryForm: false,
+            showSpaceDetailsModal: false,
+            showSuccessMessage: false,
+            selectedSpace: null,
+            form: {
+                name: '',
+                email: '',
+                phone: '',
+                company: '',
+                message: '',
+            },
+
+            init() {
+                this.generateFakeData();
+                this.filterSpaces();
+            },
+
+            generateFakeData() {
+                // The global `faker` object is now available from the deferred script
+                const { faker } = window;
+
+                // More diverse categories for a mall
+                const categories = [
+                    { id: 'fashion', name: 'Fashion & Apparel' },
+                    { id: 'electronics', name: 'Electronics' },
+                    { id: 'food_court', name: 'Food Court' },
+                    { id: 'services', name: 'Services' },
+                    { id: 'entertainment', name: 'Entertainment' },
+                    { id: 'home_goods', name: 'Home Goods' },
+                    { id: 'supermarket', name: 'Supermarket' },
+                    { id: 'kiosk', name: 'Kiosks' }
+                ];
+                this.categories = categories; // Update categories for filtering
+
+                const statuses = ['Available', 'Leased', 'Reserved'];
+                const floors = ['Lower Ground', 'Ground', '1st', '2nd', '3rd'];
+
+                // Increase the number of spaces to 50 for a larger mall feel
+                this.allSpaces = Array.from({ length: 50 }, (_, i) => {
+                    const categoryObj = faker.helpers.arrayElement(categories);
+                    let size;
+                    let rent;
+
+                    // Assign more realistic sizes and rents based on category
+                    switch (categoryObj.id) {
+                        case 'supermarket':
+                            size = faker.number.int({ min: 800, max: 2000 });
+                            rent = faker.finance.amount(500000, 1200000, 0);
+                            break;
+                        case 'entertainment':
+                            size = faker.number.int({ min: 500, max: 1500 });
+                            rent = faker.finance.amount(400000, 900000, 0);
+                            break;
+                        case 'fashion':
+                            size = faker.number.int({ min: 100, max: 400 });
+                            rent = faker.finance.amount(150000, 400000, 0);
+                            break;
+                        case 'kiosk':
+                            size = faker.number.int({ min: 10, max: 30 });
+                            rent = faker.finance.amount(25000, 80000, 0);
+                            break;
+                        case 'food_court':
+                            size = faker.number.int({ min: 40, max: 100 });
+                            rent = faker.finance.amount(60000, 150000, 0);
+                            break;
+                        default:
+                            size = faker.number.int({ min: 50, max: 500 });
+                            rent = faker.finance.amount(50000, 350000, 0);
+                    }
+                    
+                    const companyName = faker.company.name();
+                    const productName = faker.commerce.productName();
+
+                    return {
+                        id: faker.string.uuid(),
+                        name: categoryObj.id === 'services' ? companyName : `${companyName} ${productName}`,
+                        size: `${size} sqm`,
+                        floor: categoryObj.id === 'food_court' ? '3rd Floor' : `${faker.helpers.arrayElement(floors)} Floor`,
+                        rent: `Ksh ${new Intl.NumberFormat('en-US').format(rent)}`,
+                        description: faker.lorem.sentence(15),
+                        fullDescription: faker.lorem.paragraphs(3),
+                        category: categoryObj.id,
+                        status: faker.helpers.arrayElement(statuses),
+                        images: Array.from({ length: 4 }, () => `https://placehold.co/600x400/${faker.string.alphanumeric(6)}/${faker.string.alphanumeric(6)}?text=${faker.lorem.words(2)}`)
+                    };
+                });
+
+                // Ensure there is at least one supermarket for variety
+                if (!this.allSpaces.some(s => s.category === 'supermarket')) {
+                    this.allSpaces.pop(); // remove one to make space
+                    this.allSpaces.unshift({ // add a supermarket at the beginning
+                        id: faker.string.uuid(),
+                        name: 'MegaMart Supermarket',
+                        size: `1500 sqm`,
+                        floor: `Lower Ground Floor`,
+                        rent: `Ksh 1,000,000`,
+                        description: 'A large anchor supermarket providing a wide range of groceries and household items.',
+                        fullDescription: 'This is the main anchor tenant, a large-format supermarket that draws significant foot traffic to the mall. It offers a comprehensive selection of fresh produce, pantry staples, imported goods, and household necessities.',
+                        category: 'supermarket',
+                        status: 'Leased',
+                        images: Array.from({ length: 4 }, () => `https://placehold.co/600x400/2a9d8f/ffffff?text=Supermarket`)
+                    });
+                }
+            },
+            
+            filterSpaces() {
+                if (this.selectedCategory === 'all') {
+                    this.filteredSpaces = this.allSpaces;
+                } else {
+                    this.filteredSpaces = this.allSpaces.filter(space => space.category === this.selectedCategory);
+                }
+            },
+
+            getCategoryName(categoryId) {
+                const category = this.categories.find(c => c.id === categoryId);
+                return category ? category.name : 'General';
+            },
+
+            selectSpace(space) {
+                this.selectedSpace = space;
+                this.showInquiryForm = true;
+                this.showSpaceDetailsModal = false; // Close details if open
+                // Scroll to form for better UX
+                this.$nextTick(() => {
+                    document.querySelector('#inquiry-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            },
+            
+            viewSpaceDetails(space) {
+                this.selectedSpace = space;
+                this.showSpaceDetailsModal = true;
+            },
+
+            submitInquiry() {
+                console.log('Form Submitted:', this.form, 'for space:', this.selectedSpace.name);
+                // Here you would typically send the data to a server
+                this.resetForm();
+                this.showSuccessMessage = true;
+            },
+
+            resetForm() {
+                this.showInquiryForm = false;
+                this.selectedSpace = null;
+                this.form = { name: '', email: '', phone: '', company: '', message: '' };
+            }
+        }
+    }
+
+    // Since the scripts are deferred, we can safely initialize everything inside this event listener
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // Initialize AlpineJS
+        Alpine.data('leasingApp', leasingApp);
+        Alpine.start();
+
+        // Initialize GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.fromTo('.gradient-bg h1', 
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo('.gradient-bg p', 
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' }
+        );
+
+        // Animate cards as they enter the viewport
+        gsap.from(".space-card", {
+            scrollTrigger: {
+                trigger: ".available-spaces-grid", // Use a parent container as the trigger
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none none",
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
+    });
+
+    </script>
+</body>
+</html>
